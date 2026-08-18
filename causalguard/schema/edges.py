@@ -1,21 +1,32 @@
-"""Typed edge schema for the provenance DAG."""
+"""Typed edge schema for the provenance multigraph."""
 
 from __future__ import annotations
 
 from enum import Enum
 
-from pydantic import BaseModel, ConfigDict, field_validator, model_validator
+from typing import Any
+
+from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
 from causalguard.schema.common import (
+    ensure_dict,
     non_empty_string,
     non_negative_finite_number,
     optional_non_empty_string,
 )
+from causalguard.schema.privacy import assert_no_raw_content_keys
 
 
 class EdgeType(str, Enum):
     INVOKES = "invokes"
     TRIGGERS = "triggers"
+    READ = "read"
+    WRITE = "write"
+    PRODUCES = "produces"
+    INPUT_TO = "input_to"
+    PAYLOAD_OF = "payload_of"
+    # Legacy coarse relation. New collectors should emit an evidence-backed
+    # relation above whenever the operation semantics are known.
     ACCESSES = "accesses"
     AUTHORIZES = "authorizes"
 
@@ -23,6 +34,8 @@ class EdgeType(str, Enum):
 class Derivation(str, Enum):
     PARENT_EVENT = "parent_event"
     CAUSAL_CONTEXT = "causal_context"
+    RUNTIME_OBSERVATION = "runtime_observation"
+    EXPLICIT_DATA_REFERENCE = "explicit_data_reference"
     TEMPORAL_WINDOW = "temporal_window"
     EXPLICIT_APPROVAL_SCOPE = "explicit_approval_scope"
 
@@ -45,6 +58,7 @@ class ProvenanceEdge(BaseModel):
     derivation: Derivation
     confidence: Confidence
     evidence_ref: str | None
+    attributes: dict[str, Any] = Field(default_factory=dict)
 
     @field_validator("edge_id", "source_id", "target_id")
     @classmethod
@@ -60,6 +74,13 @@ class ProvenanceEdge(BaseModel):
     @classmethod
     def validate_timestamp(cls, value: float) -> float:
         return non_negative_finite_number(value)
+
+    @field_validator("attributes")
+    @classmethod
+    def validate_attributes(cls, value: Any) -> dict[str, Any]:
+        attributes = ensure_dict(value)
+        assert_no_raw_content_keys(attributes, path="attributes")
+        return attributes
 
     @model_validator(mode="after")
     def validate_distinct_endpoints(self) -> "ProvenanceEdge":

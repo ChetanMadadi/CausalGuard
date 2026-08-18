@@ -1,0 +1,92 @@
+[
+  {
+    "file": "examples/exgentic_appworld/exgentic_appworld_00.jsonl",
+    "session_id": "2a21e94e0687_1b28ad67",
+    "benchmark": "appworld",
+    "harness": "claude_code",
+    "num_events": 56,
+    "num_tool_calls": 27,
+    "num_llm_invocations": 28
+  },
+  {
+    "file": "examples/exgentic_appworld/exgentic_appworld_01.jsonl",
+    "session_id": "2a21e94e0687_23955e09",
+    "benchmark": "appworld",
+    "harness": "claude_code",
+    "num_events": 36,
+    "num_tool_calls": 17,
+    "num_llm_invocations": 18
+  },
+  {
+    "file": "examples/exgentic_appworld/exgentic_appworld_02.jsonl",
+    "session_id": "2a21e94e0687_29595dd0",
+    "benchmark": "appworld",
+    "harness": "claude_code",
+    "num_events": 42,
+    "num_tool_calls": 20,
+    "num_llm_invocations": 21
+  },
+  {
+    "file": "examples/exgentic_appworld/exgentic_appworld_03.jsonl",
+    "session_id": "2a21e94e0687_32bdfa3a",
+    "benchmark": "appworld",
+    "harness": "claude_code",
+    "num_events": 31,
+    "num_tool_calls": 15,
+    "num_llm_invocations": 15
+  },
+  {
+    "file": "examples/exgentic_appworld/exgentic_appworld_04.jsonl",
+    "session_id": "2a21e94e0687_33a9d10c",
+    "benchmark": "appworld",
+    "harness": "claude_code",
+    "num_events": 24,
+    "num_tool_calls": 11,
+    "num_llm_invocations": 12
+  },
+  {
+    "file": "examples/exgentic_appworld/exgentic_appworld_05.jsonl",
+    "session_id": "2a21e94e0687_42b24d11",
+    "benchmark": "appworld",
+    "harness": "claude_code",
+    "num_events": 59,
+    "num_tool_calls": 29,
+    "num_llm_invocations": 29
+  },
+  {
+    "file": "examples/exgentic_appworld/exgentic_appworld_06.jsonl",
+    "session_id": "2a21e94e0687_50895c64",
+    "benchmark": "appworld",
+    "harness": "claude_code",
+    "num_events": 22,
+    "num_tool_calls": 10,
+    "num_llm_invocations": 11
+  },
+  {
+    "file": "examples/exgentic_appworld/exgentic_appworld_07.jsonl",
+    "session_id": "2a21e94e0687_54c78d84",
+    "benchmark": "appworld",
+    "harness": "claude_code",
+    "num_events": 60,
+    "num_tool_calls": 29,
+    "num_llm_invocations": 30
+  },
+  {
+    "file": "examples/exgentic_appworld/exgentic_appworld_08.jsonl",
+    "session_id": "2a21e94e0687_76685f3e",
+    "benchmark": "appworld",
+    "harness": "claude_code",
+    "num_events": 46,
+    "num_tool_calls": 22,
+    "num_llm_invocations": 23
+  },
+  {
+    "file": "examples/exgentic_appworld/exgentic_appworld_09.jsonl",
+    "session_id": "2a21e94e0687_777c8b94",
+    "benchmark": "appworld",
+    "harness": "claude_code",
+    "num_events": 25,
+    "num_tool_calls": 12,
+    "num_llm_invocations": 12
+  }
+]

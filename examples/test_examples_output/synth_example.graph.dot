@@ -1,0 +1,12 @@
+digraph causalguard {
+  rankdir=LR;
+  "data:resource:contacts.csv" [label="data_object: data:resource:contacts.csv"];
+  "llm:e2" [label="llm_invocation: llm:e2"];
+  "sys:e4" [label="system_operation: sys:e4"];
+  "sys:e5" [label="system_operation: sys:e5"];
+  "tool:e3" [label="tool_call: tool:e3"];
+  "data:resource:contacts.csv" -> "sys:e4" [label="read\nedge:data:read:e4:data:resource:contacts.csv\nexplicit_data_reference/high"];
+  "llm:e2" -> "tool:e3" [label="invokes\nedge:parent:invokes:e2:e3\nparent_event/high"];
+  "tool:e3" -> "sys:e4" [label="triggers\nedge:parent:triggers:e3:e4\nparent_event/high"];
+  "tool:e3" -> "sys:e5" [label="triggers\nedge:parent:triggers:e3:e5\nparent_event/high"];
+}

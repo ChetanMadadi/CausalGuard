@@ -1,0 +1,375 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1240" height="4722" viewBox="0 0 1240 4722">
+<defs>
+<marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+<path d="M0,0 L0,6 L9,3 z" fill="#334155" />
+</marker>
+<style>
+text { font-family: Arial, Helvetica, sans-serif; fill: #0f172a; }
+.title { font-size: 22px; font-weight: 700; }
+.subtitle { font-size: 13px; fill: #475569; }
+.node-type { font-size: 13px; font-weight: 700; }
+.node-id { font-size: 11px; fill: #334155; }
+.edge-label { font-size: 10px; fill: #334155; }
+</style>
+</defs>
+<rect width="100%" height="100%" fill="#f8fafc"/>
+<text x="40" y="34" class="title">exgentic_appworld_07</text>
+<text x="40" y="56" class="subtitle">nodes=59, edges=29, acyclic=True</text>
+<text x="80" y="78" class="subtitle">LLM</text>
+<text x="380" y="78" class="subtitle">Tool</text>
+<text x="700" y="78" class="subtitle">System operation</text>
+<text x="1010" y="78" class="subtitle">Data object</text>
+<path d="M 270 90 C 325.0 90, 325.0 168, 380 168" stroke="#2563eb" stroke-width="1.6" fill="none" marker-end="url(#arrow)" opacity="0.72"><title>edge:parent:invokes:2a21e94e0687_54c78d84:span:539db7100d339b1a:llm:2a21e94e0687_54c78d84:span:539db7100d339b1a:tool:0: llm:2a21e94e0687_54c78d84:span:539db7100d339b1a:llm -> tool:2a21e94e0687_54c78d84:span:539db7100d339b1a:tool:0</title></path>
+<text x="329.0" y="125.0" class="edge-label">invokes/parent_event/high</text>
+<path d="M 270 246 C 325.0 246, 325.0 1104, 380 1104" stroke="#2563eb" stroke-width="1.6" fill="none" marker-end="url(#arrow)" opacity="0.72"><title>edge:parent:invokes:2a21e94e0687_54c78d84:span:1d5bf1efefcfd157:llm:2a21e94e0687_54c78d84:span:1d5bf1efefcfd157:tool:0: llm:2a21e94e0687_54c78d84:span:1d5bf1efefcfd157:llm -> tool:2a21e94e0687_54c78d84:span:1d5bf1efefcfd157:tool:0</title></path>
+<text x="329.0" y="671.0" class="edge-label">invokes/parent_event/high</text>
+<path d="M 270 324 C 325.0 324, 325.0 714, 380 714" stroke="#2563eb" stroke-width="1.6" fill="none" marker-end="url(#arrow)" opacity="0.72"><title>edge:parent:invokes:2a21e94e0687_54c78d84:span:0c436af9d70e4b9c:llm:2a21e94e0687_54c78d84:span:0c436af9d70e4b9c:tool:0: llm:2a21e94e0687_54c78d84:span:0c436af9d70e4b9c:llm -> tool:2a21e94e0687_54c78d84:span:0c436af9d70e4b9c:tool:0</title></path>
+<text x="329.0" y="515.0" class="edge-label">invokes/parent_event/high</text>
+<path d="M 270 402 C 325.0 402, 325.0 558, 380 558" stroke="#2563eb" stroke-width="1.6" fill="none" marker-end="url(#arrow)" opacity="0.72"><title>edge:parent:invokes:2a21e94e0687_54c78d84:span:49e2107b9042b65c:llm:2a21e94e0687_54c78d84:span:49e2107b9042b65c:tool:0: llm:2a21e94e0687_54c78d84:span:49e2107b9042b65c:llm -> tool:2a21e94e0687_54c78d84:span:49e2107b9042b65c:tool:0</title></path>
+<text x="329.0" y="476.0" class="edge-label">invokes/parent_event/high</text>
+<path d="M 270 480 C 325.0 480, 325.0 1026, 380 1026" stroke="#2563eb" stroke-width="1.6" fill="none" marker-end="url(#arrow)" opacity="0.72"><title>edge:parent:invokes:2a21e94e0687_54c78d84:span:9cd14a83f32b9e32:llm:2a21e94e0687_54c78d84:span:9cd14a83f32b9e32:tool:0: llm:2a21e94e0687_54c78d84:span:9cd14a83f32b9e32:llm -> tool:2a21e94e0687_54c78d84:span:9cd14a83f32b9e32:tool:0</title></path>
+<text x="329.0" y="749.0" class="edge-label">invokes/parent_event/high</text>
+<path d="M 270 636 C 325.0 636, 325.0 870, 380 870" stroke="#2563eb" stroke-width="1.6" fill="none" marker-end="url(#arrow)" opacity="0.72"><title>edge:parent:invokes:2a21e94e0687_54c78d84:span:273b0d68a2437493:llm:2a21e94e0687_54c78d84:span:273b0d68a2437493:tool:0: llm:2a21e94e0687_54c78d84:span:273b0d68a2437493:llm -> tool:2a21e94e0687_54c78d84:span:273b0d68a2437493:tool:0</title></path>
+<text x="329.0" y="749.0" class="edge-label">invokes/parent_event/high</text>
+<path d="M 270 792 C 325.0 792, 325.0 1260, 380 1260" stroke="#2563eb" stroke-width="1.6" fill="none" marker-end="url(#arrow)" opacity="0.72"><title>edge:parent:invokes:2a21e94e0687_54c78d84:span:1847a6ad339b06d6:llm:2a21e94e0687_54c78d84:span:1847a6ad339b06d6:tool:0: llm:2a21e94e0687_54c78d84:span:1847a6ad339b06d6:llm -> tool:2a21e94e0687_54c78d84:span:1847a6ad339b06d6:tool:0</title></path>
+<text x="329.0" y="1022.0" class="edge-label">invokes/parent_event/high</text>
+<path d="M 270 948 C 325.0 948, 325.0 1416, 380 1416" stroke="#2563eb" stroke-width="1.6" fill="none" marker-end="url(#arrow)" opacity="0.72"><title>edge:parent:invokes:2a21e94e0687_54c78d84:span:0eaf4f86ecb8b573:llm:2a21e94e0687_54c78d84:span:0eaf4f86ecb8b573:tool:0: llm:2a21e94e0687_54c78d84:span:0eaf4f86ecb8b573:llm -> tool:2a21e94e0687_54c78d84:span:0eaf4f86ecb8b573:tool:0</title></path>
+<text x="329.0" y="1178.0" class="edge-label">invokes/parent_event/high</text>
+<path d="M 270 1182 C 325.0 1182, 325.0 1494, 380 1494" stroke="#2563eb" stroke-width="1.6" fill="none" marker-end="url(#arrow)" opacity="0.72"><title>edge:parent:invokes:2a21e94e0687_54c78d84:span:7b383445da75cb4b:llm:2a21e94e0687_54c78d84:span:7b383445da75cb4b:tool:0: llm:2a21e94e0687_54c78d84:span:7b383445da75cb4b:llm -> tool:2a21e94e0687_54c78d84:span:7b383445da75cb4b:tool:0</title></path>
+<text x="329.0" y="1334.0" class="edge-label">invokes/parent_event/high</text>
+<path d="M 270 1338 C 325.0 1338, 325.0 1806, 380 1806" stroke="#2563eb" stroke-width="1.6" fill="none" marker-end="url(#arrow)" opacity="0.72"><title>edge:parent:invokes:2a21e94e0687_54c78d84:span:e854dfefc11fe510:llm:2a21e94e0687_54c78d84:span:e854dfefc11fe510:tool:0: llm:2a21e94e0687_54c78d84:span:e854dfefc11fe510:llm -> tool:2a21e94e0687_54c78d84:span:e854dfefc11fe510:tool:0</title></path>
+<text x="329.0" y="1568.0" class="edge-label">invokes/parent_event/high</text>
+<path d="M 270 1572 C 325.0 1572, 325.0 1884, 380 1884" stroke="#2563eb" stroke-width="1.6" fill="none" marker-end="url(#arrow)" opacity="0.72"><title>edge:parent:invokes:2a21e94e0687_54c78d84:span:e0b972d19512e73e:llm:2a21e94e0687_54c78d84:span:e0b972d19512e73e:tool:0: llm:2a21e94e0687_54c78d84:span:e0b972d19512e73e:llm -> tool:2a21e94e0687_54c78d84:span:e0b972d19512e73e:tool:0</title></path>
+<text x="329.0" y="1724.0" class="edge-label">invokes/parent_event/high</text>
+<path d="M 270 1650 C 325.0 1650, 325.0 1962, 380 1962" stroke="#2563eb" stroke-width="1.6" fill="none" marker-end="url(#arrow)" opacity="0.72"><title>edge:parent:invokes:2a21e94e0687_54c78d84:span:4436886971683add:llm:2a21e94e0687_54c78d84:span:4436886971683add:tool:0: llm:2a21e94e0687_54c78d84:span:4436886971683add:llm -> tool:2a21e94e0687_54c78d84:span:4436886971683add:tool:0</title></path>
+<text x="329.0" y="1802.0" class="edge-label">invokes/parent_event/high</text>
+<path d="M 270 1728 C 325.0 1728, 325.0 2118, 380 2118" stroke="#2563eb" stroke-width="1.6" fill="none" marker-end="url(#arrow)" opacity="0.72"><title>edge:parent:invokes:2a21e94e0687_54c78d84:span:66da95225945c5fd:llm:2a21e94e0687_54c78d84:span:66da95225945c5fd:tool:0: llm:2a21e94e0687_54c78d84:span:66da95225945c5fd:llm -> tool:2a21e94e0687_54c78d84:span:66da95225945c5fd:tool:0</title></path>
+<text x="329.0" y="1919.0" class="edge-label">invokes/parent_event/high</text>
+<path d="M 270 2040 C 325.0 2040, 325.0 2352, 380 2352" stroke="#2563eb" stroke-width="1.6" fill="none" marker-end="url(#arrow)" opacity="0.72"><title>edge:parent:invokes:2a21e94e0687_54c78d84:span:4e896bab65cf634f:llm:2a21e94e0687_54c78d84:span:4e896bab65cf634f:tool:0: llm:2a21e94e0687_54c78d84:span:4e896bab65cf634f:llm -> tool:2a21e94e0687_54c78d84:span:4e896bab65cf634f:tool:0</title></path>
+<text x="329.0" y="2192.0" class="edge-label">invokes/parent_event/high</text>
+<path d="M 270 2196 C 325.0 2196, 325.0 2586, 380 2586" stroke="#2563eb" stroke-width="1.6" fill="none" marker-end="url(#arrow)" opacity="0.72"><title>edge:parent:invokes:2a21e94e0687_54c78d84:span:bd281276277d9bc3:llm:2a21e94e0687_54c78d84:span:bd281276277d9bc3:tool:0: llm:2a21e94e0687_54c78d84:span:bd281276277d9bc3:llm -> tool:2a21e94e0687_54c78d84:span:bd281276277d9bc3:tool:0</title></path>
+<text x="329.0" y="2387.0" class="edge-label">invokes/parent_event/high</text>
+<path d="M 270 2274 C 325.0 2274, 325.0 2508, 380 2508" stroke="#2563eb" stroke-width="1.6" fill="none" marker-end="url(#arrow)" opacity="0.72"><title>edge:parent:invokes:2a21e94e0687_54c78d84:span:4a110ff398df43a0:llm:2a21e94e0687_54c78d84:span:4a110ff398df43a0:tool:0: llm:2a21e94e0687_54c78d84:span:4a110ff398df43a0:llm -> tool:2a21e94e0687_54c78d84:span:4a110ff398df43a0:tool:0</title></path>
+<text x="329.0" y="2387.0" class="edge-label">invokes/parent_event/high</text>
+<path d="M 270 2430 C 325.0 2430, 325.0 2820, 380 2820" stroke="#2563eb" stroke-width="1.6" fill="none" marker-end="url(#arrow)" opacity="0.72"><title>edge:parent:invokes:2a21e94e0687_54c78d84:span:21599fd42654e452:llm:2a21e94e0687_54c78d84:span:21599fd42654e452:tool:0: llm:2a21e94e0687_54c78d84:span:21599fd42654e452:llm -> tool:2a21e94e0687_54c78d84:span:21599fd42654e452:tool:0</title></path>
+<text x="329.0" y="2621.0" class="edge-label">invokes/parent_event/high</text>
+<path d="M 270 2664 C 325.0 2664, 325.0 2976, 380 2976" stroke="#2563eb" stroke-width="1.6" fill="none" marker-end="url(#arrow)" opacity="0.72"><title>edge:parent:invokes:2a21e94e0687_54c78d84:span:b583cb58a87f68eb:llm:2a21e94e0687_54c78d84:span:b583cb58a87f68eb:tool:0: llm:2a21e94e0687_54c78d84:span:b583cb58a87f68eb:llm -> tool:2a21e94e0687_54c78d84:span:b583cb58a87f68eb:tool:0</title></path>
+<text x="329.0" y="2816.0" class="edge-label">invokes/parent_event/high</text>
+<path d="M 270 2742 C 325.0 2742, 325.0 3132, 380 3132" stroke="#2563eb" stroke-width="1.6" fill="none" marker-end="url(#arrow)" opacity="0.72"><title>edge:parent:invokes:2a21e94e0687_54c78d84:span:de4198591cfd11e0:llm:2a21e94e0687_54c78d84:span:de4198591cfd11e0:tool:0: llm:2a21e94e0687_54c78d84:span:de4198591cfd11e0:llm -> tool:2a21e94e0687_54c78d84:span:de4198591cfd11e0:tool:0</title></path>
+<text x="329.0" y="2933.0" class="edge-label">invokes/parent_event/high</text>
+<path d="M 270 2898 C 325.0 2898, 325.0 3288, 380 3288" stroke="#2563eb" stroke-width="1.6" fill="none" marker-end="url(#arrow)" opacity="0.72"><title>edge:parent:invokes:2a21e94e0687_54c78d84:span:4cc55d33ae1b8d36:llm:2a21e94e0687_54c78d84:span:4cc55d33ae1b8d36:tool:0: llm:2a21e94e0687_54c78d84:span:4cc55d33ae1b8d36:llm -> tool:2a21e94e0687_54c78d84:span:4cc55d33ae1b8d36:tool:0</title></path>
+<text x="329.0" y="3089.0" class="edge-label">invokes/parent_event/high</text>
+<path d="M 270 3054 C 325.0 3054, 325.0 3444, 380 3444" stroke="#2563eb" stroke-width="1.6" fill="none" marker-end="url(#arrow)" opacity="0.72"><title>edge:parent:invokes:2a21e94e0687_54c78d84:span:7371c38211dccc19:llm:2a21e94e0687_54c78d84:span:7371c38211dccc19:tool:0: llm:2a21e94e0687_54c78d84:span:7371c38211dccc19:llm -> tool:2a21e94e0687_54c78d84:span:7371c38211dccc19:tool:0</title></path>
+<text x="329.0" y="3245.0" class="edge-label">invokes/parent_event/high</text>
+<path d="M 270 3210 C 325.0 3210, 325.0 4146, 380 4146" stroke="#2563eb" stroke-width="1.6" fill="none" marker-end="url(#arrow)" opacity="0.72"><title>edge:parent:invokes:2a21e94e0687_54c78d84:span:276b2820f06050fb:llm:2a21e94e0687_54c78d84:span:276b2820f06050fb:tool:0: llm:2a21e94e0687_54c78d84:span:276b2820f06050fb:llm -> tool:2a21e94e0687_54c78d84:span:276b2820f06050fb:tool:0</title></path>
+<text x="329.0" y="3674.0" class="edge-label">invokes/parent_event/high</text>
+<path d="M 270 3366 C 325.0 3366, 325.0 3756, 380 3756" stroke="#2563eb" stroke-width="1.6" fill="none" marker-end="url(#arrow)" opacity="0.72"><title>edge:parent:invokes:2a21e94e0687_54c78d84:span:0e77523af85f16ae:llm:2a21e94e0687_54c78d84:span:0e77523af85f16ae:tool:0: llm:2a21e94e0687_54c78d84:span:0e77523af85f16ae:llm -> tool:2a21e94e0687_54c78d84:span:0e77523af85f16ae:tool:0</title></path>
+<text x="329.0" y="3557.0" class="edge-label">invokes/parent_event/high</text>
+<path d="M 270 3522 C 325.0 3522, 325.0 3678, 380 3678" stroke="#2563eb" stroke-width="1.6" fill="none" marker-end="url(#arrow)" opacity="0.72"><title>edge:parent:invokes:2a21e94e0687_54c78d84:span:f1f94186aafc2ba1:llm:2a21e94e0687_54c78d84:span:f1f94186aafc2ba1:tool:0: llm:2a21e94e0687_54c78d84:span:f1f94186aafc2ba1:llm -> tool:2a21e94e0687_54c78d84:span:f1f94186aafc2ba1:tool:0</title></path>
+<text x="329.0" y="3596.0" class="edge-label">invokes/parent_event/high</text>
+<path d="M 270 3600 C 325.0 3600, 325.0 4068, 380 4068" stroke="#2563eb" stroke-width="1.6" fill="none" marker-end="url(#arrow)" opacity="0.72"><title>edge:parent:invokes:2a21e94e0687_54c78d84:span:3099f3232895f9c1:llm:2a21e94e0687_54c78d84:span:3099f3232895f9c1:tool:0: llm:2a21e94e0687_54c78d84:span:3099f3232895f9c1:llm -> tool:2a21e94e0687_54c78d84:span:3099f3232895f9c1:tool:0</title></path>
+<text x="329.0" y="3830.0" class="edge-label">invokes/parent_event/high</text>
+<path d="M 270 3834 C 325.0 3834, 325.0 4380, 380 4380" stroke="#2563eb" stroke-width="1.6" fill="none" marker-end="url(#arrow)" opacity="0.72"><title>edge:parent:invokes:2a21e94e0687_54c78d84:span:0b0aa10011c25272:llm:2a21e94e0687_54c78d84:span:0b0aa10011c25272:tool:0: llm:2a21e94e0687_54c78d84:span:0b0aa10011c25272:llm -> tool:2a21e94e0687_54c78d84:span:0b0aa10011c25272:tool:0</title></path>
+<text x="329.0" y="4103.0" class="edge-label">invokes/parent_event/high</text>
+<path d="M 270 3912 C 325.0 3912, 325.0 4614, 380 4614" stroke="#2563eb" stroke-width="1.6" fill="none" marker-end="url(#arrow)" opacity="0.72"><title>edge:parent:invokes:2a21e94e0687_54c78d84:span:87d84995b3ca4ea1:llm:2a21e94e0687_54c78d84:span:87d84995b3ca4ea1:tool:0: llm:2a21e94e0687_54c78d84:span:87d84995b3ca4ea1:llm -> tool:2a21e94e0687_54c78d84:span:87d84995b3ca4ea1:tool:0</title></path>
+<text x="329.0" y="4259.0" class="edge-label">invokes/parent_event/high</text>
+<path d="M 270 3990 C 325.0 3990, 325.0 4536, 380 4536" stroke="#2563eb" stroke-width="1.6" fill="none" marker-end="url(#arrow)" opacity="0.72"><title>edge:parent:invokes:2a21e94e0687_54c78d84:span:2fb3778987d0dea9:llm:2a21e94e0687_54c78d84:span:2fb3778987d0dea9:tool:0: llm:2a21e94e0687_54c78d84:span:2fb3778987d0dea9:llm -> tool:2a21e94e0687_54c78d84:span:2fb3778987d0dea9:tool:0</title></path>
+<text x="329.0" y="4259.0" class="edge-label">invokes/parent_event/high</text>
+<path d="M 270 4224 C 325.0 4224, 325.0 4458, 380 4458" stroke="#2563eb" stroke-width="1.6" fill="none" marker-end="url(#arrow)" opacity="0.72"><title>edge:parent:invokes:2a21e94e0687_54c78d84:span:3ac44c55b59e2e72:llm:2a21e94e0687_54c78d84:span:3ac44c55b59e2e72:tool:0: llm:2a21e94e0687_54c78d84:span:3ac44c55b59e2e72:llm -> tool:2a21e94e0687_54c78d84:span:3ac44c55b59e2e72:tool:0</title></path>
+<text x="329.0" y="4337.0" class="edge-label">invokes/parent_event/high</text>
+<g><title>{&quot;node_id&quot;:&quot;llm:2a21e94e0687_54c78d84:span:539db7100d339b1a:llm&quot;,&quot;timestamp&quot;:1776667364.774351,&quot;agent_id&quot;:&quot;claude_code&quot;,&quot;session_id&quot;:&quot;2a21e94e0687_54c78d84&quot;,&quot;causal_context_id&quot;:&quot;exgentic:2a21e94e0687_54c78d84&quot;,&quot;node_type&quot;:&quot;llm_invocation&quot;,&quot;model_name&quot;:&quot;azure/DeepSeek-V3.2&quot;,&quot;prompt_hash&quot;:&quot;sha256:30d5edb0103360345ce446cc4c652e35119c231cdf7ca5cac49d25842ca944db&quot;,&quot;prompt_ref&quot;:null,&quot;output_hash&quot;:&quot;sha256:4d32cb028b7cf16b14f8926b84e10a8d106e43c8ffe1b8b1c93c5b5e412c5e14&quot;,&quot;output_ref&quot;:null,&quot;token_count&quot;:113011}</title>
+<rect x="80" y="66" width="190" height="48" rx="6" fill="#dbeafe" stroke="#2563eb" stroke-width="1.4"/>
+<text x="90" y="85" class="node-type">LLM</text>
+<text x="90" y="103" class="node-id">llm:2a21e94e0687...0d339b1a:llm</text>
+</g>
+<g><title>{&quot;node_id&quot;:&quot;tool:2a21e94e0687_54c78d84:span:539db7100d339b1a:tool:0&quot;,&quot;timestamp&quot;:1776667384.130269,&quot;agent_id&quot;:&quot;claude_code&quot;,&quot;session_id&quot;:&quot;2a21e94e0687_54c78d84&quot;,&quot;causal_context_id&quot;:&quot;exgentic:2a21e94e0687_54c78d84&quot;,&quot;node_type&quot;:&quot;tool_call&quot;,&quot;tool_name&quot;:&quot;TodoWrite&quot;,&quot;action_class&quot;:&quot;TodoWrite&quot;,&quot;argument_summary&quot;:{&quot;argument_hash&quot;:&quot;sha256:fb7680e8dd38e6592b54dd0183b74bfaabe760adc34d86a62b32cf9004f7864c&quot;,&quot;argument_type&quot;:&quot;dict&quot;,&quot;argument_keys&quot;:[&quot;todos&quot;]},&quot;target_resource&quot;:null,&quot;destination&quot;:null}</title>
+<rect x="380" y="144" width="190" height="48" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="1.4"/>
+<text x="390" y="163" class="node-type">Tool</text>
+<text x="390" y="181" class="node-id">tool:2a21e94e068...39b1a:tool:0</text>
+</g>
+<g><title>{&quot;node_id&quot;:&quot;llm:2a21e94e0687_54c78d84:span:1d5bf1efefcfd157:llm&quot;,&quot;timestamp&quot;:1776681828.925774,&quot;agent_id&quot;:&quot;claude_code&quot;,&quot;session_id&quot;:&quot;2a21e94e0687_54c78d84&quot;,&quot;causal_context_id&quot;:&quot;exgentic:2a21e94e0687_54c78d84&quot;,&quot;node_type&quot;:&quot;llm_invocation&quot;,&quot;model_name&quot;:&quot;azure/DeepSeek-V3.2&quot;,&quot;prompt_hash&quot;:&quot;sha256:52a9a106e7b679b03b65d8f6529886a30cd37ec78443d15c1803c224115edd83&quot;,&quot;prompt_ref&quot;:null,&quot;output_hash&quot;:&quot;sha256:ea2731666fd8f507d02d6fac9c361fe5973a6ceb7c09ae984fdadefd230de7da&quot;,&quot;output_ref&quot;:null,&quot;token_count&quot;:113258}</title>
+<rect x="80" y="222" width="190" height="48" rx="6" fill="#dbeafe" stroke="#2563eb" stroke-width="1.4"/>
+<text x="90" y="241" class="node-type">LLM</text>
+<text x="90" y="259" class="node-id">llm:2a21e94e0687...efcfd157:llm</text>
+</g>
+<g><title>{&quot;node_id&quot;:&quot;llm:2a21e94e0687_54c78d84:span:0c436af9d70e4b9c:llm&quot;,&quot;timestamp&quot;:1776681837.66122,&quot;agent_id&quot;:&quot;claude_code&quot;,&quot;session_id&quot;:&quot;2a21e94e0687_54c78d84&quot;,&quot;causal_context_id&quot;:&quot;exgentic:2a21e94e0687_54c78d84&quot;,&quot;node_type&quot;:&quot;llm_invocation&quot;,&quot;model_name&quot;:&quot;azure/DeepSeek-V3.2&quot;,&quot;prompt_hash&quot;:&quot;sha256:ebe0d4a9baddbd60f51b4077e6a9931865dd76bb22afb88325d420a8e613725a&quot;,&quot;prompt_ref&quot;:null,&quot;output_hash&quot;:&quot;sha256:ca828c08ff48e5095a6b454286415360b8beace320038d75bf5797c2009931d1&quot;,&quot;output_ref&quot;:null,&quot;token_count&quot;:113358}</title>
+<rect x="80" y="300" width="190" height="48" rx="6" fill="#dbeafe" stroke="#2563eb" stroke-width="1.4"/>
+<text x="90" y="319" class="node-type">LLM</text>
+<text x="90" y="337" class="node-id">llm:2a21e94e0687...d70e4b9c:llm</text>
+</g>
+<g><title>{&quot;node_id&quot;:&quot;llm:2a21e94e0687_54c78d84:span:49e2107b9042b65c:llm&quot;,&quot;timestamp&quot;:1776681850.725881,&quot;agent_id&quot;:&quot;claude_code&quot;,&quot;session_id&quot;:&quot;2a21e94e0687_54c78d84&quot;,&quot;causal_context_id&quot;:&quot;exgentic:2a21e94e0687_54c78d84&quot;,&quot;node_type&quot;:&quot;llm_invocation&quot;,&quot;model_name&quot;:&quot;azure/DeepSeek-V3.2&quot;,&quot;prompt_hash&quot;:&quot;sha256:572e9d0babb6ad3eaacedfff8475089444570dd118d3694c1ad5ee226b87c0d5&quot;,&quot;prompt_ref&quot;:null,&quot;output_hash&quot;:&quot;sha256:59ecf61e0530bc39934ab5e2d92ded8948f12477119dcdb1a97ff4ed8ae893bc&quot;,&quot;output_ref&quot;:null,&quot;token_count&quot;:113779}</title>
+<rect x="80" y="378" width="190" height="48" rx="6" fill="#dbeafe" stroke="#2563eb" stroke-width="1.4"/>
+<text x="90" y="397" class="node-type">LLM</text>
+<text x="90" y="415" class="node-id">llm:2a21e94e0687...9042b65c:llm</text>
+</g>
+<g><title>{&quot;node_id&quot;:&quot;llm:2a21e94e0687_54c78d84:span:9cd14a83f32b9e32:llm&quot;,&quot;timestamp&quot;:1776681858.64376,&quot;agent_id&quot;:&quot;claude_code&quot;,&quot;session_id&quot;:&quot;2a21e94e0687_54c78d84&quot;,&quot;causal_context_id&quot;:&quot;exgentic:2a21e94e0687_54c78d84&quot;,&quot;node_type&quot;:&quot;llm_invocation&quot;,&quot;model_name&quot;:&quot;azure/DeepSeek-V3.2&quot;,&quot;prompt_hash&quot;:&quot;sha256:0b146e2e7e6c286df06b21c3bd814e4e75e074433a0007413d9a68a715b2cfb8&quot;,&quot;prompt_ref&quot;:null,&quot;output_hash&quot;:&quot;sha256:4b08fd0ad08777c47cdab14709db24e553cb61a85cefc535dd592c010a5a57e1&quot;,&quot;output_ref&quot;:null,&quot;token_count&quot;:113916}</title>
+<rect x="80" y="456" width="190" height="48" rx="6" fill="#dbeafe" stroke="#2563eb" stroke-width="1.4"/>
+<text x="90" y="475" class="node-type">LLM</text>
+<text x="90" y="493" class="node-id">llm:2a21e94e0687...f32b9e32:llm</text>
+</g>
+<g><title>{&quot;node_id&quot;:&quot;tool:2a21e94e0687_54c78d84:span:49e2107b9042b65c:tool:0&quot;,&quot;timestamp&quot;:1776681862.353586,&quot;agent_id&quot;:&quot;claude_code&quot;,&quot;session_id&quot;:&quot;2a21e94e0687_54c78d84&quot;,&quot;causal_context_id&quot;:&quot;exgentic:2a21e94e0687_54c78d84&quot;,&quot;node_type&quot;:&quot;tool_call&quot;,&quot;tool_name&quot;:&quot;TodoWrite&quot;,&quot;action_class&quot;:&quot;TodoWrite&quot;,&quot;argument_summary&quot;:{&quot;argument_hash&quot;:&quot;sha256:0ad73d0e15a75d48383e3e4eb07e6a8020b786913647b3d7096dded10f8365ca&quot;,&quot;argument_type&quot;:&quot;dict&quot;,&quot;argument_keys&quot;:[&quot;todos&quot;]},&quot;target_resource&quot;:null,&quot;destination&quot;:null}</title>
+<rect x="380" y="534" width="190" height="48" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="1.4"/>
+<text x="390" y="553" class="node-type">Tool</text>
+<text x="390" y="571" class="node-id">tool:2a21e94e068...2b65c:tool:0</text>
+</g>
+<g><title>{&quot;node_id&quot;:&quot;llm:2a21e94e0687_54c78d84:span:273b0d68a2437493:llm&quot;,&quot;timestamp&quot;:1776681876.289866,&quot;agent_id&quot;:&quot;claude_code&quot;,&quot;session_id&quot;:&quot;2a21e94e0687_54c78d84&quot;,&quot;causal_context_id&quot;:&quot;exgentic:2a21e94e0687_54c78d84&quot;,&quot;node_type&quot;:&quot;llm_invocation&quot;,&quot;model_name&quot;:&quot;azure/DeepSeek-V3.2&quot;,&quot;prompt_hash&quot;:&quot;sha256:0faed616ce1ab647e7c007c1f575f029acdb799cc1b5aeb9ed4ebf87db9ec1c5&quot;,&quot;prompt_ref&quot;:null,&quot;output_hash&quot;:&quot;sha256:34cd58ecfa8c62ba96090b3c9e2a417bef1acd85339e4a007656a9e945afa180&quot;,&quot;output_ref&quot;:null,&quot;token_count&quot;:114255}</title>
+<rect x="80" y="612" width="190" height="48" rx="6" fill="#dbeafe" stroke="#2563eb" stroke-width="1.4"/>
+<text x="90" y="631" class="node-type">LLM</text>
+<text x="90" y="649" class="node-id">llm:2a21e94e0687...a2437493:llm</text>
+</g>
+<g><title>{&quot;node_id&quot;:&quot;tool:2a21e94e0687_54c78d84:span:0c436af9d70e4b9c:tool:0&quot;,&quot;timestamp&quot;:1776681880.636837,&quot;agent_id&quot;:&quot;claude_code&quot;,&quot;session_id&quot;:&quot;2a21e94e0687_54c78d84&quot;,&quot;causal_context_id&quot;:&quot;exgentic:2a21e94e0687_54c78d84&quot;,&quot;node_type&quot;:&quot;tool_call&quot;,&quot;tool_name&quot;:&quot;mcp__environment__supervisor__show_account_passwords&quot;,&quot;action_class&quot;:&quot;mcp__environment__supervisor__show_account_passwords&quot;,&quot;argument_summary&quot;:{&quot;argument_hash&quot;:&quot;sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a&quot;,&quot;argument_type&quot;:&quot;dict&quot;,&quot;argument_keys&quot;:[]},&quot;target_resource&quot;:null,&quot;destination&quot;:null}</title>
+<rect x="380" y="690" width="190" height="48" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="1.4"/>
+<text x="390" y="709" class="node-type">Tool</text>
+<text x="390" y="727" class="node-id">tool:2a21e94e068...e4b9c:tool:0</text>
+</g>
+<g><title>{&quot;node_id&quot;:&quot;llm:2a21e94e0687_54c78d84:span:1847a6ad339b06d6:llm&quot;,&quot;timestamp&quot;:1776681887.125494,&quot;agent_id&quot;:&quot;claude_code&quot;,&quot;session_id&quot;:&quot;2a21e94e0687_54c78d84&quot;,&quot;causal_context_id&quot;:&quot;exgentic:2a21e94e0687_54c78d84&quot;,&quot;node_type&quot;:&quot;llm_invocation&quot;,&quot;model_name&quot;:&quot;azure/DeepSeek-V3.2&quot;,&quot;prompt_hash&quot;:&quot;sha256:266b746d147d21b847c9c55af5a20c929f9655ff7a38336acd6bd5f2e11ba905&quot;,&quot;prompt_ref&quot;:null,&quot;output_hash&quot;:&quot;sha256:f287d874723061a7191bfa278194da4d0b47e0a9b7639862a08d228560f9d39b&quot;,&quot;output_ref&quot;:null,&quot;token_count&quot;:114573}</title>
+<rect x="80" y="768" width="190" height="48" rx="6" fill="#dbeafe" stroke="#2563eb" stroke-width="1.4"/>
+<text x="90" y="787" class="node-type">LLM</text>
+<text x="90" y="805" class="node-id">llm:2a21e94e0687...339b06d6:llm</text>
+</g>
+<g><title>{&quot;node_id&quot;:&quot;tool:2a21e94e0687_54c78d84:span:273b0d68a2437493:tool:0&quot;,&quot;timestamp&quot;:1776681891.271689,&quot;agent_id&quot;:&quot;claude_code&quot;,&quot;session_id&quot;:&quot;2a21e94e0687_54c78d84&quot;,&quot;causal_context_id&quot;:&quot;exgentic:2a21e94e0687_54c78d84&quot;,&quot;node_type&quot;:&quot;tool_call&quot;,&quot;tool_name&quot;:&quot;TodoWrite&quot;,&quot;action_class&quot;:&quot;TodoWrite&quot;,&quot;argument_summary&quot;:{&quot;argument_hash&quot;:&quot;sha256:9c7a92b14614d1d5b3bb7c2edd0c5b7028fc2e85a8099475ef3a68005c21dd72&quot;,&quot;argument_type&quot;:&quot;dict&quot;,&quot;argument_keys&quot;:[&quot;todos&quot;]},&quot;target_resource&quot;:null,&quot;destination&quot;:null}</title>
+<rect x="380" y="846" width="190" height="48" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="1.4"/>
+<text x="390" y="865" class="node-type">Tool</text>
+<text x="390" y="883" class="node-id">tool:2a21e94e068...37493:tool:0</text>
+</g>
+<g><title>{&quot;node_id&quot;:&quot;llm:2a21e94e0687_54c78d84:span:0eaf4f86ecb8b573:llm&quot;,&quot;timestamp&quot;:1776681898.323208,&quot;agent_id&quot;:&quot;claude_code&quot;,&quot;session_id&quot;:&quot;2a21e94e0687_54c78d84&quot;,&quot;causal_context_id&quot;:&quot;exgentic:2a21e94e0687_54c78d84&quot;,&quot;node_type&quot;:&quot;llm_invocation&quot;,&quot;model_name&quot;:&quot;azure/DeepSeek-V3.2&quot;,&quot;prompt_hash&quot;:&quot;sha256:c7334b67c238700f9339045a22ab14a9409f1f0e8955dbf5cb554b28e92ece94&quot;,&quot;prompt_ref&quot;:null,&quot;output_hash&quot;:&quot;sha256:a7df99e28093e60d2d12193fa544ccd0e9dad7c4d0345624dc4268ba65b6b606&quot;,&quot;output_ref&quot;:null,&quot;token_count&quot;:114886}</title>
+<rect x="80" y="924" width="190" height="48" rx="6" fill="#dbeafe" stroke="#2563eb" stroke-width="1.4"/>
+<text x="90" y="943" class="node-type">LLM</text>
+<text x="90" y="961" class="node-id">llm:2a21e94e0687...ecb8b573:llm</text>
+</g>
+<g><title>{&quot;node_id&quot;:&quot;tool:2a21e94e0687_54c78d84:span:9cd14a83f32b9e32:tool:0&quot;,&quot;timestamp&quot;:1776681902.097505,&quot;agent_id&quot;:&quot;claude_code&quot;,&quot;session_id&quot;:&quot;2a21e94e0687_54c78d84&quot;,&quot;causal_context_id&quot;:&quot;exgentic:2a21e94e0687_54c78d84&quot;,&quot;node_type&quot;:&quot;tool_call&quot;,&quot;tool_name&quot;:&quot;mcp__environment__venmo__login&quot;,&quot;action_class&quot;:&quot;mcp__environment__venmo__login&quot;,&quot;argument_summary&quot;:{&quot;argument_hash&quot;:&quot;sha256:c1c969a05cfed854025818f010e49e436a268a329583aaa5af00b49525d5decc&quot;,&quot;argument_type&quot;:&quot;dict&quot;,&quot;argument_keys&quot;:[&quot;password&quot;,&quot;username&quot;]},&quot;target_resource&quot;:null,&quot;destination&quot;:null}</title>
+<rect x="380" y="1002" width="190" height="48" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="1.4"/>
+<text x="390" y="1021" class="node-type">Tool</text>
+<text x="390" y="1039" class="node-id">tool:2a21e94e068...b9e32:tool:0</text>
+</g>
+<g><title>{&quot;node_id&quot;:&quot;tool:2a21e94e0687_54c78d84:span:1d5bf1efefcfd157:tool:0&quot;,&quot;timestamp&quot;:1776681904.563923,&quot;agent_id&quot;:&quot;claude_code&quot;,&quot;session_id&quot;:&quot;2a21e94e0687_54c78d84&quot;,&quot;causal_context_id&quot;:&quot;exgentic:2a21e94e0687_54c78d84&quot;,&quot;node_type&quot;:&quot;tool_call&quot;,&quot;tool_name&quot;:&quot;TodoWrite&quot;,&quot;action_class&quot;:&quot;TodoWrite&quot;,&quot;argument_summary&quot;:{&quot;argument_hash&quot;:&quot;sha256:7c851cb06266b641ced3ccfce995bfc7ddb0aaaf85f266ab3690554a3d0e1e17&quot;,&quot;argument_type&quot;:&quot;dict&quot;,&quot;argument_keys&quot;:[&quot;todos&quot;]},&quot;target_resource&quot;:null,&quot;destination&quot;:null}</title>
+<rect x="380" y="1080" width="190" height="48" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="1.4"/>
+<text x="390" y="1099" class="node-type">Tool</text>
+<text x="390" y="1117" class="node-id">tool:2a21e94e068...fd157:tool:0</text>
+</g>
+<g><title>{&quot;node_id&quot;:&quot;llm:2a21e94e0687_54c78d84:span:7b383445da75cb4b:llm&quot;,&quot;timestamp&quot;:1776681907.78193,&quot;agent_id&quot;:&quot;claude_code&quot;,&quot;session_id&quot;:&quot;2a21e94e0687_54c78d84&quot;,&quot;causal_context_id&quot;:&quot;exgentic:2a21e94e0687_54c78d84&quot;,&quot;node_type&quot;:&quot;llm_invocation&quot;,&quot;model_name&quot;:&quot;azure/DeepSeek-V3.2&quot;,&quot;prompt_hash&quot;:&quot;sha256:cd50f77da413dda17e05722e0f86a97f4d96818185f60ced906a8c14a3f6fa4d&quot;,&quot;prompt_ref&quot;:null,&quot;output_hash&quot;:&quot;sha256:0c99b5ae4a185a1e41e7d05d6f4aa9185171acd8aa3640b58be43f93f19a9455&quot;,&quot;output_ref&quot;:null,&quot;token_count&quot;:115231}</title>
+<rect x="80" y="1158" width="190" height="48" rx="6" fill="#dbeafe" stroke="#2563eb" stroke-width="1.4"/>
+<text x="90" y="1177" class="node-type">LLM</text>
+<text x="90" y="1195" class="node-id">llm:2a21e94e0687...da75cb4b:llm</text>
+</g>
+<g><title>{&quot;node_id&quot;:&quot;tool:2a21e94e0687_54c78d84:span:1847a6ad339b06d6:tool:0&quot;,&quot;timestamp&quot;:1776681918.207939,&quot;agent_id&quot;:&quot;claude_code&quot;,&quot;session_id&quot;:&quot;2a21e94e0687_54c78d84&quot;,&quot;causal_context_id&quot;:&quot;exgentic:2a21e94e0687_54c78d84&quot;,&quot;node_type&quot;:&quot;tool_call&quot;,&quot;tool_name&quot;:&quot;mcp__environment__venmo__show_transactions&quot;,&quot;action_class&quot;:&quot;mcp__environment__venmo__show_transactions&quot;,&quot;argument_summary&quot;:{&quot;argument_hash&quot;:&quot;sha256:7e43d045db08b30a0509f611d71c87a1a1d30d59ecf4086e7dcf9f8b9c7a3466&quot;,&quot;argument_type&quot;:&quot;dict&quot;,&quot;argument_keys&quot;:[&quot;access_token&quot;,&quot;max_created_at&quot;,&quot;min_created_at&quot;,&quot;query&quot;]},&quot;target_resource&quot;:null,&quot;destination&quot;:null}</title>
+<rect x="380" y="1236" width="190" height="48" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="1.4"/>
+<text x="390" y="1255" class="node-type">Tool</text>
+<text x="390" y="1273" class="node-id">tool:2a21e94e068...b06d6:tool:0</text>
+</g>
+<g><title>{&quot;node_id&quot;:&quot;llm:2a21e94e0687_54c78d84:span:e854dfefc11fe510:llm&quot;,&quot;timestamp&quot;:1776681920.266522,&quot;agent_id&quot;:&quot;claude_code&quot;,&quot;session_id&quot;:&quot;2a21e94e0687_54c78d84&quot;,&quot;causal_context_id&quot;:&quot;exgentic:2a21e94e0687_54c78d84&quot;,&quot;node_type&quot;:&quot;llm_invocation&quot;,&quot;model_name&quot;:&quot;azure/DeepSeek-V3.2&quot;,&quot;prompt_hash&quot;:&quot;sha256:0959c747838cc480879bd9f6edf1258f52aac57a47317dd265f17d8af4b0c243&quot;,&quot;prompt_ref&quot;:null,&quot;output_hash&quot;:&quot;sha256:8f08716530c45806aefa2268350429a2ae75343ac2d2af2c30f7c43d3bb19f57&quot;,&quot;output_ref&quot;:null,&quot;token_count&quot;:115569}</title>
+<rect x="80" y="1314" width="190" height="48" rx="6" fill="#dbeafe" stroke="#2563eb" stroke-width="1.4"/>
+<text x="90" y="1333" class="node-type">LLM</text>
+<text x="90" y="1351" class="node-id">llm:2a21e94e0687...c11fe510:llm</text>
+</g>
+<g><title>{&quot;node_id&quot;:&quot;tool:2a21e94e0687_54c78d84:span:0eaf4f86ecb8b573:tool:0&quot;,&quot;timestamp&quot;:1776681927.360551,&quot;agent_id&quot;:&quot;claude_code&quot;,&quot;session_id&quot;:&quot;2a21e94e0687_54c78d84&quot;,&quot;causal_context_id&quot;:&quot;exgentic:2a21e94e0687_54c78d84&quot;,&quot;node_type&quot;:&quot;tool_call&quot;,&quot;tool_name&quot;:&quot;mcp__environment__venmo__show_transactions&quot;,&quot;action_class&quot;:&quot;mcp__environment__venmo__show_transactions&quot;,&quot;argument_summary&quot;:{&quot;argument_hash&quot;:&quot;sha256:102807f5e7483fb5648a2fb03aefb79e3e68cb40d524fa87c07c71a6bb4adfde&quot;,&quot;argument_type&quot;:&quot;dict&quot;,&quot;argument_keys&quot;:[&quot;access_token&quot;,&quot;direction&quot;,&quot;max_created_at&quot;,&quot;min_created_at&quot;,&quot;query&quot;]},&quot;target_resource&quot;:null,&quot;destination&quot;:null}</title>
+<rect x="380" y="1392" width="190" height="48" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="1.4"/>
+<text x="390" y="1411" class="node-type">Tool</text>
+<text x="390" y="1429" class="node-id">tool:2a21e94e068...8b573:tool:0</text>
+</g>
+<g><title>{&quot;node_id&quot;:&quot;tool:2a21e94e0687_54c78d84:span:7b383445da75cb4b:tool:0&quot;,&quot;timestamp&quot;:1776681943.683965,&quot;agent_id&quot;:&quot;claude_code&quot;,&quot;session_id&quot;:&quot;2a21e94e0687_54c78d84&quot;,&quot;causal_context_id&quot;:&quot;exgentic:2a21e94e0687_54c78d84&quot;,&quot;node_type&quot;:&quot;tool_call&quot;,&quot;tool_name&quot;:&quot;mcp__environment__venmo__show_transactions&quot;,&quot;action_class&quot;:&quot;mcp__environment__venmo__show_transactions&quot;,&quot;argument_summary&quot;:{&quot;argument_hash&quot;:&quot;sha256:8d78a6ae92b0430594baa7e0e8b6cabe87f9f2c2bd22df9cb6ecd9500295ad2c&quot;,&quot;argument_type&quot;:&quot;dict&quot;,&quot;argument_keys&quot;:[&quot;access_token&quot;,&quot;direction&quot;,&quot;max_created_at&quot;,&quot;min_created_at&quot;,&quot;page_limit&quot;,&quot;query&quot;]},&quot;target_resource&quot;:null,&quot;destination&quot;:null}</title>
+<rect x="380" y="1470" width="190" height="48" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="1.4"/>
+<text x="390" y="1489" class="node-type">Tool</text>
+<text x="390" y="1507" class="node-id">tool:2a21e94e068...5cb4b:tool:0</text>
+</g>
+<g><title>{&quot;node_id&quot;:&quot;llm:2a21e94e0687_54c78d84:span:e0b972d19512e73e:llm&quot;,&quot;timestamp&quot;:1776681957.935257,&quot;agent_id&quot;:&quot;claude_code&quot;,&quot;session_id&quot;:&quot;2a21e94e0687_54c78d84&quot;,&quot;causal_context_id&quot;:&quot;exgentic:2a21e94e0687_54c78d84&quot;,&quot;node_type&quot;:&quot;llm_invocation&quot;,&quot;model_name&quot;:&quot;azure/DeepSeek-V3.2&quot;,&quot;prompt_hash&quot;:&quot;sha256:6d4dbd81c328b73bef4a309f446701481b5e99816753105fd13e5b619edebde0&quot;,&quot;prompt_ref&quot;:null,&quot;output_hash&quot;:&quot;sha256:777d7a17ae8ce59b5d9920391525cc8dee853bc7f7ff1797955810c929890f29&quot;,&quot;output_ref&quot;:null,&quot;token_count&quot;:115896}</title>
+<rect x="80" y="1548" width="190" height="48" rx="6" fill="#dbeafe" stroke="#2563eb" stroke-width="1.4"/>
+<text x="90" y="1567" class="node-type">LLM</text>
+<text x="90" y="1585" class="node-id">llm:2a21e94e0687...9512e73e:llm</text>
+</g>
+<g><title>{&quot;node_id&quot;:&quot;llm:2a21e94e0687_54c78d84:span:4436886971683add:llm&quot;,&quot;timestamp&quot;:1776681971.581316,&quot;agent_id&quot;:&quot;claude_code&quot;,&quot;session_id&quot;:&quot;2a21e94e0687_54c78d84&quot;,&quot;causal_context_id&quot;:&quot;exgentic:2a21e94e0687_54c78d84&quot;,&quot;node_type&quot;:&quot;llm_invocation&quot;,&quot;model_name&quot;:&quot;azure/DeepSeek-V3.2&quot;,&quot;prompt_hash&quot;:&quot;sha256:eba2a5465093f6ac6ea54501804da3dc8fcf4996f35960184090dff7d1473f78&quot;,&quot;prompt_ref&quot;:null,&quot;output_hash&quot;:&quot;sha256:229358e31fda43c6cf3794bf6a94fd56dbdc717baee859fd58bdd9eaa5fd9f30&quot;,&quot;output_ref&quot;:null,&quot;token_count&quot;:116205}</title>
+<rect x="80" y="1626" width="190" height="48" rx="6" fill="#dbeafe" stroke="#2563eb" stroke-width="1.4"/>
+<text x="90" y="1645" class="node-type">LLM</text>
+<text x="90" y="1663" class="node-id">llm:2a21e94e0687...71683add:llm</text>
+</g>
+<g><title>{&quot;node_id&quot;:&quot;llm:2a21e94e0687_54c78d84:span:66da95225945c5fd:llm&quot;,&quot;timestamp&quot;:1776681981.913866,&quot;agent_id&quot;:&quot;claude_code&quot;,&quot;session_id&quot;:&quot;2a21e94e0687_54c78d84&quot;,&quot;causal_context_id&quot;:&quot;exgentic:2a21e94e0687_54c78d84&quot;,&quot;node_type&quot;:&quot;llm_invocation&quot;,&quot;model_name&quot;:&quot;azure/DeepSeek-V3.2&quot;,&quot;prompt_hash&quot;:&quot;sha256:723cf2d770675060698b3f1b7fdb381f49a7a32a4bb388b3e95751fb568c08c2&quot;,&quot;prompt_ref&quot;:null,&quot;output_hash&quot;:&quot;sha256:520f34f62801fc8f21bcdaa68ca05811fbd4bc7b67ec4122bc72f455de3bb4c2&quot;,&quot;output_ref&quot;:null,&quot;token_count&quot;:116718}</title>
+<rect x="80" y="1704" width="190" height="48" rx="6" fill="#dbeafe" stroke="#2563eb" stroke-width="1.4"/>
+<text x="90" y="1723" class="node-type">LLM</text>
+<text x="90" y="1741" class="node-id">llm:2a21e94e0687...5945c5fd:llm</text>
+</g>
+<g><title>{&quot;node_id&quot;:&quot;tool:2a21e94e0687_54c78d84:span:e854dfefc11fe510:tool:0&quot;,&quot;timestamp&quot;:1776681985.655028,&quot;agent_id&quot;:&quot;claude_code&quot;,&quot;session_id&quot;:&quot;2a21e94e0687_54c78d84&quot;,&quot;causal_context_id&quot;:&quot;exgentic:2a21e94e0687_54c78d84&quot;,&quot;node_type&quot;:&quot;tool_call&quot;,&quot;tool_name&quot;:&quot;mcp__environment__venmo__show_transactions&quot;,&quot;action_class&quot;:&quot;mcp__environment__venmo__show_transactions&quot;,&quot;argument_summary&quot;:{&quot;argument_hash&quot;:&quot;sha256:e47998ced5ea207a7f458ecf88f271129a40bf5e225780d56f28db87aae149d2&quot;,&quot;argument_type&quot;:&quot;dict&quot;,&quot;argument_keys&quot;:[&quot;access_token&quot;,&quot;direction&quot;,&quot;max_created_at&quot;,&quot;min_created_at&quot;,&quot;page_limit&quot;,&quot;query&quot;]},&quot;target_resource&quot;:null,&quot;destination&quot;:null}</title>
+<rect x="380" y="1782" width="190" height="48" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="1.4"/>
+<text x="390" y="1801" class="node-type">Tool</text>
+<text x="390" y="1819" class="node-id">tool:2a21e94e068...fe510:tool:0</text>
+</g>
+<g><title>{&quot;node_id&quot;:&quot;tool:2a21e94e0687_54c78d84:span:e0b972d19512e73e:tool:0&quot;,&quot;timestamp&quot;:1776681992.848603,&quot;agent_id&quot;:&quot;claude_code&quot;,&quot;session_id&quot;:&quot;2a21e94e0687_54c78d84&quot;,&quot;causal_context_id&quot;:&quot;exgentic:2a21e94e0687_54c78d84&quot;,&quot;node_type&quot;:&quot;tool_call&quot;,&quot;tool_name&quot;:&quot;mcp__environment__venmo__show_transactions&quot;,&quot;action_class&quot;:&quot;mcp__environment__venmo__show_transactions&quot;,&quot;argument_summary&quot;:{&quot;argument_hash&quot;:&quot;sha256:4e5d594dfe6f5b2195af46c0f0b4137b6c4166a4bc6ea4b04e9d0461b98c8834&quot;,&quot;argument_type&quot;:&quot;dict&quot;,&quot;argument_keys&quot;:[&quot;access_token&quot;,&quot;direction&quot;,&quot;max_created_at&quot;,&quot;min_created_at&quot;,&quot;page_limit&quot;,&quot;query&quot;]},&quot;target_resource&quot;:null,&quot;destination&quot;:null}</title>
+<rect x="380" y="1860" width="190" height="48" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="1.4"/>
+<text x="390" y="1879" class="node-type">Tool</text>
+<text x="390" y="1897" class="node-id">tool:2a21e94e068...2e73e:tool:0</text>
+</g>
+<g><title>{&quot;node_id&quot;:&quot;tool:2a21e94e0687_54c78d84:span:4436886971683add:tool:0&quot;,&quot;timestamp&quot;:1776682013.468529,&quot;agent_id&quot;:&quot;claude_code&quot;,&quot;session_id&quot;:&quot;2a21e94e0687_54c78d84&quot;,&quot;causal_context_id&quot;:&quot;exgentic:2a21e94e0687_54c78d84&quot;,&quot;node_type&quot;:&quot;tool_call&quot;,&quot;tool_name&quot;:&quot;mcp__environment__venmo__show_transactions&quot;,&quot;action_class&quot;:&quot;mcp__environment__venmo__show_transactions&quot;,&quot;argument_summary&quot;:{&quot;argument_hash&quot;:&quot;sha256:274dd3ad30f6cc42d4bc545815c9f2d722aa7b90f75bf5fc3fbac115d96df2ba&quot;,&quot;argument_type&quot;:&quot;dict&quot;,&quot;argument_keys&quot;:[&quot;access_token&quot;,&quot;max_created_at&quot;,&quot;min_created_at&quot;]},&quot;target_resource&quot;:null,&quot;destination&quot;:null}</title>
+<rect x="380" y="1938" width="190" height="48" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="1.4"/>
+<text x="390" y="1957" class="node-type">Tool</text>
+<text x="390" y="1975" class="node-id">tool:2a21e94e068...83add:tool:0</text>
+</g>
+<g><title>{&quot;node_id&quot;:&quot;llm:2a21e94e0687_54c78d84:span:4e896bab65cf634f:llm&quot;,&quot;timestamp&quot;:1776682014.457284,&quot;agent_id&quot;:&quot;claude_code&quot;,&quot;session_id&quot;:&quot;2a21e94e0687_54c78d84&quot;,&quot;causal_context_id&quot;:&quot;exgentic:2a21e94e0687_54c78d84&quot;,&quot;node_type&quot;:&quot;llm_invocation&quot;,&quot;model_name&quot;:&quot;azure/DeepSeek-V3.2&quot;,&quot;prompt_hash&quot;:&quot;sha256:28f831c43ad4d821a815a1cc192d92ddc3e98a313ab7a5800d53c60d69621e1c&quot;,&quot;prompt_ref&quot;:null,&quot;output_hash&quot;:&quot;sha256:6e934c0f54e040c8749c0c11acd74a8c92f65d715189b419c813883711482834&quot;,&quot;output_ref&quot;:null,&quot;token_count&quot;:116936}</title>
+<rect x="80" y="2016" width="190" height="48" rx="6" fill="#dbeafe" stroke="#2563eb" stroke-width="1.4"/>
+<text x="90" y="2035" class="node-type">LLM</text>
+<text x="90" y="2053" class="node-id">llm:2a21e94e0687...65cf634f:llm</text>
+</g>
+<g><title>{&quot;node_id&quot;:&quot;tool:2a21e94e0687_54c78d84:span:66da95225945c5fd:tool:0&quot;,&quot;timestamp&quot;:1776682024.870626,&quot;agent_id&quot;:&quot;claude_code&quot;,&quot;session_id&quot;:&quot;2a21e94e0687_54c78d84&quot;,&quot;causal_context_id&quot;:&quot;exgentic:2a21e94e0687_54c78d84&quot;,&quot;node_type&quot;:&quot;tool_call&quot;,&quot;tool_name&quot;:&quot;TodoWrite&quot;,&quot;action_class&quot;:&quot;TodoWrite&quot;,&quot;argument_summary&quot;:{&quot;argument_hash&quot;:&quot;sha256:9c7a92b14614d1d5b3bb7c2edd0c5b7028fc2e85a8099475ef3a68005c21dd72&quot;,&quot;argument_type&quot;:&quot;dict&quot;,&quot;argument_keys&quot;:[&quot;todos&quot;]},&quot;target_resource&quot;:null,&quot;destination&quot;:null}</title>
+<rect x="380" y="2094" width="190" height="48" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="1.4"/>
+<text x="390" y="2113" class="node-type">Tool</text>
+<text x="390" y="2131" class="node-id">tool:2a21e94e068...5c5fd:tool:0</text>
+</g>
+<g><title>{&quot;node_id&quot;:&quot;llm:2a21e94e0687_54c78d84:span:bd281276277d9bc3:llm&quot;,&quot;timestamp&quot;:1776682025.239473,&quot;agent_id&quot;:&quot;claude_code&quot;,&quot;session_id&quot;:&quot;2a21e94e0687_54c78d84&quot;,&quot;causal_context_id&quot;:&quot;exgentic:2a21e94e0687_54c78d84&quot;,&quot;node_type&quot;:&quot;llm_invocation&quot;,&quot;model_name&quot;:&quot;azure/DeepSeek-V3.2&quot;,&quot;prompt_hash&quot;:&quot;sha256:47a32dc9281dc6bdd65319b34e7d3c0c8b5f394b375ec8c6e1de68b1cdf1455e&quot;,&quot;prompt_ref&quot;:null,&quot;output_hash&quot;:&quot;sha256:764300fd9d4f29984ff4af66b7b958a68588d01a429f335a68d70f2c3c1dc7aa&quot;,&quot;output_ref&quot;:null,&quot;token_count&quot;:117304}</title>
+<rect x="80" y="2172" width="190" height="48" rx="6" fill="#dbeafe" stroke="#2563eb" stroke-width="1.4"/>
+<text x="90" y="2191" class="node-type">LLM</text>
+<text x="90" y="2209" class="node-id">llm:2a21e94e0687...277d9bc3:llm</text>
+</g>
+<g><title>{&quot;node_id&quot;:&quot;llm:2a21e94e0687_54c78d84:span:4a110ff398df43a0:llm&quot;,&quot;timestamp&quot;:1776682041.000997,&quot;agent_id&quot;:&quot;claude_code&quot;,&quot;session_id&quot;:&quot;2a21e94e0687_54c78d84&quot;,&quot;causal_context_id&quot;:&quot;exgentic:2a21e94e0687_54c78d84&quot;,&quot;node_type&quot;:&quot;llm_invocation&quot;,&quot;model_name&quot;:&quot;azure/DeepSeek-V3.2&quot;,&quot;prompt_hash&quot;:&quot;sha256:43bbb17027d53f6cdab8c880585869ce0bc524a1a0a7008a4b72f217316902ce&quot;,&quot;prompt_ref&quot;:null,&quot;output_hash&quot;:&quot;sha256:a69885e82646a18eb29df37e852963d0b4c827cafb376646cc76a9653756a49c&quot;,&quot;output_ref&quot;:null,&quot;token_count&quot;:117620}</title>
+<rect x="80" y="2250" width="190" height="48" rx="6" fill="#dbeafe" stroke="#2563eb" stroke-width="1.4"/>
+<text x="90" y="2269" class="node-type">LLM</text>
+<text x="90" y="2287" class="node-id">llm:2a21e94e0687...98df43a0:llm</text>
+</g>
+<g><title>{&quot;node_id&quot;:&quot;tool:2a21e94e0687_54c78d84:span:4e896bab65cf634f:tool:0&quot;,&quot;timestamp&quot;:1776682046.914038,&quot;agent_id&quot;:&quot;claude_code&quot;,&quot;session_id&quot;:&quot;2a21e94e0687_54c78d84&quot;,&quot;causal_context_id&quot;:&quot;exgentic:2a21e94e0687_54c78d84&quot;,&quot;node_type&quot;:&quot;tool_call&quot;,&quot;tool_name&quot;:&quot;mcp__environment__venmo__show_transactions&quot;,&quot;action_class&quot;:&quot;mcp__environment__venmo__show_transactions&quot;,&quot;argument_summary&quot;:{&quot;argument_hash&quot;:&quot;sha256:0081906cdfa88105aac2c8252832f39def5bc64765b1edbe4493ffae922a6854&quot;,&quot;argument_type&quot;:&quot;dict&quot;,&quot;argument_keys&quot;:[&quot;access_token&quot;]},&quot;target_resource&quot;:null,&quot;destination&quot;:null}</title>
+<rect x="380" y="2328" width="190" height="48" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="1.4"/>
+<text x="390" y="2347" class="node-type">Tool</text>
+<text x="390" y="2365" class="node-id">tool:2a21e94e068...f634f:tool:0</text>
+</g>
+<g><title>{&quot;node_id&quot;:&quot;llm:2a21e94e0687_54c78d84:span:21599fd42654e452:llm&quot;,&quot;timestamp&quot;:1776682085.706573,&quot;agent_id&quot;:&quot;claude_code&quot;,&quot;session_id&quot;:&quot;2a21e94e0687_54c78d84&quot;,&quot;causal_context_id&quot;:&quot;exgentic:2a21e94e0687_54c78d84&quot;,&quot;node_type&quot;:&quot;llm_invocation&quot;,&quot;model_name&quot;:&quot;azure/DeepSeek-V3.2&quot;,&quot;prompt_hash&quot;:&quot;sha256:8dec9e4a2c4272158bf8359a468f3da12423b6b93e6c92abdc36ddd0254da6e8&quot;,&quot;prompt_ref&quot;:null,&quot;output_hash&quot;:&quot;sha256:90f9c704506750cb27246cfdecb22ca94d1e88042c69ac0b203616c59433d4cd&quot;,&quot;output_ref&quot;:null,&quot;token_count&quot;:117889}</title>
+<rect x="80" y="2406" width="190" height="48" rx="6" fill="#dbeafe" stroke="#2563eb" stroke-width="1.4"/>
+<text x="90" y="2425" class="node-type">LLM</text>
+<text x="90" y="2443" class="node-id">llm:2a21e94e0687...2654e452:llm</text>
+</g>
+<g><title>{&quot;node_id&quot;:&quot;tool:2a21e94e0687_54c78d84:span:4a110ff398df43a0:tool:0&quot;,&quot;timestamp&quot;:1776682096.772895,&quot;agent_id&quot;:&quot;claude_code&quot;,&quot;session_id&quot;:&quot;2a21e94e0687_54c78d84&quot;,&quot;causal_context_id&quot;:&quot;exgentic:2a21e94e0687_54c78d84&quot;,&quot;node_type&quot;:&quot;tool_call&quot;,&quot;tool_name&quot;:&quot;mcp__environment__venmo__show_transactions&quot;,&quot;action_class&quot;:&quot;mcp__environment__venmo__show_transactions&quot;,&quot;argument_summary&quot;:{&quot;argument_hash&quot;:&quot;sha256:9d4ea2e3555156afbd61d109239bcc31ff34452a09ea085fe2d9b0989235c846&quot;,&quot;argument_type&quot;:&quot;dict&quot;,&quot;argument_keys&quot;:[&quot;access_token&quot;,&quot;max_created_at&quot;,&quot;min_created_at&quot;,&quot;query&quot;]},&quot;target_resource&quot;:null,&quot;destination&quot;:null}</title>
+<rect x="380" y="2484" width="190" height="48" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="1.4"/>
+<text x="390" y="2503" class="node-type">Tool</text>
+<text x="390" y="2521" class="node-id">tool:2a21e94e068...f43a0:tool:0</text>
+</g>
+<g><title>{&quot;node_id&quot;:&quot;tool:2a21e94e0687_54c78d84:span:bd281276277d9bc3:tool:0&quot;,&quot;timestamp&quot;:1776682097.753375,&quot;agent_id&quot;:&quot;claude_code&quot;,&quot;session_id&quot;:&quot;2a21e94e0687_54c78d84&quot;,&quot;causal_context_id&quot;:&quot;exgentic:2a21e94e0687_54c78d84&quot;,&quot;node_type&quot;:&quot;tool_call&quot;,&quot;tool_name&quot;:&quot;mcp__environment__venmo__show_transactions&quot;,&quot;action_class&quot;:&quot;mcp__environment__venmo__show_transactions&quot;,&quot;argument_summary&quot;:{&quot;argument_hash&quot;:&quot;sha256:bcc49d7366df5927310f8645d924a146fd7eaf1da6f5e1547bc3c4e376fd8b4a&quot;,&quot;argument_type&quot;:&quot;dict&quot;,&quot;argument_keys&quot;:[&quot;access_token&quot;,&quot;direction&quot;,&quot;max_created_at&quot;,&quot;min_created_at&quot;,&quot;query&quot;]},&quot;target_resource&quot;:null,&quot;destination&quot;:null}</title>
+<rect x="380" y="2562" width="190" height="48" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="1.4"/>
+<text x="390" y="2581" class="node-type">Tool</text>
+<text x="390" y="2599" class="node-id">tool:2a21e94e068...d9bc3:tool:0</text>
+</g>
+<g><title>{&quot;node_id&quot;:&quot;llm:2a21e94e0687_54c78d84:span:b583cb58a87f68eb:llm&quot;,&quot;timestamp&quot;:1776682099.939382,&quot;agent_id&quot;:&quot;claude_code&quot;,&quot;session_id&quot;:&quot;2a21e94e0687_54c78d84&quot;,&quot;causal_context_id&quot;:&quot;exgentic:2a21e94e0687_54c78d84&quot;,&quot;node_type&quot;:&quot;llm_invocation&quot;,&quot;model_name&quot;:&quot;azure/DeepSeek-V3.2&quot;,&quot;prompt_hash&quot;:&quot;sha256:68b76b15eb252b72ae2ca5b9e43443b99e32fe431c0e5d816976ee1e2ee5217c&quot;,&quot;prompt_ref&quot;:null,&quot;output_hash&quot;:&quot;sha256:40a2fe7ca6011649ec05942b43f45afdcd4d3a04556ca915a4f64f6b09656d4d&quot;,&quot;output_ref&quot;:null,&quot;token_count&quot;:118197}</title>
+<rect x="80" y="2640" width="190" height="48" rx="6" fill="#dbeafe" stroke="#2563eb" stroke-width="1.4"/>
+<text x="90" y="2659" class="node-type">LLM</text>
+<text x="90" y="2677" class="node-id">llm:2a21e94e0687...a87f68eb:llm</text>
+</g>
+<g><title>{&quot;node_id&quot;:&quot;llm:2a21e94e0687_54c78d84:span:de4198591cfd11e0:llm&quot;,&quot;timestamp&quot;:1776682113.889525,&quot;agent_id&quot;:&quot;claude_code&quot;,&quot;session_id&quot;:&quot;2a21e94e0687_54c78d84&quot;,&quot;causal_context_id&quot;:&quot;exgentic:2a21e94e0687_54c78d84&quot;,&quot;node_type&quot;:&quot;llm_invocation&quot;,&quot;model_name&quot;:&quot;azure/DeepSeek-V3.2&quot;,&quot;prompt_hash&quot;:&quot;sha256:b3e50db4021bc7fa20734f10dd9ae9db140155e6e56aa6600e624edc9f1c3d18&quot;,&quot;prompt_ref&quot;:null,&quot;output_hash&quot;:&quot;sha256:901fa67f2520cab533b5e31994150e0635fd37792bed8b72387925a418ac5010&quot;,&quot;output_ref&quot;:null,&quot;token_count&quot;:118695}</title>
+<rect x="80" y="2718" width="190" height="48" rx="6" fill="#dbeafe" stroke="#2563eb" stroke-width="1.4"/>
+<text x="90" y="2737" class="node-type">LLM</text>
+<text x="90" y="2755" class="node-id">llm:2a21e94e0687...1cfd11e0:llm</text>
+</g>
+<g><title>{&quot;node_id&quot;:&quot;tool:2a21e94e0687_54c78d84:span:21599fd42654e452:tool:0&quot;,&quot;timestamp&quot;:1776682126.512514,&quot;agent_id&quot;:&quot;claude_code&quot;,&quot;session_id&quot;:&quot;2a21e94e0687_54c78d84&quot;,&quot;causal_context_id&quot;:&quot;exgentic:2a21e94e0687_54c78d84&quot;,&quot;node_type&quot;:&quot;tool_call&quot;,&quot;tool_name&quot;:&quot;mcp__environment__venmo__show_account&quot;,&quot;action_class&quot;:&quot;mcp__environment__venmo__show_account&quot;,&quot;argument_summary&quot;:{&quot;argument_hash&quot;:&quot;sha256:0081906cdfa88105aac2c8252832f39def5bc64765b1edbe4493ffae922a6854&quot;,&quot;argument_type&quot;:&quot;dict&quot;,&quot;argument_keys&quot;:[&quot;access_token&quot;]},&quot;target_resource&quot;:null,&quot;destination&quot;:null}</title>
+<rect x="380" y="2796" width="190" height="48" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="1.4"/>
+<text x="390" y="2815" class="node-type">Tool</text>
+<text x="390" y="2833" class="node-id">tool:2a21e94e068...4e452:tool:0</text>
+</g>
+<g><title>{&quot;node_id&quot;:&quot;llm:2a21e94e0687_54c78d84:span:4cc55d33ae1b8d36:llm&quot;,&quot;timestamp&quot;:1776682129.356755,&quot;agent_id&quot;:&quot;claude_code&quot;,&quot;session_id&quot;:&quot;2a21e94e0687_54c78d84&quot;,&quot;causal_context_id&quot;:&quot;exgentic:2a21e94e0687_54c78d84&quot;,&quot;node_type&quot;:&quot;llm_invocation&quot;,&quot;model_name&quot;:&quot;azure/DeepSeek-V3.2&quot;,&quot;prompt_hash&quot;:&quot;sha256:8f9bee8a4088744b3de9c7723f8d0b35fc8ec58ced98b9208d95896f65d844ec&quot;,&quot;prompt_ref&quot;:null,&quot;output_hash&quot;:&quot;sha256:ad8063eb1b37f28bb0d574380009178321af83f79aef7761a18af4f8b57deb1c&quot;,&quot;output_ref&quot;:null,&quot;token_count&quot;:118888}</title>
+<rect x="80" y="2874" width="190" height="48" rx="6" fill="#dbeafe" stroke="#2563eb" stroke-width="1.4"/>
+<text x="90" y="2893" class="node-type">LLM</text>
+<text x="90" y="2911" class="node-id">llm:2a21e94e0687...ae1b8d36:llm</text>
+</g>
+<g><title>{&quot;node_id&quot;:&quot;tool:2a21e94e0687_54c78d84:span:b583cb58a87f68eb:tool:0&quot;,&quot;timestamp&quot;:1776682137.007579,&quot;agent_id&quot;:&quot;claude_code&quot;,&quot;session_id&quot;:&quot;2a21e94e0687_54c78d84&quot;,&quot;causal_context_id&quot;:&quot;exgentic:2a21e94e0687_54c78d84&quot;,&quot;node_type&quot;:&quot;tool_call&quot;,&quot;tool_name&quot;:&quot;mcp__environment__phone__login&quot;,&quot;action_class&quot;:&quot;mcp__environment__phone__login&quot;,&quot;argument_summary&quot;:{&quot;argument_hash&quot;:&quot;sha256:10d47b81bf076e523e0ec0fb248dc72fff0cb562de9f79bc7dcae10c70c9debc&quot;,&quot;argument_type&quot;:&quot;dict&quot;,&quot;argument_keys&quot;:[&quot;password&quot;,&quot;username&quot;]},&quot;target_resource&quot;:null,&quot;destination&quot;:null}</title>
+<rect x="380" y="2952" width="190" height="48" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="1.4"/>
+<text x="390" y="2971" class="node-type">Tool</text>
+<text x="390" y="2989" class="node-id">tool:2a21e94e068...f68eb:tool:0</text>
+</g>
+<g><title>{&quot;node_id&quot;:&quot;llm:2a21e94e0687_54c78d84:span:7371c38211dccc19:llm&quot;,&quot;timestamp&quot;:1776682146.133865,&quot;agent_id&quot;:&quot;claude_code&quot;,&quot;session_id&quot;:&quot;2a21e94e0687_54c78d84&quot;,&quot;causal_context_id&quot;:&quot;exgentic:2a21e94e0687_54c78d84&quot;,&quot;node_type&quot;:&quot;llm_invocation&quot;,&quot;model_name&quot;:&quot;azure/DeepSeek-V3.2&quot;,&quot;prompt_hash&quot;:&quot;sha256:29bb8e0f4fc132c32f00824346166d79e8c78065326566668c8c1f8377eb4bd9&quot;,&quot;prompt_ref&quot;:null,&quot;output_hash&quot;:&quot;sha256:c878c0fee8fdd5f04ac47a632aa62e1f522c2344bff47c8d5103d9f46c625632&quot;,&quot;output_ref&quot;:null,&quot;token_count&quot;:119079}</title>
+<rect x="80" y="3030" width="190" height="48" rx="6" fill="#dbeafe" stroke="#2563eb" stroke-width="1.4"/>
+<text x="90" y="3049" class="node-type">LLM</text>
+<text x="90" y="3067" class="node-id">llm:2a21e94e0687...11dccc19:llm</text>
+</g>
+<g><title>{&quot;node_id&quot;:&quot;tool:2a21e94e0687_54c78d84:span:de4198591cfd11e0:tool:0&quot;,&quot;timestamp&quot;:1776682152.515992,&quot;agent_id&quot;:&quot;claude_code&quot;,&quot;session_id&quot;:&quot;2a21e94e0687_54c78d84&quot;,&quot;causal_context_id&quot;:&quot;exgentic:2a21e94e0687_54c78d84&quot;,&quot;node_type&quot;:&quot;tool_call&quot;,&quot;tool_name&quot;:&quot;mcp__environment__phone__search_contacts&quot;,&quot;action_class&quot;:&quot;mcp__environment__phone__search_contacts&quot;,&quot;argument_summary&quot;:{&quot;argument_hash&quot;:&quot;sha256:1c079647efe814937033714e97e09375923133967535448e5b87a55770fd6a73&quot;,&quot;argument_type&quot;:&quot;dict&quot;,&quot;argument_keys&quot;:[&quot;access_token&quot;,&quot;query&quot;]},&quot;target_resource&quot;:null,&quot;destination&quot;:null}</title>
+<rect x="380" y="3108" width="190" height="48" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="1.4"/>
+<text x="390" y="3127" class="node-type">Tool</text>
+<text x="390" y="3145" class="node-id">tool:2a21e94e068...d11e0:tool:0</text>
+</g>
+<g><title>{&quot;node_id&quot;:&quot;llm:2a21e94e0687_54c78d84:span:276b2820f06050fb:llm&quot;,&quot;timestamp&quot;:1776682158.237364,&quot;agent_id&quot;:&quot;claude_code&quot;,&quot;session_id&quot;:&quot;2a21e94e0687_54c78d84&quot;,&quot;causal_context_id&quot;:&quot;exgentic:2a21e94e0687_54c78d84&quot;,&quot;node_type&quot;:&quot;llm_invocation&quot;,&quot;model_name&quot;:&quot;azure/DeepSeek-V3.2&quot;,&quot;prompt_hash&quot;:&quot;sha256:1e14ed03bb49a52ab62d3e2fe72fd3caaffa4e77b7818f47632984d36bf3ccc1&quot;,&quot;prompt_ref&quot;:null,&quot;output_hash&quot;:&quot;sha256:4fe0b6335f3950aaf8496db87f3f148338635018dd7b8841e6ea6b49701b0caa&quot;,&quot;output_ref&quot;:null,&quot;token_count&quot;:119285}</title>
+<rect x="80" y="3186" width="190" height="48" rx="6" fill="#dbeafe" stroke="#2563eb" stroke-width="1.4"/>
+<text x="90" y="3205" class="node-type">LLM</text>
+<text x="90" y="3223" class="node-id">llm:2a21e94e0687...f06050fb:llm</text>
+</g>
+<g><title>{&quot;node_id&quot;:&quot;tool:2a21e94e0687_54c78d84:span:4cc55d33ae1b8d36:tool:0&quot;,&quot;timestamp&quot;:1776682161.962602,&quot;agent_id&quot;:&quot;claude_code&quot;,&quot;session_id&quot;:&quot;2a21e94e0687_54c78d84&quot;,&quot;causal_context_id&quot;:&quot;exgentic:2a21e94e0687_54c78d84&quot;,&quot;node_type&quot;:&quot;tool_call&quot;,&quot;tool_name&quot;:&quot;mcp__environment__phone__search_contacts&quot;,&quot;action_class&quot;:&quot;mcp__environment__phone__search_contacts&quot;,&quot;argument_summary&quot;:{&quot;argument_hash&quot;:&quot;sha256:b3f26c7680053d9fecceed06c56d3011d934252391b8e2b222a6db4638aa0af1&quot;,&quot;argument_type&quot;:&quot;dict&quot;,&quot;argument_keys&quot;:[&quot;access_token&quot;,&quot;query&quot;]},&quot;target_resource&quot;:null,&quot;destination&quot;:null}</title>
+<rect x="380" y="3264" width="190" height="48" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="1.4"/>
+<text x="390" y="3283" class="node-type">Tool</text>
+<text x="390" y="3301" class="node-id">tool:2a21e94e068...b8d36:tool:0</text>
+</g>
+<g><title>{&quot;node_id&quot;:&quot;llm:2a21e94e0687_54c78d84:span:0e77523af85f16ae:llm&quot;,&quot;timestamp&quot;:1776682194.963457,&quot;agent_id&quot;:&quot;claude_code&quot;,&quot;session_id&quot;:&quot;2a21e94e0687_54c78d84&quot;,&quot;causal_context_id&quot;:&quot;exgentic:2a21e94e0687_54c78d84&quot;,&quot;node_type&quot;:&quot;llm_invocation&quot;,&quot;model_name&quot;:&quot;azure/DeepSeek-V3.2&quot;,&quot;prompt_hash&quot;:&quot;sha256:d48a0fe13d1738d0df75926c8018a853c90a2a7d14ffb1dfae6a7a4bbe9d7902&quot;,&quot;prompt_ref&quot;:null,&quot;output_hash&quot;:&quot;sha256:5d3ae6684ea6541c740646ae078a64ecaeb2d82065fabd91aafcbeed2fefe166&quot;,&quot;output_ref&quot;:null,&quot;token_count&quot;:119567}</title>
+<rect x="80" y="3342" width="190" height="48" rx="6" fill="#dbeafe" stroke="#2563eb" stroke-width="1.4"/>
+<text x="90" y="3361" class="node-type">LLM</text>
+<text x="90" y="3379" class="node-id">llm:2a21e94e0687...f85f16ae:llm</text>
+</g>
+<g><title>{&quot;node_id&quot;:&quot;tool:2a21e94e0687_54c78d84:span:7371c38211dccc19:tool:0&quot;,&quot;timestamp&quot;:1776682199.681981,&quot;agent_id&quot;:&quot;claude_code&quot;,&quot;session_id&quot;:&quot;2a21e94e0687_54c78d84&quot;,&quot;causal_context_id&quot;:&quot;exgentic:2a21e94e0687_54c78d84&quot;,&quot;node_type&quot;:&quot;tool_call&quot;,&quot;tool_name&quot;:&quot;mcp__environment__phone__search_contacts&quot;,&quot;action_class&quot;:&quot;mcp__environment__phone__search_contacts&quot;,&quot;argument_summary&quot;:{&quot;argument_hash&quot;:&quot;sha256:0cdccf91e5438d117f4979b45722fc005bd936da2d60803803509de499eb0199&quot;,&quot;argument_type&quot;:&quot;dict&quot;,&quot;argument_keys&quot;:[&quot;access_token&quot;,&quot;query&quot;]},&quot;target_resource&quot;:null,&quot;destination&quot;:null}</title>
+<rect x="380" y="3420" width="190" height="48" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="1.4"/>
+<text x="390" y="3439" class="node-type">Tool</text>
+<text x="390" y="3457" class="node-id">tool:2a21e94e068...ccc19:tool:0</text>
+</g>
+<g><title>{&quot;node_id&quot;:&quot;llm:2a21e94e0687_54c78d84:span:f1f94186aafc2ba1:llm&quot;,&quot;timestamp&quot;:1776682202.385808,&quot;agent_id&quot;:&quot;claude_code&quot;,&quot;session_id&quot;:&quot;2a21e94e0687_54c78d84&quot;,&quot;causal_context_id&quot;:&quot;exgentic:2a21e94e0687_54c78d84&quot;,&quot;node_type&quot;:&quot;llm_invocation&quot;,&quot;model_name&quot;:&quot;azure/DeepSeek-V3.2&quot;,&quot;prompt_hash&quot;:&quot;sha256:26cd526a3a485a1b9d70e971506a191c8bc3d8281c82f32bde2b4adaca731a92&quot;,&quot;prompt_ref&quot;:null,&quot;output_hash&quot;:&quot;sha256:20439d8e8eac486a3832ea5287461c98649db6ed08dffe01cd3b64318b737b85&quot;,&quot;output_ref&quot;:null,&quot;token_count&quot;:119875}</title>
+<rect x="80" y="3498" width="190" height="48" rx="6" fill="#dbeafe" stroke="#2563eb" stroke-width="1.4"/>
+<text x="90" y="3517" class="node-type">LLM</text>
+<text x="90" y="3535" class="node-id">llm:2a21e94e0687...aafc2ba1:llm</text>
+</g>
+<g><title>{&quot;node_id&quot;:&quot;llm:2a21e94e0687_54c78d84:span:3099f3232895f9c1:llm&quot;,&quot;timestamp&quot;:1776682219.297306,&quot;agent_id&quot;:&quot;claude_code&quot;,&quot;session_id&quot;:&quot;2a21e94e0687_54c78d84&quot;,&quot;causal_context_id&quot;:&quot;exgentic:2a21e94e0687_54c78d84&quot;,&quot;node_type&quot;:&quot;llm_invocation&quot;,&quot;model_name&quot;:&quot;azure/DeepSeek-V3.2&quot;,&quot;prompt_hash&quot;:&quot;sha256:0951dcb3d7fe646ec7d22e5d5f95a3d89754b44b7720fe790ec7a2c034ac87f8&quot;,&quot;prompt_ref&quot;:null,&quot;output_hash&quot;:&quot;sha256:5b855f0779b4ee78d2740429472e62b638b9713e9f9580c74b9199401976edd4&quot;,&quot;output_ref&quot;:null,&quot;token_count&quot;:120196}</title>
+<rect x="80" y="3576" width="190" height="48" rx="6" fill="#dbeafe" stroke="#2563eb" stroke-width="1.4"/>
+<text x="90" y="3595" class="node-type">LLM</text>
+<text x="90" y="3613" class="node-id">llm:2a21e94e0687...2895f9c1:llm</text>
+</g>
+<g><title>{&quot;node_id&quot;:&quot;tool:2a21e94e0687_54c78d84:span:f1f94186aafc2ba1:tool:0&quot;,&quot;timestamp&quot;:1776682223.654218,&quot;agent_id&quot;:&quot;claude_code&quot;,&quot;session_id&quot;:&quot;2a21e94e0687_54c78d84&quot;,&quot;causal_context_id&quot;:&quot;exgentic:2a21e94e0687_54c78d84&quot;,&quot;node_type&quot;:&quot;tool_call&quot;,&quot;tool_name&quot;:&quot;mcp__environment__splitwise__login&quot;,&quot;action_class&quot;:&quot;mcp__environment__splitwise__login&quot;,&quot;argument_summary&quot;:{&quot;argument_hash&quot;:&quot;sha256:7d97108753ecce2284020c0b0b87ec2491efbf2604ff02d9c7bbeb880a90b5a0&quot;,&quot;argument_type&quot;:&quot;dict&quot;,&quot;argument_keys&quot;:[&quot;password&quot;,&quot;username&quot;]},&quot;target_resource&quot;:null,&quot;destination&quot;:null}</title>
+<rect x="380" y="3654" width="190" height="48" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="1.4"/>
+<text x="390" y="3673" class="node-type">Tool</text>
+<text x="390" y="3691" class="node-id">tool:2a21e94e068...c2ba1:tool:0</text>
+</g>
+<g><title>{&quot;node_id&quot;:&quot;tool:2a21e94e0687_54c78d84:span:0e77523af85f16ae:tool:0&quot;,&quot;timestamp&quot;:1776682226.251813,&quot;agent_id&quot;:&quot;claude_code&quot;,&quot;session_id&quot;:&quot;2a21e94e0687_54c78d84&quot;,&quot;causal_context_id&quot;:&quot;exgentic:2a21e94e0687_54c78d84&quot;,&quot;node_type&quot;:&quot;tool_call&quot;,&quot;tool_name&quot;:&quot;TodoWrite&quot;,&quot;action_class&quot;:&quot;TodoWrite&quot;,&quot;argument_summary&quot;:{&quot;argument_hash&quot;:&quot;sha256:9c7a92b14614d1d5b3bb7c2edd0c5b7028fc2e85a8099475ef3a68005c21dd72&quot;,&quot;argument_type&quot;:&quot;dict&quot;,&quot;argument_keys&quot;:[&quot;todos&quot;]},&quot;target_resource&quot;:null,&quot;destination&quot;:null}</title>
+<rect x="380" y="3732" width="190" height="48" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="1.4"/>
+<text x="390" y="3751" class="node-type">Tool</text>
+<text x="390" y="3769" class="node-id">tool:2a21e94e068...f16ae:tool:0</text>
+</g>
+<g><title>{&quot;node_id&quot;:&quot;llm:2a21e94e0687_54c78d84:span:0b0aa10011c25272:llm&quot;,&quot;timestamp&quot;:1776682238.942564,&quot;agent_id&quot;:&quot;claude_code&quot;,&quot;session_id&quot;:&quot;2a21e94e0687_54c78d84&quot;,&quot;causal_context_id&quot;:&quot;exgentic:2a21e94e0687_54c78d84&quot;,&quot;node_type&quot;:&quot;llm_invocation&quot;,&quot;model_name&quot;:&quot;azure/DeepSeek-V3.2&quot;,&quot;prompt_hash&quot;:&quot;sha256:1db4f11c1ef1f04161207a093887e68d08bf9787b23906e49d63534c563e9d40&quot;,&quot;prompt_ref&quot;:null,&quot;output_hash&quot;:&quot;sha256:f44fee0cefbb09aff752fbed84ce4b93b6eab3a249b4e10fc2f8af783ec36dd9&quot;,&quot;output_ref&quot;:null,&quot;token_count&quot;:120521}</title>
+<rect x="80" y="3810" width="190" height="48" rx="6" fill="#dbeafe" stroke="#2563eb" stroke-width="1.4"/>
+<text x="90" y="3829" class="node-type">LLM</text>
+<text x="90" y="3847" class="node-id">llm:2a21e94e0687...11c25272:llm</text>
+</g>
+<g><title>{&quot;node_id&quot;:&quot;llm:2a21e94e0687_54c78d84:span:87d84995b3ca4ea1:llm&quot;,&quot;timestamp&quot;:1776682247.036447,&quot;agent_id&quot;:&quot;claude_code&quot;,&quot;session_id&quot;:&quot;2a21e94e0687_54c78d84&quot;,&quot;causal_context_id&quot;:&quot;exgentic:2a21e94e0687_54c78d84&quot;,&quot;node_type&quot;:&quot;llm_invocation&quot;,&quot;model_name&quot;:&quot;azure/DeepSeek-V3.2&quot;,&quot;prompt_hash&quot;:&quot;sha256:867a7f48f9c2fcda7e29aca09748e1de3c56164fc900cd35efd100264a498433&quot;,&quot;prompt_ref&quot;:null,&quot;output_hash&quot;:&quot;sha256:5204ef961d8ebc7220442e8890757c086258e381eaa2cd930c6343611a23a041&quot;,&quot;output_ref&quot;:null,&quot;token_count&quot;:120885}</title>
+<rect x="80" y="3888" width="190" height="48" rx="6" fill="#dbeafe" stroke="#2563eb" stroke-width="1.4"/>
+<text x="90" y="3907" class="node-type">LLM</text>
+<text x="90" y="3925" class="node-id">llm:2a21e94e0687...b3ca4ea1:llm</text>
+</g>
+<g><title>{&quot;node_id&quot;:&quot;llm:2a21e94e0687_54c78d84:span:2fb3778987d0dea9:llm&quot;,&quot;timestamp&quot;:1776682253.550258,&quot;agent_id&quot;:&quot;claude_code&quot;,&quot;session_id&quot;:&quot;2a21e94e0687_54c78d84&quot;,&quot;causal_context_id&quot;:&quot;exgentic:2a21e94e0687_54c78d84&quot;,&quot;node_type&quot;:&quot;llm_invocation&quot;,&quot;model_name&quot;:&quot;azure/DeepSeek-V3.2&quot;,&quot;prompt_hash&quot;:&quot;sha256:2589ddb280916edee90bc94b053d45b028f64fddfb64d6ca203443b35cf3acb7&quot;,&quot;prompt_ref&quot;:null,&quot;output_hash&quot;:&quot;sha256:5c1756d8f8c80bab228f1a4044e53ef40d281f39e8de4b14ccc8ea6027669a66&quot;,&quot;output_ref&quot;:null,&quot;token_count&quot;:121040}</title>
+<rect x="80" y="3966" width="190" height="48" rx="6" fill="#dbeafe" stroke="#2563eb" stroke-width="1.4"/>
+<text x="90" y="3985" class="node-type">LLM</text>
+<text x="90" y="4003" class="node-id">llm:2a21e94e0687...87d0dea9:llm</text>
+</g>
+<g><title>{&quot;node_id&quot;:&quot;tool:2a21e94e0687_54c78d84:span:3099f3232895f9c1:tool:0&quot;,&quot;timestamp&quot;:1776682254.157817,&quot;agent_id&quot;:&quot;claude_code&quot;,&quot;session_id&quot;:&quot;2a21e94e0687_54c78d84&quot;,&quot;causal_context_id&quot;:&quot;exgentic:2a21e94e0687_54c78d84&quot;,&quot;node_type&quot;:&quot;tool_call&quot;,&quot;tool_name&quot;:&quot;mcp__environment__splitwise__show_no_group_expenses&quot;,&quot;action_class&quot;:&quot;mcp__environment__splitwise__show_no_group_expenses&quot;,&quot;argument_summary&quot;:{&quot;argument_hash&quot;:&quot;sha256:04ad2c3c7363f4da054dedc4d8e633b1a89f161f76bc7bd55ded4354b3efe642&quot;,&quot;argument_type&quot;:&quot;dict&quot;,&quot;argument_keys&quot;:[&quot;access_token&quot;,&quot;query&quot;]},&quot;target_resource&quot;:null,&quot;destination&quot;:null}</title>
+<rect x="380" y="4044" width="190" height="48" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="1.4"/>
+<text x="390" y="4063" class="node-type">Tool</text>
+<text x="390" y="4081" class="node-id">tool:2a21e94e068...5f9c1:tool:0</text>
+</g>
+<g><title>{&quot;node_id&quot;:&quot;tool:2a21e94e0687_54c78d84:span:276b2820f06050fb:tool:0&quot;,&quot;timestamp&quot;:1776682254.300082,&quot;agent_id&quot;:&quot;claude_code&quot;,&quot;session_id&quot;:&quot;2a21e94e0687_54c78d84&quot;,&quot;causal_context_id&quot;:&quot;exgentic:2a21e94e0687_54c78d84&quot;,&quot;node_type&quot;:&quot;tool_call&quot;,&quot;tool_name&quot;:&quot;mcp__environment__phone__search_contacts&quot;,&quot;action_class&quot;:&quot;mcp__environment__phone__search_contacts&quot;,&quot;argument_summary&quot;:{&quot;argument_hash&quot;:&quot;sha256:eafd4841a05fda66bfa40efa5a62d578c0cd40f2b36a0bad943a2123ce219f74&quot;,&quot;argument_type&quot;:&quot;dict&quot;,&quot;argument_keys&quot;:[&quot;access_token&quot;,&quot;page_limit&quot;,&quot;query&quot;]},&quot;target_resource&quot;:null,&quot;destination&quot;:null}</title>
+<rect x="380" y="4122" width="190" height="48" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="1.4"/>
+<text x="390" y="4141" class="node-type">Tool</text>
+<text x="390" y="4159" class="node-id">tool:2a21e94e068...050fb:tool:0</text>
+</g>
+<g><title>{&quot;node_id&quot;:&quot;llm:2a21e94e0687_54c78d84:span:3ac44c55b59e2e72:llm&quot;,&quot;timestamp&quot;:1776682260.90277,&quot;agent_id&quot;:&quot;claude_code&quot;,&quot;session_id&quot;:&quot;2a21e94e0687_54c78d84&quot;,&quot;causal_context_id&quot;:&quot;exgentic:2a21e94e0687_54c78d84&quot;,&quot;node_type&quot;:&quot;llm_invocation&quot;,&quot;model_name&quot;:&quot;azure/DeepSeek-V3.2&quot;,&quot;prompt_hash&quot;:&quot;sha256:f5bf672ebfd00636e5e35b10f7922ad661f2b72ac7fbb06c6718a02028672bdb&quot;,&quot;prompt_ref&quot;:null,&quot;output_hash&quot;:&quot;sha256:43c196c3c27cbec36530e428613fb7083e4310c7afba5a63ae76b7fe574a6f6c&quot;,&quot;output_ref&quot;:null,&quot;token_count&quot;:121258}</title>
+<rect x="80" y="4200" width="190" height="48" rx="6" fill="#dbeafe" stroke="#2563eb" stroke-width="1.4"/>
+<text x="90" y="4219" class="node-type">LLM</text>
+<text x="90" y="4237" class="node-id">llm:2a21e94e0687...b59e2e72:llm</text>
+</g>
+<g><title>{&quot;node_id&quot;:&quot;llm:2a21e94e0687_54c78d84:span:422a77d488a2cfd8:llm&quot;,&quot;timestamp&quot;:1776682266.035656,&quot;agent_id&quot;:&quot;claude_code&quot;,&quot;session_id&quot;:&quot;2a21e94e0687_54c78d84&quot;,&quot;causal_context_id&quot;:&quot;exgentic:2a21e94e0687_54c78d84&quot;,&quot;node_type&quot;:&quot;llm_invocation&quot;,&quot;model_name&quot;:&quot;azure/DeepSeek-V3.2&quot;,&quot;prompt_hash&quot;:&quot;sha256:d0371cef547b3c68095831af3b3b06868c07dc61a04b427fd316810971984a7a&quot;,&quot;prompt_ref&quot;:null,&quot;output_hash&quot;:&quot;sha256:5bc77cefdb980a19f157404e3667e350ba38797672a4f0a4610529d3e5cb9f7a&quot;,&quot;output_ref&quot;:null,&quot;token_count&quot;:121367}</title>
+<rect x="80" y="4278" width="190" height="48" rx="6" fill="#dbeafe" stroke="#2563eb" stroke-width="1.4"/>
+<text x="90" y="4297" class="node-type">LLM</text>
+<text x="90" y="4315" class="node-id">llm:2a21e94e0687...88a2cfd8:llm</text>
+</g>
+<g><title>{&quot;node_id&quot;:&quot;tool:2a21e94e0687_54c78d84:span:0b0aa10011c25272:tool:0&quot;,&quot;timestamp&quot;:1776682266.62325,&quot;agent_id&quot;:&quot;claude_code&quot;,&quot;session_id&quot;:&quot;2a21e94e0687_54c78d84&quot;,&quot;causal_context_id&quot;:&quot;exgentic:2a21e94e0687_54c78d84&quot;,&quot;node_type&quot;:&quot;tool_call&quot;,&quot;tool_name&quot;:&quot;TodoWrite&quot;,&quot;action_class&quot;:&quot;TodoWrite&quot;,&quot;argument_summary&quot;:{&quot;argument_hash&quot;:&quot;sha256:c7dcbcd6ea17d1c7efda5353aedc837814e97f11eff8d0b6724c6eaafcfc60df&quot;,&quot;argument_type&quot;:&quot;dict&quot;,&quot;argument_keys&quot;:[&quot;todos&quot;]},&quot;target_resource&quot;:null,&quot;destination&quot;:null}</title>
+<rect x="380" y="4356" width="190" height="48" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="1.4"/>
+<text x="390" y="4375" class="node-type">Tool</text>
+<text x="390" y="4393" class="node-id">tool:2a21e94e068...25272:tool:0</text>
+</g>
+<g><title>{&quot;node_id&quot;:&quot;tool:2a21e94e0687_54c78d84:span:3ac44c55b59e2e72:tool:0&quot;,&quot;timestamp&quot;:1776682279.037137,&quot;agent_id&quot;:&quot;claude_code&quot;,&quot;session_id&quot;:&quot;2a21e94e0687_54c78d84&quot;,&quot;causal_context_id&quot;:&quot;exgentic:2a21e94e0687_54c78d84&quot;,&quot;node_type&quot;:&quot;tool_call&quot;,&quot;tool_name&quot;:&quot;TodoWrite&quot;,&quot;action_class&quot;:&quot;TodoWrite&quot;,&quot;argument_summary&quot;:{&quot;argument_hash&quot;:&quot;sha256:2556b7b2dce096439aad7fd2223ae7d0bd6c2bc0b3c60e676ebc13477bd58a07&quot;,&quot;argument_type&quot;:&quot;dict&quot;,&quot;argument_keys&quot;:[&quot;todos&quot;]},&quot;target_resource&quot;:null,&quot;destination&quot;:null}</title>
+<rect x="380" y="4434" width="190" height="48" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="1.4"/>
+<text x="390" y="4453" class="node-type">Tool</text>
+<text x="390" y="4471" class="node-id">tool:2a21e94e068...e2e72:tool:0</text>
+</g>
+<g><title>{&quot;node_id&quot;:&quot;tool:2a21e94e0687_54c78d84:span:2fb3778987d0dea9:tool:0&quot;,&quot;timestamp&quot;:1776682287.889982,&quot;agent_id&quot;:&quot;claude_code&quot;,&quot;session_id&quot;:&quot;2a21e94e0687_54c78d84&quot;,&quot;causal_context_id&quot;:&quot;exgentic:2a21e94e0687_54c78d84&quot;,&quot;node_type&quot;:&quot;tool_call&quot;,&quot;tool_name&quot;:&quot;mcp__environment__finish&quot;,&quot;action_class&quot;:&quot;mcp__environment__finish&quot;,&quot;argument_summary&quot;:{&quot;argument_hash&quot;:&quot;sha256:9303396332e94f490f2fca50e3035124cd92f7c76042f30b4910cda59e5e9dbb&quot;,&quot;argument_type&quot;:&quot;dict&quot;,&quot;argument_keys&quot;:[&quot;answer&quot;,&quot;status&quot;]},&quot;target_resource&quot;:null,&quot;destination&quot;:null}</title>
+<rect x="380" y="4512" width="190" height="48" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="1.4"/>
+<text x="390" y="4531" class="node-type">Tool</text>
+<text x="390" y="4549" class="node-id">tool:2a21e94e068...0dea9:tool:0</text>
+</g>
+<g><title>{&quot;node_id&quot;:&quot;tool:2a21e94e0687_54c78d84:span:87d84995b3ca4ea1:tool:0&quot;,&quot;timestamp&quot;:1776682340.361708,&quot;agent_id&quot;:&quot;claude_code&quot;,&quot;session_id&quot;:&quot;2a21e94e0687_54c78d84&quot;,&quot;causal_context_id&quot;:&quot;exgentic:2a21e94e0687_54c78d84&quot;,&quot;node_type&quot;:&quot;tool_call&quot;,&quot;tool_name&quot;:&quot;TodoWrite&quot;,&quot;action_class&quot;:&quot;TodoWrite&quot;,&quot;argument_summary&quot;:{&quot;argument_hash&quot;:&quot;sha256:2a715b6e0b275401d01bae4142881bcc8be2cf0d5fc54c7708b4cde1d390e319&quot;,&quot;argument_type&quot;:&quot;dict&quot;,&quot;argument_keys&quot;:[&quot;todos&quot;]},&quot;target_resource&quot;:null,&quot;destination&quot;:null}</title>
+<rect x="380" y="4590" width="190" height="48" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="1.4"/>
+<text x="390" y="4609" class="node-type">Tool</text>
+<text x="390" y="4627" class="node-id">tool:2a21e94e068...a4ea1:tool:0</text>
+</g>
+</svg>

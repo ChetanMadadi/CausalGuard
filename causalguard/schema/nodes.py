@@ -1,11 +1,19 @@
-"""Typed node schemas for the provenance DAG."""
+"""Typed node schemas for the provenance multigraph."""
 
 from __future__ import annotations
 
 from enum import Enum
-from typing import Annotated, Literal, Union
+from typing import Annotated, Any, Literal, Union
 
-from pydantic import BaseModel, ConfigDict, Field, TypeAdapter, field_validator, model_validator
+from pydantic import (
+    AliasChoices,
+    BaseModel,
+    ConfigDict,
+    Field,
+    TypeAdapter,
+    field_validator,
+    model_validator,
+)
 
 from causalguard.schema.common import (
     ensure_dict,
@@ -77,10 +85,12 @@ class LLMInvocationNode(_TimedAgentNode):
     node_type: Literal[NodeType.LLM_INVOCATION] = NodeType.LLM_INVOCATION
     model_name: str | None
     prompt_hash: str | None
+    prompt_ref: str | None = None
     output_hash: str | None
-    token_count: int | None
+    output_ref: str | None = None
+    token_count: int | None = None
 
-    @field_validator("model_name", "prompt_hash", "output_hash")
+    @field_validator("model_name", "prompt_hash", "prompt_ref", "output_hash", "output_ref")
     @classmethod
     def validate_optional_strings(cls, value: str | None) -> str | None:
         return optional_non_empty_string(value)
@@ -120,18 +130,28 @@ class ToolCallNode(_TimedAgentNode):
 class SystemOperationNode(_TimedAgentNode):
     node_type: Literal[NodeType.SYSTEM_OPERATION] = NodeType.SYSTEM_OPERATION
     operation_type: str
-    syscall_kind: str | None
-    resource_id: str | None
-    destination: str | None
-    byte_count: int | None
-    confidence: Confidence
+    action_class: str | None = None
+    syscall_kind: str | None = None
+    resource_id: str | None = None
+    resource_refs: list[str] = Field(default_factory=list)
+    payload_refs: list[str] = Field(default_factory=list)
+    destination: str | None = None
+    destination_trust: str | None = None
+    byte_count: int | None = None
+    confidence: Confidence | None = None
 
     @field_validator("operation_type")
     @classmethod
     def validate_operation_type(cls, value: str) -> str:
         return non_empty_string(value)
 
-    @field_validator("syscall_kind", "resource_id", "destination")
+    @field_validator(
+        "action_class",
+        "syscall_kind",
+        "resource_id",
+        "destination",
+        "destination_trust",
+    )
     @classmethod
     def validate_optional_strings(cls, value: str | None) -> str | None:
         return optional_non_empty_string(value)
@@ -141,12 +161,20 @@ class SystemOperationNode(_TimedAgentNode):
     def validate_byte_count(cls, value: int | None) -> int | None:
         return non_negative_integer(value)
 
+    @field_validator("resource_refs", "payload_refs")
+    @classmethod
+    def validate_provenance_refs(cls, value: Any) -> list[str]:
+        if not isinstance(value, list):
+            raise ValueError("provenance references must be a list")
+        return [non_empty_string(item) for item in value]
+
 
 class DataObjectNode(_BaseNode):
     node_type: Literal[NodeType.DATA_OBJECT] = NodeType.DATA_OBJECT
     resource_id: str
     object_kind: str
     content_hash: str | None
+    version: str | None = None
     sensitivity: Sensitivity
     trust_label: TrustLabel | None
     owner: str | None
@@ -156,7 +184,7 @@ class DataObjectNode(_BaseNode):
     def validate_required_strings(cls, value: str) -> str:
         return non_empty_string(value)
 
-    @field_validator("content_hash", "owner")
+    @field_validator("content_hash", "version", "owner")
     @classmethod
     def validate_optional_strings(cls, value: str | None) -> str | None:
         return optional_non_empty_string(value)
@@ -165,7 +193,7 @@ class DataObjectNode(_BaseNode):
 class HumanApprovalNode(_BaseNode):
     node_type: Literal[NodeType.HUMAN_APPROVAL] = NodeType.HUMAN_APPROVAL
     approver_id: str
-    action_class: str
+    action_class: str = Field(validation_alias=AliasChoices("action_class", "action_scope"))
     resource_scope: str | None
     destination_scope: str | None
     timestamp: float
@@ -195,6 +223,11 @@ class HumanApprovalNode(_BaseNode):
         if self.expiration is not None and self.expiration < self.timestamp:
             raise ValueError("expiration must be greater than or equal to timestamp")
         return self
+
+    @property
+    def action_scope(self) -> str:
+        """Final-schema name for the backward-compatible ``action_class`` field."""
+        return self.action_class
 
 
 ProvenanceNode = Annotated[

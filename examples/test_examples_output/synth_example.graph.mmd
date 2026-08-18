@@ -1,0 +1,10 @@
+flowchart LR
+  n0["data_object: data:resource:contacts.csv"]
+  n1["llm_invocation: llm:e2"]
+  n2["system_operation: sys:e4"]
+  n3["system_operation: sys:e5"]
+  n4["tool_call: tool:e3"]
+  n0 -->|"read: edge:data:read:e4:data:resource:contacts.csv"| n2
+  n1 -->|"invokes: edge:parent:invokes:e2:e3"| n4
+  n4 -->|"triggers: edge:parent:triggers:e3:e4"| n2
+  n4 -->|"triggers: edge:parent:triggers:e3:e5"| n3

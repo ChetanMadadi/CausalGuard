@@ -212,6 +212,32 @@ def test_system_operation_node_validation() -> None:
     assert node.confidence == Confidence.HIGH
 
 
+def test_finalized_system_operation_provenance_fields() -> None:
+    node = SystemOperationNode.model_validate(
+        {
+            "node_id": "sys:send1",
+            "node_type": "system_operation",
+            "operation_type": "network_send",
+            "action_class": "send_email",
+            "resource_refs": ["contacts.csv"],
+            "payload_refs": ["email_body_42"],
+            "destination": "external.example",
+            "destination_trust": "untrusted",
+            "byte_count": 512,
+            "timestamp": 4.0,
+            "agent_id": "agent1",
+            "session_id": "s1",
+            "causal_context_id": "ctx17",
+        }
+    )
+
+    assert node.resource_refs == ["contacts.csv"]
+    assert node.payload_refs == ["email_body_42"]
+    assert node.destination_trust == "untrusted"
+    assert node.syscall_kind is None
+    assert node.confidence is None
+
+
 def test_data_object_node_validation() -> None:
     node = DataObjectNode.model_validate(
         {
@@ -220,6 +246,7 @@ def test_data_object_node_validation() -> None:
             "resource_id": "contacts.csv",
             "object_kind": "file",
             "content_hash": "sha256:contacts",
+            "version": "v2",
             "sensitivity": "PII",
             "trust_label": "trusted",
             "owner": "user",
@@ -229,6 +256,7 @@ def test_data_object_node_validation() -> None:
     assert node.node_type == NodeType.DATA_OBJECT
     assert node.sensitivity == Sensitivity.PII
     assert node.trust_label == TrustLabel.TRUSTED
+    assert node.version == "v2"
 
 
 def test_human_approval_node_validation_and_expiration_order() -> None:
@@ -255,6 +283,26 @@ def test_human_approval_node_validation_and_expiration_order() -> None:
 
     with pytest.raises(ValidationError, match="expiration"):
         HumanApprovalNode.model_validate(payload)
+
+
+def test_human_approval_accepts_final_action_scope_name() -> None:
+    node = HumanApprovalNode.model_validate(
+        {
+            "node_id": "approval:e7",
+            "node_type": "human_approval",
+            "approver_id": "user1",
+            "action_scope": "send_email",
+            "resource_scope": "email_body_42",
+            "destination_scope": "external.example",
+            "timestamp": 6.0,
+            "expiration": None,
+            "session_id": "s1",
+            "causal_context_id": "ctx17",
+        }
+    )
+
+    assert node.action_class == "send_email"
+    assert node.action_scope == "send_email"
 
 
 def test_invalid_node_type_fails_validation() -> None:
@@ -335,12 +383,36 @@ def test_valid_edge_passes_validation() -> None:
             "derivation": "parent_event",
             "confidence": "high",
             "evidence_ref": "e3",
+            "attributes": {"collector_event_kind": "tool_call"},
         }
     )
 
     assert edge.edge_type == EdgeType.INVOKES
     assert edge.derivation == Derivation.PARENT_EVENT
     assert edge.confidence == Confidence.HIGH
+    assert edge.attributes == {"collector_event_kind": "tool_call"}
+
+
+@pytest.mark.parametrize(
+    "edge_type",
+    ["read", "write", "produces", "input_to", "payload_of", "authorizes"],
+)
+def test_finalized_edge_types_are_valid(edge_type: str) -> None:
+    edge = ProvenanceEdge.model_validate(
+        {
+            "edge_id": f"edge:{edge_type}",
+            "source_id": "source",
+            "target_id": "target",
+            "edge_type": edge_type,
+            "timestamp": 3.0,
+            "derivation": "explicit_data_reference",
+            "confidence": "high",
+            "evidence_ref": "e3",
+            "attributes": {},
+        }
+    )
+
+    assert edge.edge_type.value == edge_type
 
 
 def test_invalid_edge_type_fails_validation() -> None:

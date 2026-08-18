@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1240" height="510" viewBox="0 0 1240 510">
+<defs>
+<marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+<path d="M0,0 L0,6 L9,3 z" fill="#334155" />
+</marker>
+<style>
+text { font-family: Arial, Helvetica, sans-serif; fill: #0f172a; }
+.title { font-size: 22px; font-weight: 700; }
+.subtitle { font-size: 13px; fill: #475569; }
+.node-type { font-size: 13px; font-weight: 700; }
+.node-id { font-size: 11px; fill: #334155; }
+.edge-label { font-size: 10px; fill: #334155; }
+</style>
+</defs>
+<rect width="100%" height="100%" fill="#f8fafc"/>
+<text x="40" y="34" class="title">synth_example</text>
+<text x="40" y="56" class="subtitle">nodes=5, edges=4, acyclic=True</text>
+<text x="80" y="78" class="subtitle">LLM</text>
+<text x="380" y="78" class="subtitle">Tool</text>
+<text x="700" y="78" class="subtitle">System operation</text>
+<text x="1010" y="78" class="subtitle">Data object</text>
+<path d="M 270 168 C 325.0 168, 325.0 246, 380 246" stroke="#2563eb" stroke-width="1.6" fill="none" marker-end="url(#arrow)" opacity="0.72"><title>edge:parent:invokes:e2:e3: llm:e2 -> tool:e3</title></path>
+<text x="329.0" y="203.0" class="edge-label">invokes/parent_event/high</text>
+<path d="M 570 246 C 635.0 246, 635.0 324, 700 324" stroke="#d97706" stroke-width="1.6" fill="none" marker-end="url(#arrow)" opacity="0.72"><title>edge:parent:triggers:e3:e4: tool:e3 -> sys:e4</title></path>
+<text x="639.0" y="281.0" class="edge-label">triggers/parent_event/high</text>
+<path d="M 570 246 C 635.0 246, 635.0 402, 700 402" stroke="#d97706" stroke-width="1.6" fill="none" marker-end="url(#arrow)" opacity="0.72"><title>edge:parent:triggers:e3:e5: tool:e3 -> sys:e5</title></path>
+<text x="639.0" y="320.0" class="edge-label">triggers/parent_event/high</text>
+<path d="M 1010 90 C 950.0 90, 950.0 324, 890 324" stroke="#dc2626" stroke-width="1.6" fill="none" marker-end="url(#arrow)" opacity="0.72"><title>edge:data:read:e4:data:resource:contacts.csv: data:resource:contacts.csv -> sys:e4</title></path>
+<text x="954.0" y="203.0" class="edge-label">read/explicit_data_reference/high</text>
+<g><title>{&quot;node_id&quot;:&quot;data:resource:contacts.csv&quot;,&quot;node_type&quot;:&quot;data_object&quot;,&quot;resource_id&quot;:&quot;contacts.csv&quot;,&quot;object_kind&quot;:&quot;file&quot;,&quot;content_hash&quot;:null,&quot;version&quot;:null,&quot;sensitivity&quot;:&quot;PII&quot;,&quot;trust_label&quot;:&quot;unknown&quot;,&quot;owner&quot;:null}</title>
+<rect x="1010" y="66" width="190" height="48" rx="6" fill="#fee2e2" stroke="#dc2626" stroke-width="1.4"/>
+<text x="1020" y="85" class="node-type">Data</text>
+<text x="1020" y="103" class="node-id">data:resource:contacts.csv</text>
+</g>
+<g><title>{&quot;node_id&quot;:&quot;llm:e2&quot;,&quot;timestamp&quot;:2.0,&quot;agent_id&quot;:&quot;agent1&quot;,&quot;session_id&quot;:&quot;s1&quot;,&quot;causal_context_id&quot;:&quot;ctx17&quot;,&quot;node_type&quot;:&quot;llm_invocation&quot;,&quot;model_name&quot;:&quot;gpt-4o&quot;,&quot;prompt_hash&quot;:&quot;sha256:p&quot;,&quot;prompt_ref&quot;:null,&quot;output_hash&quot;:&quot;sha256:o&quot;,&quot;output_ref&quot;:null,&quot;token_count&quot;:120}</title>
+<rect x="80" y="144" width="190" height="48" rx="6" fill="#dbeafe" stroke="#2563eb" stroke-width="1.4"/>
+<text x="90" y="163" class="node-type">LLM</text>
+<text x="90" y="181" class="node-id">llm:e2</text>
+</g>
+<g><title>{&quot;node_id&quot;:&quot;tool:e3&quot;,&quot;timestamp&quot;:3.0,&quot;agent_id&quot;:&quot;agent1&quot;,&quot;session_id&quot;:&quot;s1&quot;,&quot;causal_context_id&quot;:&quot;ctx17&quot;,&quot;node_type&quot;:&quot;tool_call&quot;,&quot;tool_name&quot;:&quot;share_contacts&quot;,&quot;action_class&quot;:&quot;upload&quot;,&quot;argument_summary&quot;:{},&quot;target_resource&quot;:&quot;contacts.csv&quot;,&quot;destination&quot;:&quot;external.example&quot;}</title>
+<rect x="380" y="222" width="190" height="48" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="1.4"/>
+<text x="390" y="241" class="node-type">Tool</text>
+<text x="390" y="259" class="node-id">tool:e3</text>
+</g>
+<g><title>{&quot;node_id&quot;:&quot;sys:e4&quot;,&quot;timestamp&quot;:4.0,&quot;agent_id&quot;:&quot;agent1&quot;,&quot;session_id&quot;:&quot;s1&quot;,&quot;causal_context_id&quot;:&quot;ctx17&quot;,&quot;node_type&quot;:&quot;system_operation&quot;,&quot;operation_type&quot;:&quot;file_read&quot;,&quot;action_class&quot;:null,&quot;syscall_kind&quot;:null,&quot;resource_id&quot;:&quot;contacts.csv&quot;,&quot;resource_refs&quot;:[&quot;contacts.csv&quot;],&quot;payload_refs&quot;:[],&quot;destination&quot;:null,&quot;destination_trust&quot;:null,&quot;byte_count&quot;:null,&quot;confidence&quot;:&quot;high&quot;}</title>
+<rect x="700" y="300" width="190" height="48" rx="6" fill="#fef3c7" stroke="#d97706" stroke-width="1.4"/>
+<text x="710" y="319" class="node-type">SysOp</text>
+<text x="710" y="337" class="node-id">sys:e4</text>
+</g>
+<g><title>{&quot;node_id&quot;:&quot;sys:e5&quot;,&quot;timestamp&quot;:5.0,&quot;agent_id&quot;:&quot;agent1&quot;,&quot;session_id&quot;:&quot;s1&quot;,&quot;causal_context_id&quot;:&quot;ctx17&quot;,&quot;node_type&quot;:&quot;system_operation&quot;,&quot;operation_type&quot;:&quot;network_send&quot;,&quot;action_class&quot;:null,&quot;syscall_kind&quot;:null,&quot;resource_id&quot;:null,&quot;resource_refs&quot;:[],&quot;payload_refs&quot;:[],&quot;destination&quot;:&quot;external.example&quot;,&quot;destination_trust&quot;:&quot;untrusted&quot;,&quot;byte_count&quot;:2048,&quot;confidence&quot;:&quot;high&quot;}</title>
+<rect x="700" y="378" width="190" height="48" rx="6" fill="#fef3c7" stroke="#d97706" stroke-width="1.4"/>
+<text x="710" y="397" class="node-type">SysOp</text>
+<text x="710" y="415" class="node-id">sys:e5</text>
+</g>
+</svg>

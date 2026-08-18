@@ -1,0 +1,126 @@
+{
+  "edges": [
+    {
+      "attributes": {},
+      "confidence": "high",
+      "derivation": "explicit_data_reference",
+      "edge_id": "edge:data:read:e4:data:resource:contacts.csv",
+      "edge_type": "read",
+      "evidence_ref": "e4",
+      "source_id": "data:resource:contacts.csv",
+      "target_id": "sys:e4",
+      "timestamp": 4.0
+    },
+    {
+      "attributes": {},
+      "confidence": "high",
+      "derivation": "parent_event",
+      "edge_id": "edge:parent:invokes:e2:e3",
+      "edge_type": "invokes",
+      "evidence_ref": "e3",
+      "source_id": "llm:e2",
+      "target_id": "tool:e3",
+      "timestamp": 3.0
+    },
+    {
+      "attributes": {},
+      "confidence": "high",
+      "derivation": "parent_event",
+      "edge_id": "edge:parent:triggers:e3:e4",
+      "edge_type": "triggers",
+      "evidence_ref": "e4",
+      "source_id": "tool:e3",
+      "target_id": "sys:e4",
+      "timestamp": 4.0
+    },
+    {
+      "attributes": {},
+      "confidence": "high",
+      "derivation": "parent_event",
+      "edge_id": "edge:parent:triggers:e3:e5",
+      "edge_type": "triggers",
+      "evidence_ref": "e5",
+      "source_id": "tool:e3",
+      "target_id": "sys:e5",
+      "timestamp": 5.0
+    }
+  ],
+  "nodes": [
+    {
+      "content_hash": null,
+      "node_id": "data:resource:contacts.csv",
+      "node_type": "data_object",
+      "object_kind": "file",
+      "owner": null,
+      "resource_id": "contacts.csv",
+      "sensitivity": "PII",
+      "trust_label": "unknown",
+      "version": null
+    },
+    {
+      "agent_id": "agent1",
+      "causal_context_id": "ctx17",
+      "model_name": "gpt-4o",
+      "node_id": "llm:e2",
+      "node_type": "llm_invocation",
+      "output_hash": "sha256:o",
+      "output_ref": null,
+      "prompt_hash": "sha256:p",
+      "prompt_ref": null,
+      "session_id": "s1",
+      "timestamp": 2.0,
+      "token_count": 120
+    },
+    {
+      "action_class": null,
+      "agent_id": "agent1",
+      "byte_count": null,
+      "causal_context_id": "ctx17",
+      "confidence": "high",
+      "destination": null,
+      "destination_trust": null,
+      "node_id": "sys:e4",
+      "node_type": "system_operation",
+      "operation_type": "file_read",
+      "payload_refs": [],
+      "resource_id": "contacts.csv",
+      "resource_refs": [
+        "contacts.csv"
+      ],
+      "session_id": "s1",
+      "syscall_kind": null,
+      "timestamp": 4.0
+    },
+    {
+      "action_class": null,
+      "agent_id": "agent1",
+      "byte_count": 2048,
+      "causal_context_id": "ctx17",
+      "confidence": "high",
+      "destination": "external.example",
+      "destination_trust": "untrusted",
+      "node_id": "sys:e5",
+      "node_type": "system_operation",
+      "operation_type": "network_send",
+      "payload_refs": [],
+      "resource_id": null,
+      "resource_refs": [],
+      "session_id": "s1",
+      "syscall_kind": null,
+      "timestamp": 5.0
+    },
+    {
+      "action_class": "upload",
+      "agent_id": "agent1",
+      "argument_summary": {},
+      "causal_context_id": "ctx17",
+      "destination": "external.example",
+      "node_id": "tool:e3",
+      "node_type": "tool_call",
+      "session_id": "s1",
+      "target_resource": "contacts.csv",
+      "timestamp": 3.0,
+      "tool_name": "share_contacts"
+    }
+  ]
+}
