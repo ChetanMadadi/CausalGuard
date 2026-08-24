@@ -1,0 +1,144 @@
+"""Transparent observation of AgentDojo's actual FunctionsRuntime boundary."""
+
+from __future__ import annotations
+
+from collections.abc import Mapping, Sequence
+from dataclasses import dataclass
+from typing import Any
+
+from agentdojo.functions_runtime import (
+    Function,
+    FunctionReturnType,
+    FunctionsRuntime,
+    TaskEnvironment,
+)
+
+from causalguard.integrations.agentdojo.common import stable_hash
+from causalguard.integrations.agentdojo.extractors.base import (
+    AgentDojoDomainExtractor,
+    DomainOperationEvidence,
+    ToolExecutionContext,
+)
+
+
+@dataclass(frozen=True)
+class RuntimeCallObservation:
+    """Privacy-safe evidence captured for one top-level runtime invocation."""
+
+    ordinal: int
+    function_name: str
+    argument_hash: str
+    succeeded: bool
+    error_hash: str | None
+    operations: tuple[DomainOperationEvidence, ...]
+
+
+class AgentDojoRuntimeObserver:
+    """Collect domain evidence without retaining raw arguments or state snapshots."""
+
+    def __init__(
+        self,
+        extractors: Sequence[AgentDojoDomainExtractor] = (),
+    ) -> None:
+        self.extractors = tuple(extractors)
+        self._observations: list[RuntimeCallObservation] = []
+
+    @property
+    def observations(self) -> tuple[RuntimeCallObservation, ...]:
+        return tuple(self._observations)
+
+    def begin_attempt(self) -> None:
+        self._observations.clear()
+
+    def supports(self, function_name: str) -> bool:
+        return any(extractor.supports(function_name) for extractor in self.extractors)
+
+    def record(self, context: ToolExecutionContext) -> RuntimeCallObservation:
+        operations = tuple(
+            operation
+            for extractor in self.extractors
+            if extractor.supports(context.function_name)
+            for operation in extractor.extract(context)
+        )
+        observation = RuntimeCallObservation(
+            ordinal=len(self._observations),
+            function_name=context.function_name,
+            argument_hash=stable_hash(context.arguments),
+            succeeded=context.error is None,
+            error_hash=(
+                stable_hash(context.error) if context.error is not None else None
+            ),
+            operations=operations,
+        )
+        self._observations.append(observation)
+        return observation
+
+
+class ObservingFunctionsRuntime(FunctionsRuntime):
+    """Proxy a runtime while observing supported function executions."""
+
+    def __init__(
+        self,
+        delegate: FunctionsRuntime,
+        observer: AgentDojoRuntimeObserver,
+    ) -> None:
+        self.delegate = delegate
+        self.observer = observer
+        self.functions = delegate.functions
+
+    def run_function(
+        self,
+        env: TaskEnvironment | None,
+        function: str,
+        kwargs: Mapping[str, Any],
+        raise_on_error: bool = False,
+    ) -> tuple[FunctionReturnType, str | None]:
+        before = _snapshot(env) if self.observer.supports(function) else None
+        try:
+            result, error = self.delegate.run_function(
+                env,
+                function,
+                kwargs,
+                raise_on_error=raise_on_error,
+            )
+        except Exception as exc:
+            after = _snapshot(env) if self.observer.supports(function) else None
+            self.observer.record(
+                ToolExecutionContext(
+                    function_name=function,
+                    arguments=kwargs,
+                    result="",
+                    error=f"{type(exc).__name__}: {exc}",
+                    environment_before=before,
+                    environment_after=after,
+                )
+            )
+            raise
+
+        after = _snapshot(env) if self.observer.supports(function) else None
+        self.observer.record(
+            ToolExecutionContext(
+                function_name=function,
+                arguments=kwargs,
+                result=result,
+                error=error,
+                environment_before=before,
+                environment_after=after,
+            )
+        )
+        return result, error
+
+    def register_function(self, function: Any) -> Any:
+        registered = self.delegate.register_function(function)
+        self.functions = self.delegate.functions
+        return registered
+
+    def update_functions(self, new_functions: dict[str, Function]) -> None:
+        self.delegate.update_functions(new_functions)
+        self.functions = self.delegate.functions
+
+
+def _snapshot(environment: TaskEnvironment | None) -> TaskEnvironment | None:
+    if environment is None:
+        return None
+    return environment.model_copy(deep=True)

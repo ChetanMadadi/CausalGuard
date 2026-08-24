@@ -215,6 +215,8 @@ def test_export_graph_as_dict_json_dot_and_mermaid_preserves_parallel_edges() ->
     }
     assert as_json == exported
     assert "digraph causalguard" in as_dot
+    assert "Data: data:payload" in as_dot
+    assert "SysOp: sys:e4" in as_dot
     assert as_dot.count('"data:payload" -> "sys:e4"') == 2
     assert "parent_event/high" in as_dot
     assert as_mermaid.count("n0 -->") == 2

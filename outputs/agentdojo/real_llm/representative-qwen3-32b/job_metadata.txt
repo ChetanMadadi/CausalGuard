@@ -1,0 +1,7 @@
+slurm_job_id=63543004
+model=Qwen/Qwen3-32B
+model_path=/datasets/ai/qwen3/hub/models--Qwen--Qwen3-32B/snapshots/9216db5781bf21249d130ec9da846c4624c16137
+provider=local
+vllm_python=/work/pi_juanzhai_umass_edu/gehaozhang/conda/envs/Unsloth/bin/python
+port=23004
+NVIDIA A100-SXM4-80GB, 81920 MiB, 595.71.05

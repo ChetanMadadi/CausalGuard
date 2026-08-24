@@ -2,12 +2,18 @@
 
 CausalGuard is a foundation prototype for a directed, typed, temporal, privacy-preserving provenance multigraph for agentic AI execution.
 
-The repository provides validated schemas for normalized events, typed nodes, and typed edges; an in-memory `MultiDiGraph` store with export support; and a graph builder that converts normalized traces into causal/control, data/information, and authorization provenance in one connected graph. It intentionally does not include the future trigger-based policy engine or an AgentDojo-specific collector.
+The repository provides validated schemas for normalized events, typed nodes, and typed edges; an in-memory `MultiDiGraph` store with export support; a graph builder that converts normalized traces into causal/control, data/information, and authorization provenance in one connected graph; and AgentDojo 0.1.35 transcript and runtime adapters. It intentionally does not include the future trigger-based policy engine.
 
 ## Setup
 
 ```bash
 python3 -m pip install -e ".[dev]"
+```
+
+Install the optional AgentDojo integration with:
+
+```bash
+python3 -m pip install -e ".[dev,agentdojo]"
 ```
 
 ## Run Tests
@@ -39,6 +45,70 @@ Current generated examples:
 - `exgentic_appworld_07.jsonl`: 60 events -> 59 nodes, 29 edges, acyclic.
 
 Graphviz is not required for this script. The DOT files can still be rendered later with Graphviz if desired, while the SVG files are generated directly.
+
+## AgentDojo integration smoke run
+
+Run one existing AgentDojo workspace task through the adapter:
+
+```bash
+.venv/bin/python scripts/run_agentdojo_integration.py
+```
+
+The smoke run uses AgentDojo's `v1.2.2` `workspace/user_task_35`, standard
+pipeline/tool loop, function runtime, and mutable environment. It uses a
+deterministic model stand-in so it requires no external model credentials. It
+writes normalized `trace.jsonl`, `graph.json`, `graph.dot`, and an integration
+coverage report under `outputs/agentdojo/`. Raw prompts, arguments, and tool
+results are hashed or summarized rather than exported.
+
+Validate six real execution shapes (single read, sequential read/write,
+parallel fan-out and join, outgoing action, and failed-call recovery) with:
+
+```bash
+.venv/bin/python scripts/validate_agentdojo_examples.py
+```
+
+This writes a count-by-count expectation report and per-example graph artifacts
+under `outputs/agentdojo/examples/`.
+
+## AgentDojo runtime-enriched provenance
+
+Run the first policy-ready workspace extractor against a real read/send task:
+
+```bash
+.venv/bin/python scripts/run_agentdojo_runtime_provenance.py
+```
+
+This uses `v1.2.2 workspace/user_task_33` to observe a concrete cloud-drive
+read followed by an email send. The collector wraps AgentDojo's actual
+`FunctionsRuntime` without modifying AgentDojo core, then enriches the transcript
+graph with versioned file/email objects, runtime-derived read/write edges, a
+hashed email-content payload, attachment linkage, and recipient metadata. Output
+is written under `outputs/agentdojo/runtime_enriched/`. AgentDojo exposes no
+user approval event for this path, so the integration emits no approval node.
+
+## AgentDojo real-LLM validation
+
+Submit the same runtime-enriched task using AgentDojo's supported local provider
+and a local vLLM server with:
+
+```bash
+sbatch scripts/slurm/run_agentdojo_real_llm_provenance.sbatch
+```
+
+The Slurm harness starts `Qwen/Qwen3-32B` on one A100, waits for the server to
+become healthy, runs `workspace/user_task_33`, writes privacy-safe provenance
+artifacts, and fails the job if task utility, runtime correlation, privacy, or
+the required source-to-email provenance path does not pass. Override
+`VLLM_PYTHON` when the default cluster environment is unavailable.
+
+The successful representative run is preserved under
+`outputs/agentdojo/real_llm/representative-qwen3-32b/`. Job `63543004`
+completed with exit code `0:0`: AgentDojo utility and no-injection security both
+passed, all four requested email fields matched, all supported runtime calls
+correlated, and the acyclic graph contained 16 nodes and 22 edges. Per-job
+directories and Slurm/vLLM logs are ignored because they are ephemeral and may
+contain machine-specific details.
 
 ## Week 1 Scope
 
@@ -98,8 +168,13 @@ The builder never infers data flow merely from a shared session, causal context,
 - The graph layer records provenance but does not evaluate policy queries.
 - Key-based privacy checks are a conservative first guard, not a full content classifier.
 - `user_input` events are represented as normalized events and indexed by the builder, but they do not create graph nodes.
-- Synthetic traces currently live in tests and `examples/test_examples/`; a mock collector and broader trace-loading workflow are planned for a later milestone.
+- Synthetic traces live in tests and `examples/test_examples/`; AgentDojo smoke,
+  runtime-enriched, and real-LLM workflows provide the current live-runtime
+  validation paths.
 
 ## Next Steps
 
-Add the AgentDojo collector/adapter that maps trace-specific result, input, and payload evidence into the normalized reference fields above, followed by bounded provenance queries for the future trigger-based policy checker.
+Extend runtime extractors beyond the initial workspace read/send path, add
+state-transition coverage for additional mutation tools, and integrate explicit
+approval events if a future AgentDojo API exposes them. Validate that broader
+coverage before adding bounded queries and the trigger-based policy checker.

@@ -1,0 +1,360 @@
+{
+  "edges": [
+    {
+      "attributes": {},
+      "confidence": "high",
+      "derivation": "explicit_data_reference",
+      "edge_id": "edge:data:input_to:agentdojo:workspace-user_task_20-parallel_then_write:llm:5:data:agentdojo:workspace-user_task_20-parallel_then_write:tool_result:3",
+      "edge_type": "input_to",
+      "evidence_ref": "agentdojo:workspace-user_task_20-parallel_then_write:llm:5",
+      "source_id": "data:agentdojo:workspace-user_task_20-parallel_then_write:tool_result:3",
+      "target_id": "llm:agentdojo:workspace-user_task_20-parallel_then_write:llm:5",
+      "timestamp": 7.0
+    },
+    {
+      "attributes": {},
+      "confidence": "high",
+      "derivation": "explicit_data_reference",
+      "edge_id": "edge:data:input_to:agentdojo:workspace-user_task_20-parallel_then_write:llm:5:data:agentdojo:workspace-user_task_20-parallel_then_write:tool_result:4",
+      "edge_type": "input_to",
+      "evidence_ref": "agentdojo:workspace-user_task_20-parallel_then_write:llm:5",
+      "source_id": "data:agentdojo:workspace-user_task_20-parallel_then_write:tool_result:4",
+      "target_id": "llm:agentdojo:workspace-user_task_20-parallel_then_write:llm:5",
+      "timestamp": 7.0
+    },
+    {
+      "attributes": {},
+      "confidence": "high",
+      "derivation": "explicit_data_reference",
+      "edge_id": "edge:data:input_to:agentdojo:workspace-user_task_20-parallel_then_write:llm:7:data:agentdojo:workspace-user_task_20-parallel_then_write:tool_result:3",
+      "edge_type": "input_to",
+      "evidence_ref": "agentdojo:workspace-user_task_20-parallel_then_write:llm:7",
+      "source_id": "data:agentdojo:workspace-user_task_20-parallel_then_write:tool_result:3",
+      "target_id": "llm:agentdojo:workspace-user_task_20-parallel_then_write:llm:7",
+      "timestamp": 10.0
+    },
+    {
+      "attributes": {},
+      "confidence": "high",
+      "derivation": "explicit_data_reference",
+      "edge_id": "edge:data:input_to:agentdojo:workspace-user_task_20-parallel_then_write:llm:7:data:agentdojo:workspace-user_task_20-parallel_then_write:tool_result:4",
+      "edge_type": "input_to",
+      "evidence_ref": "agentdojo:workspace-user_task_20-parallel_then_write:llm:7",
+      "source_id": "data:agentdojo:workspace-user_task_20-parallel_then_write:tool_result:4",
+      "target_id": "llm:agentdojo:workspace-user_task_20-parallel_then_write:llm:7",
+      "timestamp": 10.0
+    },
+    {
+      "attributes": {},
+      "confidence": "high",
+      "derivation": "explicit_data_reference",
+      "edge_id": "edge:data:input_to:agentdojo:workspace-user_task_20-parallel_then_write:llm:7:data:agentdojo:workspace-user_task_20-parallel_then_write:tool_result:6",
+      "edge_type": "input_to",
+      "evidence_ref": "agentdojo:workspace-user_task_20-parallel_then_write:llm:7",
+      "source_id": "data:agentdojo:workspace-user_task_20-parallel_then_write:tool_result:6",
+      "target_id": "llm:agentdojo:workspace-user_task_20-parallel_then_write:llm:7",
+      "timestamp": 10.0
+    },
+    {
+      "attributes": {},
+      "confidence": "high",
+      "derivation": "explicit_data_reference",
+      "edge_id": "edge:data:produces:agentdojo:workspace-user_task_20-parallel_then_write:system_operation:3:data:agentdojo:workspace-user_task_20-parallel_then_write:tool_result:3",
+      "edge_type": "produces",
+      "evidence_ref": "agentdojo:workspace-user_task_20-parallel_then_write:system_operation:3",
+      "source_id": "sys:agentdojo:workspace-user_task_20-parallel_then_write:system_operation:3",
+      "target_id": "data:agentdojo:workspace-user_task_20-parallel_then_write:tool_result:3",
+      "timestamp": 5.0
+    },
+    {
+      "attributes": {},
+      "confidence": "high",
+      "derivation": "explicit_data_reference",
+      "edge_id": "edge:data:produces:agentdojo:workspace-user_task_20-parallel_then_write:system_operation:4:data:agentdojo:workspace-user_task_20-parallel_then_write:tool_result:4",
+      "edge_type": "produces",
+      "evidence_ref": "agentdojo:workspace-user_task_20-parallel_then_write:system_operation:4",
+      "source_id": "sys:agentdojo:workspace-user_task_20-parallel_then_write:system_operation:4",
+      "target_id": "data:agentdojo:workspace-user_task_20-parallel_then_write:tool_result:4",
+      "timestamp": 6.0
+    },
+    {
+      "attributes": {},
+      "confidence": "high",
+      "derivation": "explicit_data_reference",
+      "edge_id": "edge:data:produces:agentdojo:workspace-user_task_20-parallel_then_write:system_operation:6:data:agentdojo:workspace-user_task_20-parallel_then_write:tool_result:6",
+      "edge_type": "produces",
+      "evidence_ref": "agentdojo:workspace-user_task_20-parallel_then_write:system_operation:6",
+      "source_id": "sys:agentdojo:workspace-user_task_20-parallel_then_write:system_operation:6",
+      "target_id": "data:agentdojo:workspace-user_task_20-parallel_then_write:tool_result:6",
+      "timestamp": 9.0
+    },
+    {
+      "attributes": {},
+      "confidence": "high",
+      "derivation": "parent_event",
+      "edge_id": "edge:parent:invokes:agentdojo:workspace-user_task_20-parallel_then_write:llm:2:agentdojo:workspace-user_task_20-parallel_then_write:tool:2:0",
+      "edge_type": "invokes",
+      "evidence_ref": "agentdojo:workspace-user_task_20-parallel_then_write:tool:2:0",
+      "source_id": "llm:agentdojo:workspace-user_task_20-parallel_then_write:llm:2",
+      "target_id": "tool:agentdojo:workspace-user_task_20-parallel_then_write:tool:2:0",
+      "timestamp": 3.0
+    },
+    {
+      "attributes": {},
+      "confidence": "high",
+      "derivation": "parent_event",
+      "edge_id": "edge:parent:invokes:agentdojo:workspace-user_task_20-parallel_then_write:llm:2:agentdojo:workspace-user_task_20-parallel_then_write:tool:2:1",
+      "edge_type": "invokes",
+      "evidence_ref": "agentdojo:workspace-user_task_20-parallel_then_write:tool:2:1",
+      "source_id": "llm:agentdojo:workspace-user_task_20-parallel_then_write:llm:2",
+      "target_id": "tool:agentdojo:workspace-user_task_20-parallel_then_write:tool:2:1",
+      "timestamp": 4.0
+    },
+    {
+      "attributes": {},
+      "confidence": "high",
+      "derivation": "parent_event",
+      "edge_id": "edge:parent:invokes:agentdojo:workspace-user_task_20-parallel_then_write:llm:5:agentdojo:workspace-user_task_20-parallel_then_write:tool:5:0",
+      "edge_type": "invokes",
+      "evidence_ref": "agentdojo:workspace-user_task_20-parallel_then_write:tool:5:0",
+      "source_id": "llm:agentdojo:workspace-user_task_20-parallel_then_write:llm:5",
+      "target_id": "tool:agentdojo:workspace-user_task_20-parallel_then_write:tool:5:0",
+      "timestamp": 8.0
+    },
+    {
+      "attributes": {},
+      "confidence": "high",
+      "derivation": "parent_event",
+      "edge_id": "edge:parent:triggers:agentdojo:workspace-user_task_20-parallel_then_write:tool:2:0:agentdojo:workspace-user_task_20-parallel_then_write:system_operation:3",
+      "edge_type": "triggers",
+      "evidence_ref": "agentdojo:workspace-user_task_20-parallel_then_write:system_operation:3",
+      "source_id": "tool:agentdojo:workspace-user_task_20-parallel_then_write:tool:2:0",
+      "target_id": "sys:agentdojo:workspace-user_task_20-parallel_then_write:system_operation:3",
+      "timestamp": 5.0
+    },
+    {
+      "attributes": {},
+      "confidence": "high",
+      "derivation": "parent_event",
+      "edge_id": "edge:parent:triggers:agentdojo:workspace-user_task_20-parallel_then_write:tool:2:1:agentdojo:workspace-user_task_20-parallel_then_write:system_operation:4",
+      "edge_type": "triggers",
+      "evidence_ref": "agentdojo:workspace-user_task_20-parallel_then_write:system_operation:4",
+      "source_id": "tool:agentdojo:workspace-user_task_20-parallel_then_write:tool:2:1",
+      "target_id": "sys:agentdojo:workspace-user_task_20-parallel_then_write:system_operation:4",
+      "timestamp": 6.0
+    },
+    {
+      "attributes": {},
+      "confidence": "high",
+      "derivation": "parent_event",
+      "edge_id": "edge:parent:triggers:agentdojo:workspace-user_task_20-parallel_then_write:tool:5:0:agentdojo:workspace-user_task_20-parallel_then_write:system_operation:6",
+      "edge_type": "triggers",
+      "evidence_ref": "agentdojo:workspace-user_task_20-parallel_then_write:system_operation:6",
+      "source_id": "tool:agentdojo:workspace-user_task_20-parallel_then_write:tool:5:0",
+      "target_id": "sys:agentdojo:workspace-user_task_20-parallel_then_write:system_operation:6",
+      "timestamp": 9.0
+    }
+  ],
+  "nodes": [
+    {
+      "content_hash": "sha256:41674e2b1797d184e9fabcbaa06023a55ee9e2eab00633fa4d0ac883c155e08a",
+      "node_id": "data:agentdojo:workspace-user_task_20-parallel_then_write:tool_result:3",
+      "node_type": "data_object",
+      "object_kind": "tool_result",
+      "owner": null,
+      "resource_id": "agentdojo:workspace-user_task_20-parallel_then_write:tool_result:3",
+      "sensitivity": "unknown",
+      "trust_label": "unknown",
+      "version": null
+    },
+    {
+      "content_hash": "sha256:2d02829cd6cd5d73dbed710fc7fc3aa65057c26f3fa2fa7668b653292bcac791",
+      "node_id": "data:agentdojo:workspace-user_task_20-parallel_then_write:tool_result:4",
+      "node_type": "data_object",
+      "object_kind": "tool_result",
+      "owner": null,
+      "resource_id": "agentdojo:workspace-user_task_20-parallel_then_write:tool_result:4",
+      "sensitivity": "unknown",
+      "trust_label": "unknown",
+      "version": null
+    },
+    {
+      "content_hash": "sha256:8d5189c3d7292eb9bf50a2802d55e077fad2f71ebfc89ef756cc0ff01afd4801",
+      "node_id": "data:agentdojo:workspace-user_task_20-parallel_then_write:tool_result:6",
+      "node_type": "data_object",
+      "object_kind": "tool_result",
+      "owner": null,
+      "resource_id": "agentdojo:workspace-user_task_20-parallel_then_write:tool_result:6",
+      "sensitivity": "unknown",
+      "trust_label": "unknown",
+      "version": null
+    },
+    {
+      "agent_id": "agentdojo-agent",
+      "causal_context_id": "workspace-user_task_20-parallel_then_write",
+      "model_name": "causalguard-planned-validation",
+      "node_id": "llm:agentdojo:workspace-user_task_20-parallel_then_write:llm:2",
+      "node_type": "llm_invocation",
+      "output_hash": "sha256:bfda85f5a2614a04742c276977636e0c7111821ace8caa0940a01d0454df62b1",
+      "output_ref": null,
+      "prompt_hash": "sha256:6b7a8a40f73f09763826febd3f5fcba2a27cd4afa5562d15b91c2f33a660cc6b",
+      "prompt_ref": null,
+      "session_id": "workspace-user_task_20-parallel_then_write",
+      "timestamp": 2.0,
+      "token_count": null
+    },
+    {
+      "agent_id": "agentdojo-agent",
+      "causal_context_id": "workspace-user_task_20-parallel_then_write",
+      "model_name": "causalguard-planned-validation",
+      "node_id": "llm:agentdojo:workspace-user_task_20-parallel_then_write:llm:5",
+      "node_type": "llm_invocation",
+      "output_hash": "sha256:29108f404f1335e9202ccd2b2178244305a6f10aab3d89eff0fffb495363e79b",
+      "output_ref": null,
+      "prompt_hash": "sha256:df7cd626d4e2dcddd57b0687e610a96b3f544b99b4f62294064f017e02f6bce3",
+      "prompt_ref": null,
+      "session_id": "workspace-user_task_20-parallel_then_write",
+      "timestamp": 7.0,
+      "token_count": null
+    },
+    {
+      "agent_id": "agentdojo-agent",
+      "causal_context_id": "workspace-user_task_20-parallel_then_write",
+      "model_name": "causalguard-planned-validation",
+      "node_id": "llm:agentdojo:workspace-user_task_20-parallel_then_write:llm:7",
+      "node_type": "llm_invocation",
+      "output_hash": "sha256:6963b8b191058f2d3357e32a9f5384996593c29bb96c1c8174c90569e54b2b5c",
+      "output_ref": null,
+      "prompt_hash": "sha256:826520b41233a743b25b0b8f2887b455dfd75a062a60bb83dee34c2358aa06f3",
+      "prompt_ref": null,
+      "session_id": "workspace-user_task_20-parallel_then_write",
+      "timestamp": 10.0,
+      "token_count": null
+    },
+    {
+      "action_class": "get_day_calendar_events",
+      "agent_id": "agentdojo-agent",
+      "byte_count": null,
+      "causal_context_id": "workspace-user_task_20-parallel_then_write",
+      "confidence": "high",
+      "destination": null,
+      "destination_trust": null,
+      "node_id": "sys:agentdojo:workspace-user_task_20-parallel_then_write:system_operation:3",
+      "node_type": "system_operation",
+      "operation_type": "agentdojo_function_execution",
+      "payload_refs": [],
+      "resource_id": null,
+      "resource_refs": [],
+      "session_id": "workspace-user_task_20-parallel_then_write",
+      "syscall_kind": null,
+      "timestamp": 5.0
+    },
+    {
+      "action_class": "search_contacts_by_name",
+      "agent_id": "agentdojo-agent",
+      "byte_count": null,
+      "causal_context_id": "workspace-user_task_20-parallel_then_write",
+      "confidence": "high",
+      "destination": null,
+      "destination_trust": null,
+      "node_id": "sys:agentdojo:workspace-user_task_20-parallel_then_write:system_operation:4",
+      "node_type": "system_operation",
+      "operation_type": "agentdojo_function_execution",
+      "payload_refs": [],
+      "resource_id": null,
+      "resource_refs": [],
+      "session_id": "workspace-user_task_20-parallel_then_write",
+      "syscall_kind": null,
+      "timestamp": 6.0
+    },
+    {
+      "action_class": "create_calendar_event",
+      "agent_id": "agentdojo-agent",
+      "byte_count": null,
+      "causal_context_id": "workspace-user_task_20-parallel_then_write",
+      "confidence": "high",
+      "destination": null,
+      "destination_trust": null,
+      "node_id": "sys:agentdojo:workspace-user_task_20-parallel_then_write:system_operation:6",
+      "node_type": "system_operation",
+      "operation_type": "agentdojo_function_execution",
+      "payload_refs": [],
+      "resource_id": null,
+      "resource_refs": [],
+      "session_id": "workspace-user_task_20-parallel_then_write",
+      "syscall_kind": null,
+      "timestamp": 9.0
+    },
+    {
+      "action_class": "get_day_calendar_events",
+      "agent_id": "agentdojo-agent",
+      "argument_summary": {
+        "argument_count": 1,
+        "argument_names": [
+          "day"
+        ],
+        "argument_type_names": [
+          "str"
+        ]
+      },
+      "causal_context_id": "workspace-user_task_20-parallel_then_write",
+      "destination": null,
+      "node_id": "tool:agentdojo:workspace-user_task_20-parallel_then_write:tool:2:0",
+      "node_type": "tool_call",
+      "session_id": "workspace-user_task_20-parallel_then_write",
+      "target_resource": null,
+      "timestamp": 3.0,
+      "tool_name": "get_day_calendar_events"
+    },
+    {
+      "action_class": "search_contacts_by_name",
+      "agent_id": "agentdojo-agent",
+      "argument_summary": {
+        "argument_count": 1,
+        "argument_names": [
+          "query"
+        ],
+        "argument_type_names": [
+          "str"
+        ]
+      },
+      "causal_context_id": "workspace-user_task_20-parallel_then_write",
+      "destination": null,
+      "node_id": "tool:agentdojo:workspace-user_task_20-parallel_then_write:tool:2:1",
+      "node_type": "tool_call",
+      "session_id": "workspace-user_task_20-parallel_then_write",
+      "target_resource": null,
+      "timestamp": 4.0,
+      "tool_name": "search_contacts_by_name"
+    },
+    {
+      "action_class": "create_calendar_event",
+      "agent_id": "agentdojo-agent",
+      "argument_summary": {
+        "argument_count": 5,
+        "argument_names": [
+          "description",
+          "end_time",
+          "participants",
+          "start_time",
+          "title"
+        ],
+        "argument_type_names": [
+          "str",
+          "str",
+          "list",
+          "str",
+          "str"
+        ]
+      },
+      "causal_context_id": "workspace-user_task_20-parallel_then_write",
+      "destination": null,
+      "node_id": "tool:agentdojo:workspace-user_task_20-parallel_then_write:tool:5:0",
+      "node_type": "tool_call",
+      "session_id": "workspace-user_task_20-parallel_then_write",
+      "target_resource": null,
+      "timestamp": 8.0,
+      "tool_name": "create_calendar_event"
+    }
+  ]
+}

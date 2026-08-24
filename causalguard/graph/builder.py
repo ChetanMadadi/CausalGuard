@@ -153,7 +153,7 @@ class GraphBuilder:
         if event.event_type is EventType.DATA_ACCESS:
             operation_type = self._required_attribute(event, "operation_type")
             resource_id = event.attributes.get("resource_id")
-            if resource_id is None and not event.attributes.get("resource_refs"):
+            if resource_id is None and not self._resource_ref_values(event):
                 raise GraphBuilderError(
                     f"event {event.event_id} missing required resource reference"
                 )
@@ -422,6 +422,13 @@ class GraphBuilder:
         if event.event_type not in _SYSTEM_EVENT_TYPES:
             return
 
+        explicit_reads = self._reference_values(event, "read_refs", "read_ref")
+        explicit_writes = self._reference_values(event, "write_refs", "write_ref")
+        for reference in explicit_reads:
+            self._add_data_edge(event, reference, EdgeType.READ, data_is_source=True)
+        for reference in explicit_writes:
+            self._add_data_edge(event, reference, EdgeType.WRITE, data_is_source=False)
+
         operation_type = str(event.attributes.get("operation_type", event.event_type.value))
         relation = event.attributes.get("resource_relation") or event.attributes.get("access_mode")
         if relation is None:
@@ -431,10 +438,14 @@ class GraphBuilder:
                 relation = "write"
 
         if relation == "read":
-            for reference in self._resource_ref_values(event):
+            for reference in self._generic_resource_ref_values(event):
+                if reference in explicit_reads:
+                    continue
                 self._add_data_edge(event, reference, EdgeType.READ, data_is_source=True)
         elif relation == "write":
-            for reference in self._resource_ref_values(event):
+            for reference in self._generic_resource_ref_values(event):
+                if reference in explicit_writes:
+                    continue
                 self._add_data_edge(event, reference, EdgeType.WRITE, data_is_source=False)
 
         for reference in self._reference_values(event, "payload_refs", "payload_ref"):
@@ -462,7 +473,10 @@ class GraphBuilder:
                 "target_id": target_id,
                 "edge_type": edge_type.value,
                 "timestamp": event.timestamp,
-                "derivation": Derivation.EXPLICIT_DATA_REFERENCE.value,
+                "derivation": event.attributes.get(
+                    "data_derivation",
+                    Derivation.EXPLICIT_DATA_REFERENCE.value,
+                ),
                 "confidence": event.attributes.get("data_confidence", Confidence.HIGH.value),
                 "evidence_ref": event.event_id,
             }
@@ -630,12 +644,17 @@ class GraphBuilder:
             raise GraphBuilderError(str(exc)) from exc
 
     def _resource_ref_values(self, event: NormalizedEvent) -> list[str]:
-        references = self._reference_values(event, "resource_refs", "resource_id")
+        references = self._generic_resource_ref_values(event)
+        references.extend(self._reference_values(event, "read_refs", "read_ref"))
+        references.extend(self._reference_values(event, "write_refs", "write_ref"))
         if event.event_type is EventType.DEVICE_COMMAND and not references:
             device_id = event.attributes.get("device_id")
             if device_id is not None:
                 references.append(self._validated_reference(device_id, "device_id"))
-        return references
+        return list(dict.fromkeys(references))
+
+    def _generic_resource_ref_values(self, event: NormalizedEvent) -> list[str]:
+        return self._reference_values(event, "resource_refs", "resource_id")
 
     def _input_ref_values(self, event: NormalizedEvent) -> list[str]:
         return self._reference_values(event, "input_refs", "input_ref")

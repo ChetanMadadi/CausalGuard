@@ -17,6 +17,9 @@ dependencies = [
 dev = [
     "pytest>=7",
 ]
+agentdojo = [
+    "agentdojo==0.1.35",
+]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

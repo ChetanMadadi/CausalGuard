@@ -1,0 +1,21 @@
+digraph causalguard {
+  rankdir=LR;
+  "data:agentdojo:workspace-user_task_33-outgoing_email:tool_result:3" [label="Data: data:agentdojo:workspace-user_task_33-outgoing_email:tool_result:3"];
+  "data:agentdojo:workspace-user_task_33-outgoing_email:tool_result:5" [label="Data: data:agentdojo:workspace-user_task_33-outgoing_email:tool_result:5"];
+  "llm:agentdojo:workspace-user_task_33-outgoing_email:llm:2" [label="LLM: llm:agentdojo:workspace-user_task_33-outgoing_email:llm:2"];
+  "llm:agentdojo:workspace-user_task_33-outgoing_email:llm:4" [label="LLM: llm:agentdojo:workspace-user_task_33-outgoing_email:llm:4"];
+  "llm:agentdojo:workspace-user_task_33-outgoing_email:llm:6" [label="LLM: llm:agentdojo:workspace-user_task_33-outgoing_email:llm:6"];
+  "sys:agentdojo:workspace-user_task_33-outgoing_email:system_operation:3" [label="SysOp: sys:agentdojo:workspace-user_task_33-outgoing_email:system_operation:3"];
+  "sys:agentdojo:workspace-user_task_33-outgoing_email:system_operation:5" [label="SysOp: sys:agentdojo:workspace-user_task_33-outgoing_email:system_operation:5"];
+  "tool:agentdojo:workspace-user_task_33-outgoing_email:tool:2:0" [label="Tool: tool:agentdojo:workspace-user_task_33-outgoing_email:tool:2:0"];
+  "tool:agentdojo:workspace-user_task_33-outgoing_email:tool:4:0" [label="Tool: tool:agentdojo:workspace-user_task_33-outgoing_email:tool:4:0"];
+  "data:agentdojo:workspace-user_task_33-outgoing_email:tool_result:3" -> "llm:agentdojo:workspace-user_task_33-outgoing_email:llm:4" [label="input_to\nedge:data:input_to:agentdojo:workspace-user_task_33-outgoing_email:llm:4:data:agentdojo:workspace-user_task_33-outgoing_email:tool_result:3\nexplicit_data_reference/high"];
+  "data:agentdojo:workspace-user_task_33-outgoing_email:tool_result:3" -> "llm:agentdojo:workspace-user_task_33-outgoing_email:llm:6" [label="input_to\nedge:data:input_to:agentdojo:workspace-user_task_33-outgoing_email:llm:6:data:agentdojo:workspace-user_task_33-outgoing_email:tool_result:3\nexplicit_data_reference/high"];
+  "data:agentdojo:workspace-user_task_33-outgoing_email:tool_result:5" -> "llm:agentdojo:workspace-user_task_33-outgoing_email:llm:6" [label="input_to\nedge:data:input_to:agentdojo:workspace-user_task_33-outgoing_email:llm:6:data:agentdojo:workspace-user_task_33-outgoing_email:tool_result:5\nexplicit_data_reference/high"];
+  "sys:agentdojo:workspace-user_task_33-outgoing_email:system_operation:3" -> "data:agentdojo:workspace-user_task_33-outgoing_email:tool_result:3" [label="produces\nedge:data:produces:agentdojo:workspace-user_task_33-outgoing_email:system_operation:3:data:agentdojo:workspace-user_task_33-outgoing_email:tool_result:3\nexplicit_data_reference/high"];
+  "sys:agentdojo:workspace-user_task_33-outgoing_email:system_operation:5" -> "data:agentdojo:workspace-user_task_33-outgoing_email:tool_result:5" [label="produces\nedge:data:produces:agentdojo:workspace-user_task_33-outgoing_email:system_operation:5:data:agentdojo:workspace-user_task_33-outgoing_email:tool_result:5\nexplicit_data_reference/high"];
+  "llm:agentdojo:workspace-user_task_33-outgoing_email:llm:2" -> "tool:agentdojo:workspace-user_task_33-outgoing_email:tool:2:0" [label="invokes\nedge:parent:invokes:agentdojo:workspace-user_task_33-outgoing_email:llm:2:agentdojo:workspace-user_task_33-outgoing_email:tool:2:0\nparent_event/high"];
+  "llm:agentdojo:workspace-user_task_33-outgoing_email:llm:4" -> "tool:agentdojo:workspace-user_task_33-outgoing_email:tool:4:0" [label="invokes\nedge:parent:invokes:agentdojo:workspace-user_task_33-outgoing_email:llm:4:agentdojo:workspace-user_task_33-outgoing_email:tool:4:0\nparent_event/high"];
+  "tool:agentdojo:workspace-user_task_33-outgoing_email:tool:2:0" -> "sys:agentdojo:workspace-user_task_33-outgoing_email:system_operation:3" [label="triggers\nedge:parent:triggers:agentdojo:workspace-user_task_33-outgoing_email:tool:2:0:agentdojo:workspace-user_task_33-outgoing_email:system_operation:3\nparent_event/high"];
+  "tool:agentdojo:workspace-user_task_33-outgoing_email:tool:4:0" -> "sys:agentdojo:workspace-user_task_33-outgoing_email:system_operation:5" [label="triggers\nedge:parent:triggers:agentdojo:workspace-user_task_33-outgoing_email:tool:4:0:agentdojo:workspace-user_task_33-outgoing_email:system_operation:5\nparent_event/high"];
+}

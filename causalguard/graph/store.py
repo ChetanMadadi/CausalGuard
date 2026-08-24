@@ -38,6 +38,14 @@ _ALLOWED_ENDPOINT_TYPES: dict[EdgeType, set[tuple[str, str]]] = {
     EdgeType.ACCESSES: {("system_operation", "data_object")},
 }
 
+_DOT_NODE_LABELS = {
+    "llm_invocation": "LLM",
+    "tool_call": "Tool",
+    "system_operation": "SysOp",
+    "data_object": "Data",
+    "human_approval": "Approval",
+}
+
 
 class GraphStore:
     """Store validated provenance nodes and edges in a NetworkX MultiDiGraph."""
@@ -153,7 +161,9 @@ class GraphStore:
     def to_dot(self) -> str:
         lines = ["digraph causalguard {", "  rankdir=LR;"]
         for node in sorted(self.nodes(), key=lambda item: item.node_id):
-            node_label = _dot_escape(f"{node.node_type.value}: {node.node_id}")
+            node_label = _dot_escape(
+                f"{_DOT_NODE_LABELS[node.node_type.value]}: {node.node_id}"
+            )
             lines.append(f'  "{_dot_escape(node.node_id)}" [label="{node_label}"];')
 
         for edge in sorted(self.edges(), key=lambda item: item.edge_id):
