@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from collections.abc import Sequence
+from collections.abc import Mapping, Sequence
 
 from agentdojo.default_suites.v1.tools.types import CloudDriveFile, Email
 
@@ -10,7 +10,9 @@ from causalguard.integrations.agentdojo.common import stable_hash
 from causalguard.integrations.agentdojo.extractors.base import (
     DomainObjectEvidence,
     DomainOperationEvidence,
+    ProposedActionEvidence,
     ToolExecutionContext,
+    ToolProposalContext,
 )
 from causalguard.schema.events import EventType
 
@@ -34,6 +36,26 @@ class WorkspaceReadSendExtractor:
         if context.function_name == "send_email":
             return self._extract_email_send(context)
         return ()
+
+    def propose(
+        self,
+        context: ToolProposalContext,
+    ) -> ProposedActionEvidence | None:
+        if context.function_name != "send_email":
+            return None
+        attachments = _proposal_attachment_evidence(
+            context.arguments,
+            context.environment,
+        )
+        content = _proposal_email_content_evidence(context.arguments)
+        inputs = (*((content,) if content is not None else ()), *attachments)
+        return ProposedActionEvidence(
+            action_class=context.function_name,
+            tool_input_objects=inputs,
+            llm_generated_objects=((content,) if content is not None else ()),
+            destination=_proposal_destination(context.arguments),
+            target_resource=(attachments[0].reference if len(attachments) == 1 else None),
+        )
 
     def _extract_file_search(
         self,
@@ -152,21 +174,92 @@ def _email_evidence(email: Email) -> DomainObjectEvidence:
 
 
 def _email_content_evidence(email: Email) -> DomainObjectEvidence:
-    reference = f"agentdojo:workspace:email_content:{email.id_}"
-    version = stable_hash({"subject": email.subject, "body": email.body})
+    return _email_content_evidence_from_fields(
+        subject=email.subject,
+        body=email.body,
+        owner=str(email.sender),
+    )
+
+
+def _email_content_evidence_from_fields(
+    *,
+    subject: str,
+    body: str,
+    owner: str | None,
+) -> DomainObjectEvidence:
+    version = stable_hash({"subject": subject, "body": body})
+    reference = f"agentdojo:workspace:email_content:{version.removeprefix('sha256:')}"
     return DomainObjectEvidence(
         reference=reference,
         node_id=_versioned_node_id(reference, version),
         object_kind="email_content",
         content_hash=version,
         version=version,
-        owner=str(email.sender),
+        owner=owner,
     )
 
 
 def _email_destination(email: Email) -> str:
     recipients = [*email.recipients, *email.cc, *email.bcc]
     return ",".join(f"mailto:{str(item).lower()}" for item in recipients)
+
+
+def _proposal_attachment_evidence(
+    arguments: Mapping[str, object],
+    environment: object | None,
+) -> tuple[DomainObjectEvidence, ...]:
+    attachment_ids = arguments.get("attachments", [])
+    if (
+        not isinstance(attachment_ids, Sequence)
+        or isinstance(attachment_ids, (str, bytes, bytearray))
+        or environment is None
+        or not hasattr(environment, "cloud_drive")
+    ):
+        return ()
+    files = environment.cloud_drive.files
+    evidence = []
+    for attachment in attachment_ids:
+        if isinstance(attachment, str):
+            attachment_id = attachment
+        elif isinstance(attachment, Mapping):
+            attachment_id = attachment.get("file_id")
+        else:
+            continue
+        if not isinstance(attachment_id, str):
+            continue
+        file = files.get(attachment_id)
+        if file is not None:
+            evidence.append(_file_evidence(file))
+    return tuple(evidence)
+
+
+def _proposal_email_content_evidence(
+    arguments: Mapping[str, object],
+) -> DomainObjectEvidence | None:
+    subject = arguments.get("subject")
+    body = arguments.get("body")
+    if not isinstance(subject, str) or not isinstance(body, str):
+        return None
+    return _email_content_evidence_from_fields(
+        subject=subject,
+        body=body,
+        owner=None,
+    )
+
+
+def _proposal_destination(arguments: Mapping[str, object]) -> str | None:
+    recipients: list[str] = []
+    for field in ("recipients", "cc", "bcc"):
+        values = arguments.get(field, [])
+        if not isinstance(values, Sequence) or isinstance(
+            values,
+            (str, bytes, bytearray),
+        ):
+            continue
+        recipients.extend(str(item).lower() for item in values)
+    if not recipients:
+        return None
+    return ",".join(f"mailto:{item}" for item in recipients)
 
 
 def _versioned_node_id(reference: str, version: str) -> str:

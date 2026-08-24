@@ -110,6 +110,36 @@ correlated, and the acyclic graph contained 16 nodes and 22 edges. Per-job
 directories and Slurm/vLLM logs are ignored because they are ephemeral and may
 contain machine-specific details.
 
+## Trigger-driven policy enforcement
+
+Run the first pre-mutation policy vertical slice with:
+
+```bash
+.venv/bin/python scripts/run_agentdojo_policy_demo.py
+```
+
+The `protected_file_external_email` policy uses one validated model with
+`trigger`, `select`, `predicate`, `exception`, `action`, and `params` fields. It
+triggers only when `send_email` is proposed, selects bounded upstream evidence
+from that ToolCall, matches configured protected resources only when they are
+exact outgoing inputs, classifies the destination, and checks trusted-destination
+or exact HumanApproval exceptions. Policy actions use `allow`, `deny`,
+`request_approval`, `allow_with_audit`, and `escalate`.
+
+The demo runs AgentDojo's real workspace environment and tool loop. It permits
+the file read, then denies the proposed external email containing protected file
+19 before `FunctionsRuntime` mutates email state. It preserves the proposed
+ToolCall and privacy-safe evidence but creates no successful `email_send`
+SystemOperation, outgoing-email DataObject, or write edge. Outputs are written
+under `outputs/agentdojo/policy_enforcement/`.
+
+At this lifecycle boundary, AgentDojo already exposes the proposed FunctionCall,
+arguments, and pre-mutation environment. CausalGuard incrementally materializes
+those with prior runtime observations because the ordinary collector's complete
+post-hoc graph is not built until the delegated pipeline returns. Real AgentDojo
+still provides no HumanApproval event; approval matching is exercised with
+synthetic graph evidence and is never fabricated in the integration.
+
 ## Week 1 Scope
 
 - `causalguard/schema/events.py`: normalized collector event schema.
@@ -174,7 +204,7 @@ The builder never infers data flow merely from a shared session, causal context,
 
 ## Next Steps
 
-Extend runtime extractors beyond the initial workspace read/send path, add
-state-transition coverage for additional mutation tools, and integrate explicit
-approval events if a future AgentDojo API exposes them. Validate that broader
-coverage before adding bounded queries and the trigger-based policy checker.
+Review the first policy's configuration and decision artifacts before expanding
+domain/tool coverage. A future AgentDojo approval API can replace the synthetic
+approval fixtures; broader mutation extractors and additional policies remain
+separate later milestones.

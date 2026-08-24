@@ -68,6 +68,17 @@ class DomainOperationEvidence:
 
 
 @dataclass(frozen=True)
+class ProposedActionEvidence:
+    """Privacy-safe objects and destination known before a tool executes."""
+
+    action_class: str
+    tool_input_objects: tuple[DomainObjectEvidence, ...] = ()
+    llm_generated_objects: tuple[DomainObjectEvidence, ...] = ()
+    destination: str | None = None
+    target_resource: str | None = None
+
+
+@dataclass(frozen=True)
 class ToolExecutionContext:
     """In-memory execution context supplied to a domain extractor."""
 
@@ -77,6 +88,15 @@ class ToolExecutionContext:
     error: str | None
     environment_before: TaskEnvironment | None
     environment_after: TaskEnvironment | None
+
+
+@dataclass(frozen=True)
+class ToolProposalContext:
+    """Read-only context available immediately before runtime execution."""
+
+    function_name: str
+    arguments: Mapping[str, object]
+    environment: TaskEnvironment | None
 
 
 class AgentDojoDomainExtractor(Protocol):
@@ -90,3 +110,9 @@ class AgentDojoDomainExtractor(Protocol):
         context: ToolExecutionContext,
     ) -> Sequence[DomainOperationEvidence]:
         """Return only directly observed operations and objects."""
+
+    def propose(
+        self,
+        context: ToolProposalContext,
+    ) -> ProposedActionEvidence | None:
+        """Return evidence available before the proposed function executes."""

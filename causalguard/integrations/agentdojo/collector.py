@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from collections.abc import Sequence
 from pathlib import Path
+from typing import TYPE_CHECKING
 
 try:
     from agentdojo.agent_pipeline.base_pipeline_element import BasePipelineElement
@@ -23,6 +24,9 @@ from causalguard.integrations.agentdojo.runtime import (
 )
 from causalguard.schema.events import NormalizedEvent
 
+if TYPE_CHECKING:
+    from causalguard.integrations.agentdojo.enforcement import AgentDojoPolicyEnforcer
+
 
 class AgentDojoCollector(BasePipelineElement):
     """Collect transcript provenance and optional runtime domain evidence."""
@@ -36,6 +40,7 @@ class AgentDojoCollector(BasePipelineElement):
         agent_id: str = "agentdojo-agent",
         causal_context_id: str | None = None,
         runtime_observer: AgentDojoRuntimeObserver | None = None,
+        policy_enforcer: AgentDojoPolicyEnforcer | None = None,
     ) -> None:
         self.delegate = delegate
         self.name = delegate.name
@@ -47,7 +52,12 @@ class AgentDojoCollector(BasePipelineElement):
         )
         self.events: list[NormalizedEvent] = []
         self.messages: Sequence[ChatMessage] = []
+        if policy_enforcer is not None:
+            if runtime_observer is not None and policy_enforcer.observer is not runtime_observer:
+                raise ValueError("policy enforcer and collector must share one runtime observer")
+            runtime_observer = policy_enforcer.observer
         self.runtime_observer = runtime_observer
+        self.policy_enforcer = policy_enforcer
 
     def query(
         self,
@@ -59,6 +69,8 @@ class AgentDojoCollector(BasePipelineElement):
     ) -> tuple[str, FunctionsRuntime, Env, Sequence[ChatMessage], dict]:
         observed_runtime: ObservingFunctionsRuntime | None = None
         runtime_for_delegate = runtime
+        if self.policy_enforcer is not None:
+            self.policy_enforcer.begin_attempt()
         if self.runtime_observer is not None:
             self.runtime_observer.begin_attempt()
             observed_runtime = ObservingFunctionsRuntime(
@@ -104,11 +116,16 @@ class AgentDojoCollector(BasePipelineElement):
         """Collect a completed attempt, replacing any prior attempt."""
 
         self.messages = messages
-        self.events = self.mapper.map_trace(
+        mapped = self.mapper.map_trace(
             query,
             messages,
             runtime_observations,
+            self.runtime_observer.proposals if self.runtime_observer is not None else (),
         )
+        self.events = [
+            *(self.policy_enforcer.approval_events if self.policy_enforcer else ()),
+            *mapped,
+        ]
         return list(self.events)
 
     def build_graph(self) -> GraphStore:

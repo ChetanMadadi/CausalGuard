@@ -18,8 +18,12 @@ from causalguard.integrations.agentdojo.common import stable_hash
 from causalguard.integrations.agentdojo.extractors.base import (
     DomainObjectEvidence,
     DomainOperationEvidence,
+    ProposedActionEvidence,
 )
-from causalguard.integrations.agentdojo.runtime import RuntimeCallObservation
+from causalguard.integrations.agentdojo.runtime import (
+    ProposedCallObservation,
+    RuntimeCallObservation,
+)
 from causalguard.schema.events import NormalizedEvent
 
 
@@ -71,6 +75,7 @@ class AgentDojoTraceMapper:
         query: str,
         messages: Sequence[ChatMessage],
         runtime_observations: Sequence[RuntimeCallObservation] = (),
+        proposed_observations: Sequence[ProposedCallObservation] = (),
     ) -> list[NormalizedEvent]:
         """Return normalized events without retaining raw message content."""
 
@@ -78,6 +83,7 @@ class AgentDojoTraceMapper:
         events: list[NormalizedEvent] = []
         pending_calls: list[_PendingToolCall] = []
         pending_observations = list(runtime_observations)
+        pending_proposals = list(proposed_observations)
         observed_result_inputs: list[_ToolResultRef] = []
 
         user_event_id = self._event_id("user_input")
@@ -148,6 +154,16 @@ class AgentDojoTraceMapper:
                     pending_calls.append(
                         _PendingToolCall(event_id=tool_event_id, call=tool_call)
                     )
+                    proposal = _pop_matching_proposal(
+                        pending_proposals,
+                        tool_call,
+                    )
+                    if proposal is not None:
+                        _attach_proposed_tool_context(
+                            events,
+                            tool_event_id,
+                            proposal.evidence,
+                        )
 
             elif role == "tool":
                 pending = _pop_matching_call(pending_calls, message["tool_call"])
@@ -267,6 +283,11 @@ class AgentDojoTraceMapper:
             return f"agentdojo:{self.session_id}:{kind}:{suffix}"
         return f"agentdojo:{self.session_id}:{kind}"
 
+    def tool_node_id(self, *, message_index: int, call_index: int) -> str:
+        """Return the graph node ID used for a transcript ToolCall."""
+
+        return f"tool:{self._event_id('tool', message_index, call_index)}"
+
 
 def _pop_matching_call(
     pending_calls: list[_PendingToolCall],
@@ -294,6 +315,26 @@ def _pop_matching_observation(
             and observation.argument_hash == argument_hash
         ):
             return observations.pop(index)
+    return None
+
+
+def _pop_matching_proposal(
+    proposals: list[ProposedCallObservation],
+    call: FunctionCall,
+) -> ProposedCallObservation | None:
+    argument_hash = stable_hash(call.args)
+    for index, proposal in enumerate(proposals):
+        if (
+            proposal.source_tool_call_id is not None
+            and proposal.source_tool_call_id == call.id
+        ):
+            return proposals.pop(index)
+        if (
+            proposal.source_tool_call_id is None
+            and proposal.function_name == call.function
+            and proposal.argument_hash == argument_hash
+        ):
+            return proposals.pop(index)
     return None
 
 
@@ -363,6 +404,58 @@ def _attach_domain_tool_context(
         None,
     )
 
+    _attach_tool_context(
+        events,
+        tool_event_id,
+        tool_inputs=tool_inputs,
+        generated=generated,
+        destination=destination,
+        target_resource=target_resource,
+    )
+
+
+def _attach_proposed_tool_context(
+    events: list[NormalizedEvent],
+    tool_event_id: str,
+    proposals: Sequence[ProposedActionEvidence],
+) -> None:
+    tool_inputs = _unique_objects(
+        item for proposal in proposals for item in proposal.tool_input_objects
+    )
+    generated = _unique_objects(
+        item for proposal in proposals for item in proposal.llm_generated_objects
+    )
+    destination = next(
+        (proposal.destination for proposal in proposals if proposal.destination),
+        None,
+    )
+    target_resource = next(
+        (
+            proposal.target_resource
+            for proposal in proposals
+            if proposal.target_resource
+        ),
+        None,
+    )
+    _attach_tool_context(
+        events,
+        tool_event_id,
+        tool_inputs=tool_inputs,
+        generated=generated,
+        destination=destination,
+        target_resource=target_resource,
+    )
+
+
+def _attach_tool_context(
+    events: list[NormalizedEvent],
+    tool_event_id: str,
+    *,
+    tool_inputs: Sequence[DomainObjectEvidence],
+    generated: Sequence[DomainObjectEvidence],
+    destination: str | None,
+    target_resource: str | None,
+) -> None:
     tool_event = _event_by_id(events, tool_event_id)
     tool_updates: dict[str, Any] = {}
     if tool_inputs:
@@ -372,7 +465,10 @@ def _attach_domain_tool_context(
         }
     if destination is not None:
         tool_updates["destination"] = destination
-    if target_resource is not None:
+    if (
+        target_resource is not None
+        and tool_event.attributes.get("target_resource") is None
+    ):
         tool_updates["target_resource"] = target_resource
     _merge_event_attributes(events, tool_event_id, tool_updates)
 

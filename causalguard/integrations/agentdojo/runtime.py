@@ -17,7 +17,9 @@ from causalguard.integrations.agentdojo.common import stable_hash
 from causalguard.integrations.agentdojo.extractors.base import (
     AgentDojoDomainExtractor,
     DomainOperationEvidence,
+    ProposedActionEvidence,
     ToolExecutionContext,
+    ToolProposalContext,
 )
 
 
@@ -33,6 +35,17 @@ class RuntimeCallObservation:
     operations: tuple[DomainOperationEvidence, ...]
 
 
+@dataclass(frozen=True)
+class ProposedCallObservation:
+    """Privacy-safe evidence captured before a proposed call executes."""
+
+    ordinal: int
+    function_name: str
+    argument_hash: str
+    source_tool_call_id: str | None
+    evidence: tuple[ProposedActionEvidence, ...]
+
+
 class AgentDojoRuntimeObserver:
     """Collect domain evidence without retaining raw arguments or state snapshots."""
 
@@ -42,13 +55,19 @@ class AgentDojoRuntimeObserver:
     ) -> None:
         self.extractors = tuple(extractors)
         self._observations: list[RuntimeCallObservation] = []
+        self._proposals: list[ProposedCallObservation] = []
 
     @property
     def observations(self) -> tuple[RuntimeCallObservation, ...]:
         return tuple(self._observations)
 
+    @property
+    def proposals(self) -> tuple[ProposedCallObservation, ...]:
+        return tuple(self._proposals)
+
     def begin_attempt(self) -> None:
         self._observations.clear()
+        self._proposals.clear()
 
     def supports(self, function_name: str) -> bool:
         return any(extractor.supports(function_name) for extractor in self.extractors)
@@ -71,6 +90,28 @@ class AgentDojoRuntimeObserver:
             operations=operations,
         )
         self._observations.append(observation)
+        return observation
+
+    def propose(
+        self,
+        context: ToolProposalContext,
+        *,
+        source_tool_call_id: str | None,
+    ) -> ProposedCallObservation:
+        evidence = tuple(
+            proposed
+            for extractor in self.extractors
+            if extractor.supports(context.function_name)
+            if (proposed := extractor.propose(context)) is not None
+        )
+        observation = ProposedCallObservation(
+            ordinal=len(self._proposals),
+            function_name=context.function_name,
+            argument_hash=stable_hash(context.arguments),
+            source_tool_call_id=source_tool_call_id,
+            evidence=evidence,
+        )
+        self._proposals.append(observation)
         return observation
 
 
