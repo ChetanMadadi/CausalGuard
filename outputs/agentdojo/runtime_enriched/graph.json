@@ -37,10 +37,10 @@
       "attributes": {},
       "confidence": "high",
       "derivation": "explicit_data_reference",
-      "edge_id": "edge:data:input_to:agentdojo:workspace-user_task_33-runtime:tool:4:0:data:agentdojo:workspace:email_content:34:version:43f58c9fb4df160bc6a46facdc0ffbe563c58dc8840df1c413ffc0d39a3a2ae4",
+      "edge_id": "edge:data:input_to:agentdojo:workspace-user_task_33-runtime:tool:4:0:data:agentdojo:workspace:email_content:43f58c9fb4df160bc6a46facdc0ffbe563c58dc8840df1c413ffc0d39a3a2ae4:version:43f58c9fb4df160bc6a46facdc0ffbe563c58dc8840df1c413ffc0d39a3a2ae4",
       "edge_type": "input_to",
       "evidence_ref": "agentdojo:workspace-user_task_33-runtime:tool:4:0",
-      "source_id": "data:agentdojo:workspace:email_content:34:version:43f58c9fb4df160bc6a46facdc0ffbe563c58dc8840df1c413ffc0d39a3a2ae4",
+      "source_id": "data:agentdojo:workspace:email_content:43f58c9fb4df160bc6a46facdc0ffbe563c58dc8840df1c413ffc0d39a3a2ae4:version:43f58c9fb4df160bc6a46facdc0ffbe563c58dc8840df1c413ffc0d39a3a2ae4",
       "target_id": "tool:agentdojo:workspace-user_task_33-runtime:tool:4:0",
       "timestamp": 6.0
     },
@@ -59,10 +59,10 @@
       "attributes": {},
       "confidence": "high",
       "derivation": "runtime_observation",
-      "edge_id": "edge:data:payload_of:agentdojo:workspace-user_task_33-runtime:runtime_operation:5:0:data:agentdojo:workspace:email_content:34:version:43f58c9fb4df160bc6a46facdc0ffbe563c58dc8840df1c413ffc0d39a3a2ae4",
+      "edge_id": "edge:data:payload_of:agentdojo:workspace-user_task_33-runtime:runtime_operation:5:0:data:agentdojo:workspace:email_content:43f58c9fb4df160bc6a46facdc0ffbe563c58dc8840df1c413ffc0d39a3a2ae4:version:43f58c9fb4df160bc6a46facdc0ffbe563c58dc8840df1c413ffc0d39a3a2ae4",
       "edge_type": "payload_of",
       "evidence_ref": "agentdojo:workspace-user_task_33-runtime:runtime_operation:5:0",
-      "source_id": "data:agentdojo:workspace:email_content:34:version:43f58c9fb4df160bc6a46facdc0ffbe563c58dc8840df1c413ffc0d39a3a2ae4",
+      "source_id": "data:agentdojo:workspace:email_content:43f58c9fb4df160bc6a46facdc0ffbe563c58dc8840df1c413ffc0d39a3a2ae4:version:43f58c9fb4df160bc6a46facdc0ffbe563c58dc8840df1c413ffc0d39a3a2ae4",
       "target_id": "sys:agentdojo:workspace-user_task_33-runtime:runtime_operation:5:0",
       "timestamp": 7.0
     },
@@ -81,11 +81,11 @@
       "attributes": {},
       "confidence": "high",
       "derivation": "explicit_data_reference",
-      "edge_id": "edge:data:produces:agentdojo:workspace-user_task_33-runtime:llm:4:data:agentdojo:workspace:email_content:34:version:43f58c9fb4df160bc6a46facdc0ffbe563c58dc8840df1c413ffc0d39a3a2ae4",
+      "edge_id": "edge:data:produces:agentdojo:workspace-user_task_33-runtime:llm:4:data:agentdojo:workspace:email_content:43f58c9fb4df160bc6a46facdc0ffbe563c58dc8840df1c413ffc0d39a3a2ae4:version:43f58c9fb4df160bc6a46facdc0ffbe563c58dc8840df1c413ffc0d39a3a2ae4",
       "edge_type": "produces",
       "evidence_ref": "agentdojo:workspace-user_task_33-runtime:llm:4",
       "source_id": "llm:agentdojo:workspace-user_task_33-runtime:llm:4",
-      "target_id": "data:agentdojo:workspace:email_content:34:version:43f58c9fb4df160bc6a46facdc0ffbe563c58dc8840df1c413ffc0d39a3a2ae4",
+      "target_id": "data:agentdojo:workspace:email_content:43f58c9fb4df160bc6a46facdc0ffbe563c58dc8840df1c413ffc0d39a3a2ae4:version:43f58c9fb4df160bc6a46facdc0ffbe563c58dc8840df1c413ffc0d39a3a2ae4",
       "timestamp": 5.0
     },
     {
@@ -136,11 +136,11 @@
       "attributes": {},
       "confidence": "high",
       "derivation": "runtime_observation",
-      "edge_id": "edge:data:write:agentdojo:workspace-user_task_33-runtime:runtime_operation:5:0:data:agentdojo:workspace:email:34:version:bcc365c5c580d29a591a6c18b0cd9a07ddc98b88cfc173625fced72e9f481b2b",
+      "edge_id": "edge:data:write:agentdojo:workspace-user_task_33-runtime:runtime_operation:5:0:data:agentdojo:workspace:email:34:version:468d26e775a381619a1c72aa0c0fb4916cf2ac34d156544ecbb23f5c5bde1003",
       "edge_type": "write",
       "evidence_ref": "agentdojo:workspace-user_task_33-runtime:runtime_operation:5:0",
       "source_id": "sys:agentdojo:workspace-user_task_33-runtime:runtime_operation:5:0",
-      "target_id": "data:agentdojo:workspace:email:34:version:bcc365c5c580d29a591a6c18b0cd9a07ddc98b88cfc173625fced72e9f481b2b",
+      "target_id": "data:agentdojo:workspace:email:34:version:468d26e775a381619a1c72aa0c0fb4916cf2ac34d156544ecbb23f5c5bde1003",
       "timestamp": 7.0
     },
     {
@@ -201,7 +201,7 @@
       "version": null
     },
     {
-      "content_hash": "sha256:b78393bdf5ccd2fae3fc6067eae54fec4be7b5fb0a2f858a9a8f2cc889b551ee",
+      "content_hash": "sha256:442566dbe6fee4c5c071165afd40d1028c0edf6e438fc183d78f95a612c463f5",
       "node_id": "data:agentdojo:workspace-user_task_33-runtime:tool_result:5",
       "node_type": "data_object",
       "object_kind": "tool_result",
@@ -212,23 +212,23 @@
       "version": null
     },
     {
-      "content_hash": "sha256:bcc365c5c580d29a591a6c18b0cd9a07ddc98b88cfc173625fced72e9f481b2b",
-      "node_id": "data:agentdojo:workspace:email:34:version:bcc365c5c580d29a591a6c18b0cd9a07ddc98b88cfc173625fced72e9f481b2b",
+      "content_hash": "sha256:468d26e775a381619a1c72aa0c0fb4916cf2ac34d156544ecbb23f5c5bde1003",
+      "node_id": "data:agentdojo:workspace:email:34:version:468d26e775a381619a1c72aa0c0fb4916cf2ac34d156544ecbb23f5c5bde1003",
       "node_type": "data_object",
       "object_kind": "email",
       "owner": "emma.johnson@bluesparrowtech.com",
       "resource_id": "agentdojo:workspace:email:34",
       "sensitivity": "unknown",
       "trust_label": "unknown",
-      "version": "sha256:bcc365c5c580d29a591a6c18b0cd9a07ddc98b88cfc173625fced72e9f481b2b"
+      "version": "sha256:468d26e775a381619a1c72aa0c0fb4916cf2ac34d156544ecbb23f5c5bde1003"
     },
     {
       "content_hash": "sha256:43f58c9fb4df160bc6a46facdc0ffbe563c58dc8840df1c413ffc0d39a3a2ae4",
-      "node_id": "data:agentdojo:workspace:email_content:34:version:43f58c9fb4df160bc6a46facdc0ffbe563c58dc8840df1c413ffc0d39a3a2ae4",
+      "node_id": "data:agentdojo:workspace:email_content:43f58c9fb4df160bc6a46facdc0ffbe563c58dc8840df1c413ffc0d39a3a2ae4:version:43f58c9fb4df160bc6a46facdc0ffbe563c58dc8840df1c413ffc0d39a3a2ae4",
       "node_type": "data_object",
       "object_kind": "email_content",
       "owner": "emma.johnson@bluesparrowtech.com",
-      "resource_id": "agentdojo:workspace:email_content:34",
+      "resource_id": "agentdojo:workspace:email_content:43f58c9fb4df160bc6a46facdc0ffbe563c58dc8840df1c413ffc0d39a3a2ae4",
       "sensitivity": "unknown",
       "trust_label": "unknown",
       "version": "sha256:43f58c9fb4df160bc6a46facdc0ffbe563c58dc8840df1c413ffc0d39a3a2ae4"
@@ -291,7 +291,7 @@
       "node_type": "llm_invocation",
       "output_hash": "sha256:6963b8b191058f2d3357e32a9f5384996593c29bb96c1c8174c90569e54b2b5c",
       "output_ref": null,
-      "prompt_hash": "sha256:7b6ae60bcbe1d4365e8edef06010dcc396d4356dcbed90374b752cd8103f5cb9",
+      "prompt_hash": "sha256:1e131c46590095fe65bce160ebb836dc4d89dcb08ec87c54961dc734b7f33213",
       "prompt_ref": null,
       "session_id": "workspace-user_task_33-runtime",
       "timestamp": 8.0,
@@ -330,7 +330,7 @@
       "node_type": "system_operation",
       "operation_type": "email_send",
       "payload_refs": [
-        "agentdojo:workspace:email_content:34",
+        "agentdojo:workspace:email_content:43f58c9fb4df160bc6a46facdc0ffbe563c58dc8840df1c413ffc0d39a3a2ae4",
         "agentdojo:workspace:file:19"
       ],
       "resource_id": "agentdojo:workspace:email:34",

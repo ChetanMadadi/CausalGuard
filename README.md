@@ -140,6 +140,20 @@ post-hoc graph is not built until the delegated pipeline returns. Real AgentDojo
 still provides no HumanApproval event; approval matching is exercised with
 synthetic graph evidence and is never fabricated in the integration.
 
+Validate the same policy with an actual Qwen3-32B-generated ToolCall using:
+
+```bash
+sbatch scripts/slurm/run_agentdojo_real_llm_policy.sbatch
+```
+
+This starts one local vLLM server and runs two fresh AgentDojo environments. In
+the blocked case, file 19 is protected and the destination is untrusted. In the
+allowed case, the task and model pipeline remain the same but the recipient's
+domain is trusted. Every model-generated retry or revised `send_email` is
+evaluated independently. Privacy-safe per-case graphs, policy configuration,
+decision sequences, mutation checks, utility/security results, and regression
+results are written under `outputs/agentdojo/policy_enforcement/real_llm/`.
+
 ## Week 1 Scope
 
 - `causalguard/schema/events.py`: normalized collector event schema.

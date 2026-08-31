@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from collections.abc import Iterable, Mapping, Sequence
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from typing import Any
 
 try:
@@ -31,6 +31,7 @@ from causalguard.schema.events import NormalizedEvent
 class _PendingToolCall:
     event_id: str
     call: FunctionCall
+    proposal_evidence: tuple[ProposedActionEvidence, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -151,18 +152,27 @@ class AgentDojoTraceMapper:
                             attributes=tool_attributes,
                         )
                     )
-                    pending_calls.append(
-                        _PendingToolCall(event_id=tool_event_id, call=tool_call)
-                    )
                     proposal = _pop_matching_proposal(
                         pending_proposals,
                         tool_call,
+                    )
+                    proposal_evidence = (
+                        _scope_proposed_evidence(proposal.evidence, tool_event_id)
+                        if proposal is not None
+                        else ()
+                    )
+                    pending_calls.append(
+                        _PendingToolCall(
+                            event_id=tool_event_id,
+                            call=tool_call,
+                            proposal_evidence=proposal_evidence,
+                        )
                     )
                     if proposal is not None:
                         _attach_proposed_tool_context(
                             events,
                             tool_event_id,
-                            proposal.evidence,
+                            proposal_evidence,
                         )
 
             elif role == "tool":
@@ -187,16 +197,20 @@ class AgentDojoTraceMapper:
                     continue
 
                 if observation is not None and observation.operations:
+                    operations = tuple(
+                        _canonicalize_operation(operation, pending.proposal_evidence)
+                        for operation in observation.operations
+                    )
                     _attach_domain_tool_context(
                         events,
                         pending.event_id,
-                        observation.operations,
+                        operations,
                     )
                     for operation_index, operation in enumerate(
-                        observation.operations
+                        operations
                     ):
                         is_result_producer = (
-                            operation_index == len(observation.operations) - 1
+                            operation_index == len(operations) - 1
                         )
                         events.append(
                             self._event(
@@ -336,6 +350,65 @@ def _pop_matching_proposal(
         ):
             return proposals.pop(index)
     return None
+
+
+def _scope_proposed_evidence(
+    proposals: Sequence[ProposedActionEvidence],
+    tool_event_id: str,
+) -> tuple[ProposedActionEvidence, ...]:
+    suffix = stable_hash(tool_event_id).removeprefix("sha256:")[:16]
+    scoped: list[ProposedActionEvidence] = []
+    for proposal in proposals:
+        replacements = {
+            item.reference: replace(
+                item,
+                reference=f"{item.reference}:proposal:{suffix}",
+                node_id=f"{item.node_id}:proposal:{suffix}",
+            )
+            for item in proposal.llm_generated_objects
+        }
+        scoped.append(
+            replace(
+                proposal,
+                tool_input_objects=tuple(
+                    replacements.get(item.reference, item)
+                    for item in proposal.tool_input_objects
+                ),
+                llm_generated_objects=tuple(
+                    replacements.get(item.reference, item)
+                    for item in proposal.llm_generated_objects
+                ),
+            )
+        )
+    return tuple(scoped)
+
+
+def _canonicalize_operation(
+    operation: DomainOperationEvidence,
+    proposals: Sequence[ProposedActionEvidence],
+) -> DomainOperationEvidence:
+    canonical = {
+        (item.object_kind, item.content_hash): item
+        for proposal in proposals
+        for item in proposal.tool_input_objects
+    }
+
+    def remap(
+        objects: Sequence[DomainObjectEvidence],
+    ) -> tuple[DomainObjectEvidence, ...]:
+        return tuple(
+            canonical.get((item.object_kind, item.content_hash), item)
+            for item in objects
+        )
+
+    return replace(
+        operation,
+        read_objects=remap(operation.read_objects),
+        write_objects=remap(operation.write_objects),
+        payload_objects=remap(operation.payload_objects),
+        tool_input_objects=remap(operation.tool_input_objects),
+        llm_generated_objects=remap(operation.llm_generated_objects),
+    )
 
 
 def _operation_attributes(

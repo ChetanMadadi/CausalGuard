@@ -33,6 +33,14 @@ class RuntimeCallObservation:
     succeeded: bool
     error_hash: str | None
     operations: tuple[DomainOperationEvidence, ...]
+    state_before_hash: str | None = None
+    state_after_hash: str | None = None
+
+    @property
+    def state_changed(self) -> bool | None:
+        if self.state_before_hash is None or self.state_after_hash is None:
+            return None
+        return self.state_before_hash != self.state_after_hash
 
 
 @dataclass(frozen=True)
@@ -52,8 +60,11 @@ class AgentDojoRuntimeObserver:
     def __init__(
         self,
         extractors: Sequence[AgentDojoDomainExtractor] = (),
+        *,
+        capture_all_state: bool = False,
     ) -> None:
         self.extractors = tuple(extractors)
+        self.capture_all_state = capture_all_state
         self._observations: list[RuntimeCallObservation] = []
         self._proposals: list[ProposedCallObservation] = []
 
@@ -88,6 +99,16 @@ class AgentDojoRuntimeObserver:
                 stable_hash(context.error) if context.error is not None else None
             ),
             operations=operations,
+            state_before_hash=(
+                stable_hash(context.environment_before)
+                if context.environment_before is not None
+                else None
+            ),
+            state_after_hash=(
+                stable_hash(context.environment_after)
+                if context.environment_after is not None
+                else None
+            ),
         )
         self._observations.append(observation)
         return observation
@@ -134,7 +155,8 @@ class ObservingFunctionsRuntime(FunctionsRuntime):
         kwargs: Mapping[str, Any],
         raise_on_error: bool = False,
     ) -> tuple[FunctionReturnType, str | None]:
-        before = _snapshot(env) if self.observer.supports(function) else None
+        capture_state = self.observer.capture_all_state or self.observer.supports(function)
+        before = _snapshot(env) if capture_state else None
         try:
             result, error = self.delegate.run_function(
                 env,
@@ -143,7 +165,7 @@ class ObservingFunctionsRuntime(FunctionsRuntime):
                 raise_on_error=raise_on_error,
             )
         except Exception as exc:
-            after = _snapshot(env) if self.observer.supports(function) else None
+            after = _snapshot(env) if capture_state else None
             self.observer.record(
                 ToolExecutionContext(
                     function_name=function,
@@ -156,7 +178,7 @@ class ObservingFunctionsRuntime(FunctionsRuntime):
             )
             raise
 
-        after = _snapshot(env) if self.observer.supports(function) else None
+        after = _snapshot(env) if capture_state else None
         self.observer.record(
             ToolExecutionContext(
                 function_name=function,

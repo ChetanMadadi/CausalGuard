@@ -1,0 +1,31 @@
+{
+  "conditional": {
+    "destination_tasks": 29,
+    "destination_tasks_with_correct_correlation": 2,
+    "mutated_tasks": 50,
+    "mutated_tasks_consistent_with_graph": 2,
+    "mutated_tasks_with_complete_write_provenance": 2,
+    "payload_tasks": 21,
+    "payload_tasks_with_complete_payload_provenance": 2
+  },
+  "instrumentation_failures": 0,
+  "llm_invocations": 437,
+  "result_bearing_tool_calls": 340,
+  "successful_tool_calls_and_system_operation_nodes": 311,
+  "task_level": {
+    "actual_mutation_vs_graph_consistent": 49,
+    "destination_correlation_correct": 70,
+    "graph_acyclic": 97,
+    "invocation_causality_correct": 97,
+    "payload_provenance_correct": 78,
+    "read_provenance_correct": 6,
+    "runtime_observer_correlation_correct": 97,
+    "system_operation_coverage_correct": 5,
+    "tool_call_coverage_correct": 97,
+    "write_provenance_correct": 49
+  },
+  "tasks": 97,
+  "tasks_with_semantic_provenance_gaps": 92,
+  "tool_call_proposals": 342,
+  "unexecuted_terminal_tool_call_proposals": 2
+}

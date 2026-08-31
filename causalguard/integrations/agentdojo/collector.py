@@ -52,6 +52,15 @@ class AgentDojoCollector(BasePipelineElement):
         )
         self.events: list[NormalizedEvent] = []
         self.messages: Sequence[ChatMessage] = []
+        # AgentDojo may retry a task up to three times when an attempt has no
+        # final model output.  Keep privacy-sensitive transcripts in memory
+        # only, while exposing enough lifecycle state for the benchmark audit
+        # to account for those retries and compare the complete task mutation.
+        self.attempt_messages: list[Sequence[ChatMessage]] = []
+        self.attempt_events: list[tuple[NormalizedEvent, ...]] = []
+        self.attempt_initial_environments: list[Env] = []
+        self.attempt_final_environments: list[Env] = []
+        self.attempt_runtime_observations: list[tuple[RuntimeCallObservation, ...]] = []
         if policy_enforcer is not None:
             if runtime_observer is not None and policy_enforcer.observer is not runtime_observer:
                 raise ValueError("policy enforcer and collector must share one runtime observer")
@@ -67,6 +76,7 @@ class AgentDojoCollector(BasePipelineElement):
         messages: Sequence[ChatMessage] = [],
         extra_args: dict = {},
     ) -> tuple[str, FunctionsRuntime, Env, Sequence[ChatMessage], dict]:
+        self.attempt_initial_environments.append(env.model_copy(deep=True))
         observed_runtime: ObservingFunctionsRuntime | None = None
         runtime_for_delegate = runtime
         if self.policy_enforcer is not None:
@@ -97,6 +107,10 @@ class AgentDojoCollector(BasePipelineElement):
             final_messages,
             runtime_observations=observations,
         )
+        self.attempt_messages.append(final_messages)
+        self.attempt_events.append(tuple(self.events))
+        self.attempt_final_environments.append(final_env.model_copy(deep=True))
+        self.attempt_runtime_observations.append(tuple(observations))
         if observed_runtime is not None and final_runtime is observed_runtime:
             final_runtime = runtime
         return (

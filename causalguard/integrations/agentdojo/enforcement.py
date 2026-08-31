@@ -6,7 +6,11 @@ from ast import literal_eval
 from collections.abc import Sequence
 
 from agentdojo.agent_pipeline.llms.google_llm import EMPTY_FUNCTION_NAME
-from agentdojo.agent_pipeline.tool_execution import ToolsExecutor, is_string_list
+from agentdojo.agent_pipeline.tool_execution import (
+    ToolsExecutionLoop,
+    ToolsExecutor,
+    is_string_list,
+)
 from agentdojo.functions_runtime import EmptyEnv, Env, FunctionsRuntime
 from agentdojo.types import (
     ChatMessage,
@@ -191,6 +195,59 @@ class PolicyEnforcingToolsExecutor(ToolsExecutor):
             )
 
         return query, runtime, env, [*messages, *results], extra_args
+
+
+def install_policy_enforcement(
+    pipeline,
+    enforcer: AgentDojoPolicyEnforcer,
+):
+    """Replace standard AgentDojo tool executors without changing the pipeline."""
+
+    elements = getattr(pipeline, "elements", None)
+    if elements is None:
+        raise ValueError("pipeline has no inspectable elements")
+    replacements = 0
+    updated = []
+    for element in elements:
+        if type(element) is ToolsExecutor:
+            updated.append(
+                PolicyEnforcingToolsExecutor(
+                    enforcer,
+                    tool_output_formatter=element.output_formatter,
+                )
+            )
+            replacements += 1
+        elif isinstance(element, ToolsExecutionLoop):
+            nested, nested_replacements = _install_in_loop(element, enforcer)
+            updated.append(nested)
+            replacements += nested_replacements
+        else:
+            updated.append(element)
+    pipeline.elements = updated
+    if replacements == 0:
+        raise ValueError("pipeline contains no standard ToolsExecutor")
+    return pipeline
+
+
+def _install_in_loop(
+    loop: ToolsExecutionLoop,
+    enforcer: AgentDojoPolicyEnforcer,
+) -> tuple[ToolsExecutionLoop, int]:
+    replacements = 0
+    updated = []
+    for element in loop.elements:
+        if type(element) is ToolsExecutor:
+            updated.append(
+                PolicyEnforcingToolsExecutor(
+                    enforcer,
+                    tool_output_formatter=element.output_formatter,
+                )
+            )
+            replacements += 1
+        else:
+            updated.append(element)
+    loop.elements = updated
+    return loop, replacements
 
 
 def _error_result(tool_call, error: str) -> ChatToolResultMessage:

@@ -10,7 +10,7 @@ pytest.importorskip("agentdojo")
 from agentdojo.agent_pipeline.agent_pipeline import AgentPipeline
 from agentdojo.agent_pipeline.base_pipeline_element import BasePipelineElement
 from agentdojo.agent_pipeline.basic_elements import InitQuery, SystemMessage
-from agentdojo.agent_pipeline.tool_execution import ToolsExecutionLoop
+from agentdojo.agent_pipeline.tool_execution import ToolsExecutionLoop, ToolsExecutor
 from agentdojo.functions_runtime import EmptyEnv, Env, FunctionCall, FunctionsRuntime
 from agentdojo.task_suite.load_suites import get_suite
 from agentdojo.types import (
@@ -27,6 +27,7 @@ from causalguard.integrations.agentdojo import (
     AgentDojoTraceMapper,
     PolicyEnforcingToolsExecutor,
     WorkspaceReadSendExtractor,
+    install_policy_enforcement,
 )
 from causalguard.policy import PolicyAction, protected_file_external_email_policy
 from causalguard.schema.edges import EdgeType
@@ -70,6 +71,7 @@ def _run_policy_flow(
     *,
     trusted_domains: tuple[str, ...] = (),
     include_protected_attachment: bool = True,
+    retry_without_attachment: bool = False,
 ) -> tuple[GraphStore, AgentDojoPolicyEnforcer, int, int]:
     suite = get_suite("v1.2.2", "workspace")
     task = suite.get_user_task_by_id("user_task_33")
@@ -86,6 +88,14 @@ def _run_policy_flow(
     ]
     if not include_protected_attachment:
         calls[-1].args["attachments"] = []
+    if retry_without_attachment:
+        calls.append(
+            FunctionCall(
+                id="policy-revised-send",
+                function=calls[-1].function,
+                args={**calls[-1].args, "attachments": []},
+            )
+        )
 
     observer = AgentDojoRuntimeObserver([WorkspaceReadSendExtractor()])
     mapper = AgentDojoTraceMapper(
@@ -190,6 +200,17 @@ def test_prior_protected_read_without_outgoing_attachment_is_allowed() -> None:
     assert enforcer.decisions[0].protected_resource_ids == ()
     assert any(edge.edge_type is EdgeType.READ for edge in store.edges())
     assert _successful_send_nodes(store)
+    protected_nodes = {
+        node.node_id
+        for node in store.nodes()
+        if node.node_type.value == "data_object"
+        and node.resource_id == PROTECTED
+    }
+    assert not any(
+        edge.source_id in protected_nodes
+        and edge.edge_type is EdgeType.PAYLOAD_OF
+        for edge in store.edges()
+    )
 
 
 def test_policy_decision_and_denied_exports_do_not_leak_raw_content(tmp_path) -> None:
@@ -206,6 +227,48 @@ def test_policy_decision_and_denied_exports_do_not_leak_raw_content(tmp_path) ->
         json.dumps(json.loads(decision_json), indent=2) + "\n",
         encoding="utf-8",
     )
+
+
+def test_revised_send_after_denial_receives_a_fresh_decision() -> None:
+    store, enforcer, before_count, after_count = _run_policy_flow(
+        retry_without_attachment=True,
+    )
+
+    assert after_count == before_count + 1
+    assert [item.decision for item in enforcer.decisions] == [
+        PolicyAction.DENY,
+        PolicyAction.ALLOW,
+    ]
+    assert enforcer.decisions[0].protected_resource_ids == (PROTECTED,)
+    assert enforcer.decisions[1].protected_resource_ids == ()
+    assert (
+        enforcer.decisions[0].triggering_tool_call_id
+        != enforcer.decisions[1].triggering_tool_call_id
+    )
+    assert len(_successful_send_nodes(store)) == 1
+
+
+def test_standard_agentdojo_executor_can_be_replaced_for_real_llm_pipeline() -> None:
+    observer = AgentDojoRuntimeObserver([WorkspaceReadSendExtractor()])
+    mapper = AgentDojoTraceMapper(session_id="install-policy")
+    enforcer = AgentDojoPolicyEnforcer(
+        [
+            protected_file_external_email_policy(
+                protected_resource_ids=(PROTECTED,),
+            )
+        ],
+        mapper=mapper,
+        observer=observer,
+    )
+    llm = _PlannedLLM(())
+    loop = ToolsExecutionLoop([ToolsExecutor(), llm])
+    pipeline = AgentPipeline([loop])
+
+    installed = install_policy_enforcement(pipeline, enforcer)
+
+    assert installed is pipeline
+    assert isinstance(loop.elements[0], PolicyEnforcingToolsExecutor)
+    assert loop.elements[0].enforcer is enforcer
 
 
 def _successful_send_nodes(store: GraphStore) -> list[object]:

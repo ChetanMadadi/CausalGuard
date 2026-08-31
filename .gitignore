@@ -10,3 +10,8 @@ __pycache__/
 outputs/agentdojo/real_llm/job-*/
 outputs/agentdojo/real_llm/slurm-*.out
 outputs/agentdojo/real_llm/slurm-*.err
+outputs/agentdojo/policy_enforcement/real_llm/job-*/
+outputs/agentdojo/policy_enforcement/real_llm/slurm-*.out
+outputs/agentdojo/policy_enforcement/real_llm/slurm-*.err
+outputs/agentdojo/benchmark_audit_*/shards/
+outputs/agentdojo/benchmark_audit_*/slurm/

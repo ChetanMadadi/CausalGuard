@@ -1,0 +1,51 @@
+{
+  "raw_text_retained": false,
+  "records": [
+    {
+      "path": "slurm/slurm-63806751_0.out",
+      "sha256": "f32aaeae24c00a9c68b195de738cf20b1c29d4d692025cea140de48b90736ea9"
+    },
+    {
+      "path": "slurm/slurm-63806751_1.out",
+      "sha256": "eb6fdac0c397fa022cc99e473bb16d1f5169cda5ca8db141b13cf99d71f40519"
+    },
+    {
+      "path": "slurm/slurm-63806751_1.out",
+      "sha256": "5cbeaaa38234a270b880083b9674311c74357763890cebe58806a7071ff657f2"
+    },
+    {
+      "path": "slurm/slurm-63806751_2.out",
+      "sha256": "03c2b2d9b621541b836709af9aa564e9679826f05dc5bb1e350605cc337adff3"
+    },
+    {
+      "path": "slurm/slurm-63806751_3.out",
+      "sha256": "cdefd0d800943c112c38cce7676a25bd59487a66df8de72c74e4a756ae8354f5"
+    },
+    {
+      "path": "slurm/slurm-63806751_3.out",
+      "sha256": "c26c705c2933a5d291064cabdd35bf3ac8687bbfe9e37a9b17c6c338287d1895"
+    },
+    {
+      "path": "slurm/slurm-63806751_3.out",
+      "sha256": "755ac729723fd3241d07daf87c059453ff9c914be44975d814199e38e933aa18"
+    },
+    {
+      "path": "slurm/slurm-63806751_6.out",
+      "sha256": "28e6abab09a1c3a625da5392edca5a2436bb43557200720ba962508f32bab1be"
+    },
+    {
+      "path": "slurm/slurm-63806751_6.out",
+      "sha256": "5e737e2ea361dc8ae35f2b4d1b1c879646cddbf36e05c0e2394927b0fa83eab9"
+    },
+    {
+      "path": "slurm/slurm-63806751_6.out",
+      "sha256": "1e716326d5613e02feff001edfab4b3f21a227242708aaee1820ca6c59e9dd2b"
+    },
+    {
+      "path": "slurm/slurm-63806751_7.out",
+      "sha256": "b54993ac8a389f9742bcfbfb520dba7fdf7dd92741205a6c106b441e5876eb16"
+    }
+  ],
+  "redacted_line_count": 11,
+  "sanitization": "raw AgentDojo broken-JSON debug lines replaced in place by SHA-256 evidence"
+}
