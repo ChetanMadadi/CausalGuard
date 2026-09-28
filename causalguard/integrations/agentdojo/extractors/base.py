@@ -23,6 +23,7 @@ class DomainObjectEvidence:
     sensitivity: str = "unknown"
     trust_label: str = "unknown"
     owner: str | None = None
+    lineage_status: str = "unrecorded"
 
     def metadata(self) -> dict[str, object]:
         return {
@@ -34,6 +35,7 @@ class DomainObjectEvidence:
             "sensitivity": self.sensitivity,
             "trust_label": self.trust_label,
             "owner": self.owner,
+            "lineage_status": self.lineage_status,
         }
 
 
@@ -52,6 +54,7 @@ class DomainOperationEvidence:
     destination: str | None = None
     target_resource: str | None = None
     byte_count: int | None = None
+    data_flow_semantics: str | None = None
 
     def all_objects(self) -> tuple[DomainObjectEvidence, ...]:
         objects: dict[str, DomainObjectEvidence] = {}
@@ -76,6 +79,9 @@ class ProposedActionEvidence:
     llm_generated_objects: tuple[DomainObjectEvidence, ...] = ()
     destination: str | None = None
     target_resource: str | None = None
+    # Adapter-attested outgoing attachments, not arbitrary tool inputs.
+    # None means evidence unavailable; () explicitly means no attachments.
+    outgoing_attachment_refs: tuple[str, ...] | None = None
 
 
 @dataclass(frozen=True)

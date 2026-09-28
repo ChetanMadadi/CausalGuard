@@ -287,7 +287,11 @@ class AgentDojoTraceMapper:
                 "session_id": self.session_id,
                 "causal_context_id": self.causal_context_id,
                 "parent_event_id": parent_event_id,
-                "attributes": attributes,
+                "attributes": {
+                    **attributes,
+                    "clock_unit": "ordinal",
+                    "clock_domain": f"agentdojo-transcript:{self.session_id}",
+                },
             }
         )
 
@@ -421,6 +425,7 @@ def _operation_attributes(
     objects = {item.reference: item.metadata() for item in operation.all_objects()}
     attributes: dict[str, Any] = {
         "operation_type": operation.operation_type,
+        "data_flow_semantics": operation.data_flow_semantics,
         "action_class": operation.action_class,
         "read_refs": [item.reference for item in operation.read_objects],
         "write_refs": [item.reference for item in operation.write_objects],
@@ -518,6 +523,20 @@ def _attach_proposed_tool_context(
         destination=destination,
         target_resource=target_resource,
     )
+    # This role is asserted by the adapter, never copied from model arguments.
+    refs = (
+        list(dict.fromkeys(ref for proposal in proposals
+                           for ref in proposal.outgoing_attachment_refs))
+        if proposals and all(p.outgoing_attachment_refs is not None for p in proposals)
+        else None
+    )
+    tool_event = _event_by_id(events, tool_event_id)
+    _merge_event_attributes(events, tool_event_id, {
+        "argument_summary": {
+            **tool_event.attributes.get("argument_summary", {}),
+            "outgoing_attachment_refs": refs,
+        },
+    })
 
 
 def _attach_tool_context(

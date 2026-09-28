@@ -8,22 +8,32 @@ from causalguard.policy.models import (
     PolicyDecision,
     PolicyDefinition,
     PolicyParams,
+    PathWitness,
     PredicateSpec,
     SelectSpec,
     TriggerSpec,
     protected_file_external_email_policy,
 )
+from causalguard.policy.tool_arguments import (
+    MappedProgentPolicy,
+    MappedProgentPolicyEngine,
+    ToolArgumentDecision,
+)
 
 __all__ = [
     "ActionSpec",
     "ExceptionSpec",
+    "MappedProgentPolicy",
+    "MappedProgentPolicyEngine",
     "PolicyAction",
     "PolicyDecision",
     "PolicyDefinition",
     "PolicyEngine",
     "PolicyParams",
+    "PathWitness",
     "PredicateSpec",
     "SelectSpec",
     "TriggerSpec",
+    "ToolArgumentDecision",
     "protected_file_external_email_policy",
 ]

@@ -33,6 +33,7 @@ class _DataRef:
     sensitivity: str
     trust_label: str | None
     owner: str | None
+    lineage_status: str
 
 
 _SYSTEM_EVENT_TYPES = {
@@ -118,7 +119,11 @@ class GraphBuilder:
                 "node_type": "tool_call",
                 "tool_name": self._required_attribute(event, "tool_name"),
                 "action_class": event.attributes.get("action_class"),
-                "argument_summary": event.attributes.get("argument_summary", {}),
+                "argument_summary": {
+                    **event.attributes.get("argument_summary", {}),
+                    "clock_unit": event.attributes.get("clock_unit"),
+                    "clock_domain": event.attributes.get("clock_domain"),
+                },
                 "target_resource": event.attributes.get("target_resource"),
                 "destination": event.attributes.get("destination"),
                 "timestamp": event.timestamp,
@@ -175,6 +180,7 @@ class GraphBuilder:
             "node_id": f"sys:{event.event_id}",
             "node_type": "system_operation",
             "operation_type": operation_type,
+            "data_flow_semantics": event.attributes.get("data_flow_semantics"),
             "action_class": event.attributes.get("action_class"),
             "syscall_kind": event.attributes.get("syscall_kind"),
             "resource_id": resource_id,
@@ -241,6 +247,7 @@ class GraphBuilder:
             sensitivity=metadata.get("sensitivity", "unknown"),
             trust_label=metadata.get("trust_label", "unknown"),
             owner=metadata.get("owner"),
+            lineage_status=metadata.get("lineage_status", "unrecorded"),
         )
 
     def _data_metadata(self, event: NormalizedEvent, reference: str) -> dict[str, Any]:
@@ -295,6 +302,7 @@ class GraphBuilder:
                 "sensitivity": data_ref.sensitivity,
                 "trust_label": data_ref.trust_label,
                 "owner": data_ref.owner,
+                "lineage_status": data_ref.lineage_status,
             }
         )
         return data_ref.node_id
@@ -340,6 +348,10 @@ class GraphBuilder:
                 "derivation": Derivation.PARENT_EVENT.value,
                 "confidence": Confidence.HIGH.value,
                 "evidence_ref": event.event_id,
+                "attributes": {
+                    "clock_unit": event.attributes.get("clock_unit"),
+                    "clock_domain": event.attributes.get("clock_domain"),
+                },
             }
         )
 
@@ -479,6 +491,10 @@ class GraphBuilder:
                 ),
                 "confidence": event.attributes.get("data_confidence", Confidence.HIGH.value),
                 "evidence_ref": event.event_id,
+                "attributes": {
+                    "clock_unit": event.attributes.get("clock_unit"),
+                    "clock_domain": event.attributes.get("clock_domain"),
+                },
             }
         )
 
@@ -567,7 +583,13 @@ class GraphBuilder:
         if tool.action_class != approval.action_class:
             return False
         if approval.resource_scope is not None and approval.resource_scope != tool.target_resource:
-            return False
+            attachment_refs = tool.argument_summary.get("outgoing_attachment_refs")
+            if not (
+                tool.action_class == "send_email"
+                and isinstance(attachment_refs, list)
+                and approval.resource_scope in attachment_refs
+            ):
+                return False
         if (
             approval.destination_scope is not None
             and approval.destination_scope != tool.destination

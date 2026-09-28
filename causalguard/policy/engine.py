@@ -1,30 +1,26 @@
-"""Bounded evaluation for trigger-driven provenance policies."""
+"""Immediate protected-attachment policy evaluation at the proposed tool gate."""
 
 from __future__ import annotations
 
-from collections import deque
 from dataclasses import dataclass
 from fnmatch import fnmatchcase
+import re
 
 from causalguard.graph import GraphStore
-from causalguard.policy.models import (
-    PolicyDecision,
-    PolicyDefinition,
-)
+from causalguard.policy.models import PolicyDecision, PolicyDefinition
 from causalguard.schema.edges import EdgeType, ProvenanceEdge
 from causalguard.schema.nodes import DataObjectNode, HumanApprovalNode, ToolCallNode
 
 
 @dataclass(frozen=True)
 class _EvidenceSelection:
-    node_ids: frozenset[str]
-    edge_ids: frozenset[str]
-    payload_node_ids: frozenset[str]
-    approval_node_ids: frozenset[str]
+    attachment_edges: tuple[ProvenanceEdge, ...]
+    approval_edges: tuple[ProvenanceEdge, ...]
+    missing_attachments: bool
 
 
 class PolicyEngine:
-    """Evaluate one policy from a proposed ToolCall using bounded provenance."""
+    """Match only adapter-attested attachments directly input to this email."""
 
     def evaluate(
         self,
@@ -40,180 +36,169 @@ class PolicyEngine:
         if tool.action_class != policy.trigger.action_class:
             return None
 
+        if policy.select.kind == "bounded_data_flow":
+            from causalguard.policy.paths import evaluate_paths
+            return evaluate_paths(self, policy, store, tool, evaluated_at=evaluated_at)
+        if policy.params.time_window is not None:
+            from causalguard.policy.paths import validate_sink_clock
+            validate_sink_clock(policy, tool)
+
         evaluation_time = tool.timestamp if evaluated_at is None else evaluated_at
         selection = self._select(policy, store, tool)
-        protected_resources = self._matched_protected_resources(
-            policy,
-            store,
-            selection.payload_node_ids,
+        protected_edges = tuple(
+            edge for edge in selection.attachment_edges
+            if self._is_protected(policy, store.get_node(edge.source_id))
         )
+        protected_resources = {
+            store.get_node(edge.source_id).resource_id for edge in protected_edges
+        }
         destination_classification = self._destination_classification(policy, tool)
-
-        exception_status: str = "none"
-        if not protected_resources:
-            decision = policy.action.on_no_match
-            explanation = "No configured protected resource is an exact outgoing payload."
-        elif (
+        recipients = _recipient_addresses(tool.destination)
+        trusted_destination = (
             "trusted_destination" in policy.exception.kinds
             and destination_classification == "trusted"
-        ):
+        )
+        approval_edges = tuple(
+            edge for edge in selection.approval_edges
+            if "exact_human_approval" in policy.exception.kinds
+            and any(
+                self._approval_matches(
+                    policy, store.get_node(edge.source_id), tool, resource_id,
+                    evaluation_time,
+                )
+                for resource_id in protected_resources
+            )
+        )
+        approved_resources = {
+            store.get_node(edge.source_id).resource_scope for edge in approval_edges
+        }
+        valid_approval = bool(protected_resources) and protected_resources <= approved_resources
+        missing_destination = destination_classification == "unresolved"
+        missing = selection.missing_attachments or missing_destination
+        exception_status = "none"
+
+        # Resolve all required evidence before claiming a definite policy match.
+        if missing:
+            decision = policy.action.on_missing_evidence
+            reason = (
+                "Required evidence unresolved: "
+                + ", ".join(name for name, absent in (
+                    ("attachments", selection.missing_attachments),
+                    ("destination", missing_destination),
+                ) if absent)
+                + ". Execution is held."
+            )
+        elif protected_resources and not trusted_destination and not valid_approval:
+            decision = policy.action.on_violation
+            reason = "Protected outgoing attachment to an unauthorized destination."
+        elif not protected_resources:
+            decision = policy.action.on_no_match
+            reason = "No configured protected object matches an outgoing attachment."
+        elif trusted_destination:
             decision = policy.action.on_trusted_destination
             exception_status = "trusted_destination"
-            explanation = "The exact protected payload is going only to trusted recipients."
-        elif (
-            "exact_human_approval" in policy.exception.kinds
-            and self._has_exact_approval(
-                policy,
-                store,
-                tool,
-                selection.approval_node_ids,
-                protected_resources,
-                evaluation_time,
-            )
-        ):
+            reason = "All recipients of the protected attachments satisfy trusted configuration."
+        else:
             decision = policy.action.on_valid_approval
             exception_status = "valid_approval"
-            explanation = "An exact, unexpired HumanApproval covers the proposed action."
-        else:
-            decision = policy.action.on_violation
-            explanation = (
-                "A configured protected resource is an exact outgoing payload to an "
-                "untrusted destination without an applicable exception."
-            )
+            reason = "Exact, unexpired action approval covers every protected attachment."
 
+        # A direct witness only: no preceding read, LLM, or transitive edges.
+        witness_edges = protected_edges or selection.attachment_edges
+        witness_nodes = {tool.node_id, *(edge.source_id for edge in witness_edges)}
         return PolicyDecision(
             policy_id=policy.policy_id,
             decision=decision,
-            triggering_tool_call_id=triggering_tool_call_id,
+            triggering_tool_call_id=tool.node_id,
             protected_resource_ids=tuple(sorted(protected_resources)),
             destination_classification=destination_classification,
             exception_status=exception_status,
-            evidence_node_ids=tuple(sorted(selection.node_ids)),
-            evidence_edge_ids=tuple(sorted(selection.edge_ids)),
-            explanation=explanation,
+            evidence_status="missing" if missing else "complete",
+            evidence_node_ids=tuple(sorted(witness_nodes)),
+            evidence_edge_ids=tuple(sorted(edge.edge_id for edge in witness_edges)),
+            recipient_addresses=recipients,
+            exception_evidence_node_ids=tuple(sorted({
+                edge.source_id for edge in approval_edges
+            })),
+            exception_evidence_edge_ids=tuple(sorted(edge.edge_id for edge in approval_edges)),
+            explanation=(
+                reason
+                + f" Recipient metadata: {destination_classification}; "
+                + f"recipients={list(recipients)}. Exception: {exception_status}."
+            ),
         )
 
     def _select(
-        self,
-        policy: PolicyDefinition,
-        store: GraphStore,
-        tool: ToolCallNode,
+        self, policy: PolicyDefinition, store: GraphStore, tool: ToolCallNode,
     ) -> _EvidenceSelection:
-        graph = store.copy_networkx()
-        node_ids = {tool.node_id}
-        edge_ids: set[str] = set()
-        payload_node_ids: set[str] = set()
-        approval_node_ids: set[str] = set()
-        queue = deque([(tool.node_id, 0)])
-        visited_depth = {tool.node_id: 0}
-
-        while queue:
-            current_id, depth = queue.popleft()
-            if depth >= policy.params.max_provenance_depth:
-                continue
-            for source_id, _, edge_id in graph.in_edges(current_id, keys=True):
-                edge = store.get_edge(edge_id)
-                if not self._within_time_window(policy, edge, tool.timestamp):
-                    continue
-                edge_ids.add(edge.edge_id)
-                node_ids.add(source_id)
-                if current_id == tool.node_id and edge.edge_type is EdgeType.INPUT_TO:
-                    payload_node_ids.add(source_id)
-                if current_id == tool.node_id and edge.edge_type is EdgeType.AUTHORIZES:
-                    approval_node_ids.add(source_id)
-                next_depth = depth + 1
-                if visited_depth.get(source_id, next_depth + 1) > next_depth:
-                    visited_depth[source_id] = next_depth
-                    queue.append((source_id, next_depth))
-
-        return _EvidenceSelection(
-            node_ids=frozenset(node_ids),
-            edge_ids=frozenset(edge_ids),
-            payload_node_ids=frozenset(payload_node_ids),
-            approval_node_ids=frozenset(approval_node_ids),
+        # Reuse ToolCall.argument_summary; this field is populated by the trusted
+        # proposal adapter, not model-supplied claims or generic input_refs.
+        refs = tool.argument_summary.get("outgoing_attachment_refs")
+        known = isinstance(refs, list) and all(
+            isinstance(ref, str) and bool(ref.strip()) for ref in refs
         )
+        expected = set(refs) if known else set()
+        attachments, approvals = [], []
+        resolved = set()
+        missing = not known
+        graph = store.copy_networkx()
+        for source_id, _, edge_id in graph.in_edges(tool.node_id, keys=True):
+            edge = store.get_edge(edge_id)
+            if edge.edge_type is not EdgeType.AUTHORIZES and not self._within_time_window(policy, edge, tool):
+                continue
+            source = store.get_node(source_id)
+            if edge.edge_type is EdgeType.AUTHORIZES and isinstance(source, HumanApprovalNode):
+                approvals.append(edge)
+            elif (
+                edge.edge_type is EdgeType.INPUT_TO
+                and isinstance(source, DataObjectNode)
+                and source.resource_id in expected
+            ):
+                attachments.append(edge)
+                resolved.add(source.resource_id)
+                if source.object_kind == "unresolved_cloud_drive_attachment":
+                    missing = True
+        missing = missing or bool(expected - resolved)
+        return _EvidenceSelection(tuple(attachments), tuple(approvals), missing)
 
     def _within_time_window(
-        self,
-        policy: PolicyDefinition,
-        edge: ProvenanceEdge,
-        trigger_timestamp: float,
+        self, policy: PolicyDefinition, edge: ProvenanceEdge, tool: ToolCallNode,
     ) -> bool:
+        # Direct-mode filtering retains its conservative missing-evidence result.
+        # Numeric windows now require declared units and a compatible clock.
         window = policy.params.time_window
-        if window is None:
-            return True
-        return trigger_timestamp - window <= edge.timestamp <= trigger_timestamp
+        if window is not None:
+            from causalguard.policy.paths import validate_edge_clock
+            validate_edge_clock(policy, edge, tool)
+        return window is None or tool.timestamp - window <= edge.timestamp <= tool.timestamp
 
-    def _matched_protected_resources(
-        self,
-        policy: PolicyDefinition,
-        store: GraphStore,
-        payload_node_ids: frozenset[str],
-    ) -> set[str]:
-        matches: set[str] = set()
-        configured_ids = set(policy.params.protected_resource_ids)
-        for node_id in payload_node_ids:
-            node = store.get_node(node_id)
-            if not isinstance(node, DataObjectNode):
-                continue
-            if node.resource_id in configured_ids or any(
-                fnmatchcase(node.resource_id, pattern)
-                for pattern in policy.params.protected_resource_patterns
-            ):
-                matches.add(node.resource_id)
-        return matches
+    def _is_protected(self, policy, node) -> bool:
+        return isinstance(node, DataObjectNode) and (
+            node.resource_id in policy.params.protected_resource_ids
+            or any(fnmatchcase(node.resource_id, pattern)
+                   for pattern in policy.params.protected_resource_patterns)
+            or node.sensitivity in policy.params.protected_sensitivities
+        )
 
     def _destination_classification(
-        self,
-        policy: PolicyDefinition,
-        tool: ToolCallNode,
+        self, policy: PolicyDefinition, tool: ToolCallNode,
     ) -> str:
         recipients = _recipient_addresses(tool.destination)
         if not recipients:
-            return "untrusted"
+            return "unresolved"
         trusted_recipients = {
-            item.removeprefix("mailto:").lower()
+            item.strip().lower().removeprefix("mailto:")
             for item in policy.params.trusted_recipients
         }
         trusted_domains = {
-            item.lower().removeprefix("@")
+            item.strip().lower().removeprefix("@")
             for item in policy.params.trusted_domains
         }
-        if all(
+        return "trusted" if all(
             recipient in trusted_recipients
-            or _recipient_domain(recipient) in trusted_domains
+            or recipient.rpartition("@")[2] in trusted_domains
             for recipient in recipients
-        ):
-            return "trusted"
-        return "untrusted"
-
-    def _has_exact_approval(
-        self,
-        policy: PolicyDefinition,
-        store: GraphStore,
-        tool: ToolCallNode,
-        approval_node_ids: frozenset[str],
-        protected_resources: set[str],
-        evaluated_at: float,
-    ) -> bool:
-        approvals = [
-            node
-            for node_id in approval_node_ids
-            if isinstance((node := store.get_node(node_id)), HumanApprovalNode)
-        ]
-        return all(
-            any(
-                self._approval_matches(
-                    policy,
-                    approval,
-                    tool,
-                    resource_id,
-                    evaluated_at,
-                )
-                for approval in approvals
-            )
-            for resource_id in protected_resources
-        )
+        ) else "untrusted"
 
     def _approval_matches(
         self,
@@ -246,13 +231,12 @@ class PolicyEngine:
 def _recipient_addresses(destination: str | None) -> tuple[str, ...]:
     if destination is None:
         return ()
-    return tuple(
-        item.strip().removeprefix("mailto:").lower()
+    recipients = tuple(
+        item.strip().lower().removeprefix("mailto:")
         for item in destination.split(",")
-        if item.strip()
     )
-
-
-def _recipient_domain(recipient: str) -> str:
-    _, separator, domain = recipient.rpartition("@")
-    return domain if separator else ""
+    # Conservative mailbox metadata validation; never discard a malformed
+    # CC/BCC component and accidentally authorize only the remaining addresses.
+    if any(re.fullmatch(r"[^\s@,;<>:]+@[^\s@,;<>:]+", item) is None for item in recipients):
+        return ()
+    return recipients

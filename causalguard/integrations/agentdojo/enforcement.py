@@ -23,6 +23,11 @@ from causalguard.integrations.agentdojo.extractors.base import ToolProposalConte
 from causalguard.integrations.agentdojo.mapper import AgentDojoTraceMapper
 from causalguard.integrations.agentdojo.runtime import AgentDojoRuntimeObserver
 from causalguard.policy import PolicyAction, PolicyDecision, PolicyDefinition, PolicyEngine
+from causalguard.policy.tool_arguments import (
+    MappedProgentPolicy,
+    MappedProgentPolicyEngine,
+    ToolArgumentDecision,
+)
 from causalguard.schema.events import NormalizedEvent
 
 
@@ -34,18 +39,21 @@ class AgentDojoPolicyEnforcer:
 
     def __init__(
         self,
-        policies: Sequence[PolicyDefinition],
+        policies: Sequence[PolicyDefinition] = (),
         *,
         mapper: AgentDojoTraceMapper,
         observer: AgentDojoRuntimeObserver,
         approval_events: Sequence[NormalizedEvent] = (),
+        tool_argument_policies: Sequence[MappedProgentPolicy] = (),
     ) -> None:
         self.policies = tuple(policies)
+        self.tool_argument_policies = tuple(tool_argument_policies)
         self.mapper = mapper
         self.observer = observer
         self.approval_events = tuple(approval_events)
         self.engine = PolicyEngine()
-        self.decisions: list[PolicyDecision] = []
+        self.tool_argument_engine = MappedProgentPolicyEngine()
+        self.decisions: list[PolicyDecision | ToolArgumentDecision] = []
         self.last_evaluation_store: GraphStore | None = None
 
     def begin_attempt(self) -> None:
@@ -59,7 +67,7 @@ class AgentDojoPolicyEnforcer:
         messages: Sequence[ChatMessage],
         environment: Env,
         call_index: int,
-    ) -> tuple[PolicyDecision, ...]:
+    ) -> tuple[PolicyDecision | ToolArgumentDecision, ...]:
         message = messages[-1]
         tool_call = (message.get("tool_calls") or [])[call_index]
         triggered = [
@@ -67,8 +75,30 @@ class AgentDojoPolicyEnforcer:
             for policy in self.policies
             if policy.trigger.action_class == tool_call.function
         ]
-        if not triggered:
+        argument_triggered = [
+            policy
+            for policy in self.tool_argument_policies
+            if policy.tool_name == tool_call.function
+        ]
+        if not triggered and not argument_triggered:
             return ()
+
+        argument_decisions = tuple(
+            decision
+            for policy in argument_triggered
+            if (
+                decision := self.tool_argument_engine.evaluate(
+                    policy,
+                    tool_name=tool_call.function,
+                    arguments=tool_call.args,
+                    tool_call_id=str(tool_call.id or f"proposal-{call_index}"),
+                )
+            )
+            is not None
+        )
+        if not triggered:
+            self.decisions.extend(argument_decisions)
+            return argument_decisions
 
         self.observer.propose(
             ToolProposalContext(
@@ -94,7 +124,7 @@ class AgentDojoPolicyEnforcer:
             message_index=len(messages) - 1,
             call_index=call_index,
         )
-        decisions = tuple(
+        graph_decisions = tuple(
             decision
             for policy in triggered
             if (
@@ -106,11 +136,14 @@ class AgentDojoPolicyEnforcer:
             )
             is not None
         )
+        decisions = (*argument_decisions, *graph_decisions)
         self.decisions.extend(decisions)
         return decisions
 
     @staticmethod
-    def permits_execution(decisions: Sequence[PolicyDecision]) -> bool:
+    def permits_execution(
+        decisions: Sequence[PolicyDecision | ToolArgumentDecision],
+    ) -> bool:
         return all(decision.decision in _EXECUTABLE_DECISIONS for decision in decisions)
 
 

@@ -41,6 +41,7 @@ class AgentDojoCollector(BasePipelineElement):
         causal_context_id: str | None = None,
         runtime_observer: AgentDojoRuntimeObserver | None = None,
         policy_enforcer: AgentDojoPolicyEnforcer | None = None,
+        alert_monitor=None,
     ) -> None:
         self.delegate = delegate
         self.name = delegate.name
@@ -67,6 +68,20 @@ class AgentDojoCollector(BasePipelineElement):
             runtime_observer = policy_enforcer.observer
         self.runtime_observer = runtime_observer
         self.policy_enforcer = policy_enforcer
+        self.alert_monitor = alert_monitor
+        if alert_monitor is not None:
+            from causalguard.policy.alerts import EvaluationClock, validate_configuration
+            from causalguard.policy.alert_views import ProductionAlertView
+            from causalguard.integrations.agentdojo.alerts import install_postcommit_alerts
+            if self.runtime_observer is None:
+                raise ValueError("runtime alerts require a runtime observer")
+            clock = EvaluationClock(current_time=0, unit="ordinal",
+                                    domain=f"agentdojo-transcript:{session_id}")
+            for policy in alert_monitor.policies:
+                if policy.enabled:
+                    validate_configuration(policy, ProductionAlertView(GraphStore()), clock)
+            if not install_postcommit_alerts(self.delegate, self._evaluate_alert_prefix):
+                raise ValueError("no tool executor available for committed-update alerts")
 
     def query(
         self,
@@ -77,6 +92,10 @@ class AgentDojoCollector(BasePipelineElement):
         extra_args: dict = {},
     ) -> tuple[str, FunctionsRuntime, Env, Sequence[ChatMessage], dict]:
         self.attempt_initial_environments.append(env.model_copy(deep=True))
+        if self.alert_monitor is not None:
+            self.alert_monitor.begin_attempt(
+                f"{self.mapper.session_id}:attempt:{len(self.attempt_initial_environments)}"
+            )
         observed_runtime: ObservingFunctionsRuntime | None = None
         runtime_for_delegate = runtime
         if self.policy_enforcer is not None:
@@ -119,6 +138,29 @@ class AgentDojoCollector(BasePipelineElement):
             final_env,
             final_messages,
             final_extra_args,
+        )
+
+    def _evaluate_alert_prefix(self, query, messages, update_id):
+        from causalguard.policy.alerts import EvaluationClock
+        from causalguard.policy.alert_views import ProductionAlertView
+        # Rebuild an execution prefix using the normal mapper/builder. No graph
+        # edges are injected by the alert integration. Failed/denied results
+        # have no successful effect; inferred temporal/context edges are filtered
+        # by the view, not reinterpreted as captured data flow.
+        events = self.mapper.map_trace(
+            query, messages, self.runtime_observer.observations,
+            self.runtime_observer.proposals,
+        )
+        store = GraphStore()
+        GraphBuilder(store).process_trace(events)
+        self.alert_monitor.on_update(
+            ProductionAlertView(store, coverage_issues=(
+                "application_level_not_os_telemetry", "domain_extractor_coverage_is_partial",
+            )),
+            EvaluationClock(current_time=max(e.timestamp for e in events),
+                            unit="ordinal",
+                            domain=f"agentdojo-transcript:{self.mapper.session_id}"),
+            update_id,
         )
 
     def collect(
@@ -165,4 +207,10 @@ class AgentDojoCollector(BasePipelineElement):
             store.to_dot() + "\n",
             encoding="utf-8",
         )
+        if self.alert_monitor is not None:
+            (destination / "alerts.jsonl").write_text(self.alert_monitor.to_jsonl(), encoding="utf-8")
+            (destination / "alert_evaluations.jsonl").write_text(
+                "".join(e.model_dump_json() + "\n" for e in self.alert_monitor.evaluations),
+                encoding="utf-8",
+            )
         return store

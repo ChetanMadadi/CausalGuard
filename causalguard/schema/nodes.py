@@ -129,6 +129,7 @@ class ToolCallNode(_TimedAgentNode):
 
 class SystemOperationNode(_TimedAgentNode):
     node_type: Literal[NodeType.SYSTEM_OPERATION] = NodeType.SYSTEM_OPERATION
+    data_flow_semantics: Literal["identity_copy_v1"] | None = None
     operation_type: str
     action_class: str | None = None
     syscall_kind: str | None = None
@@ -171,6 +172,7 @@ class SystemOperationNode(_TimedAgentNode):
 
 class DataObjectNode(_BaseNode):
     node_type: Literal[NodeType.DATA_OBJECT] = NodeType.DATA_OBJECT
+    lineage_status: Literal["unrecorded", "root", "copy_output"] = "unrecorded"
     resource_id: str
     object_kind: str
     content_hash: str | None

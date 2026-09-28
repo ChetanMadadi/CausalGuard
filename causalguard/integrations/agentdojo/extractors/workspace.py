@@ -55,6 +55,7 @@ class WorkspaceReadSendExtractor:
             llm_generated_objects=((content,) if content is not None else ()),
             destination=_proposal_destination(context.arguments),
             target_resource=(attachments[0].reference if len(attachments) == 1 else None),
+            outgoing_attachment_refs=tuple(item.reference for item in attachments),
         )
 
     def _extract_file_search(
@@ -209,14 +210,18 @@ def _proposal_attachment_evidence(
     environment: object | None,
 ) -> tuple[DomainObjectEvidence, ...]:
     attachment_ids = arguments.get("attachments", [])
-    if (
-        not isinstance(attachment_ids, Sequence)
-        or isinstance(attachment_ids, (str, bytes, bytearray))
-        or environment is None
-        or not hasattr(environment, "cloud_drive")
-    ):
+    if attachment_ids is None:
         return ()
-    files = environment.cloud_drive.files
+    if not isinstance(attachment_ids, Sequence) or isinstance(
+        attachment_ids,
+        (str, bytes, bytearray),
+    ):
+        return (_unresolved_attachment_evidence(attachment_ids),)
+    files = (
+        environment.cloud_drive.files
+        if environment is not None and hasattr(environment, "cloud_drive")
+        else {}
+    )
     evidence = []
     for attachment in attachment_ids:
         if isinstance(attachment, str):
@@ -224,13 +229,32 @@ def _proposal_attachment_evidence(
         elif isinstance(attachment, Mapping):
             attachment_id = attachment.get("file_id")
         else:
+            evidence.append(_unresolved_attachment_evidence(attachment))
             continue
         if not isinstance(attachment_id, str):
+            evidence.append(_unresolved_attachment_evidence(attachment))
             continue
         file = files.get(attachment_id)
         if file is not None:
             evidence.append(_file_evidence(file))
+        else:
+            evidence.append(_unresolved_attachment_evidence(attachment_id))
     return tuple(evidence)
+
+
+def _unresolved_attachment_evidence(value: object) -> DomainObjectEvidence:
+    digest = stable_hash({"attachment_reference": value})
+    reference = (
+        "agentdojo:workspace:unresolved_attachment:"
+        f"{digest.removeprefix('sha256:')}"
+    )
+    return DomainObjectEvidence(
+        reference=reference,
+        node_id=_versioned_node_id(reference, digest),
+        object_kind="unresolved_cloud_drive_attachment",
+        content_hash=None,
+        version=None,
+    )
 
 
 def _proposal_email_content_evidence(
@@ -251,12 +275,19 @@ def _proposal_destination(arguments: Mapping[str, object]) -> str | None:
     recipients: list[str] = []
     for field in ("recipients", "cc", "bcc"):
         values = arguments.get(field, [])
+        if values is None and field in ("cc", "bcc"):
+            continue
         if not isinstance(values, Sequence) or isinstance(
             values,
             (str, bytes, bytearray),
         ):
-            continue
-        recipients.extend(str(item).lower() for item in values)
+            return None
+        if field == "recipients" and not values:
+            return None
+        for item in values:
+            if not isinstance(item, str) or not item.strip():
+                return None
+            recipients.append(item.strip().lower())
     if not recipients:
         return None
     return ",".join(f"mailto:{item}" for item in recipients)

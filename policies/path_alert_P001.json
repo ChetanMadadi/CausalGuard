@@ -1,0 +1,32 @@
+{
+  "policy_id": "P001",
+  "type": "path",
+  "name": "Secret File to External Network",
+  "description": "Sensitive files should not influence outbound connections to external network destinations.",
+  "source": {
+    "node_type": "File",
+    "attributes": {
+      "sensitivity": "secret"
+    }
+  },
+  "sink": {
+    "node_type": "Socket",
+    "attributes": {
+      "network_zone": "external"
+    }
+  },
+  "constraints": {
+    "max_hops": 5,
+    "time_window_seconds": 300,
+    "allowed_edge_types": [
+      "read",
+      "fork",
+      "connect",
+      "send"
+    ]
+  },
+  "action": {
+    "type": "alert",
+    "severity": "critical"
+  }
+}

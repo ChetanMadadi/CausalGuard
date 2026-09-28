@@ -30,6 +30,7 @@ from causalguard.integrations.agentdojo import (
     install_policy_enforcement,
 )
 from causalguard.policy import PolicyAction, protected_file_external_email_policy
+from causalguard.schema.events import NormalizedEvent
 from causalguard.schema.edges import EdgeType
 
 
@@ -72,6 +73,12 @@ def _run_policy_flow(
     trusted_domains: tuple[str, ...] = (),
     include_protected_attachment: bool = True,
     retry_without_attachment: bool = False,
+    attachment_override: object | None = None,
+    without_read: bool = False,
+    send_overrides: dict | None = None,
+    approval_events: Sequence[NormalizedEvent] = (),
+    extra_policies: tuple = (),
+    with_extractor: bool = True,
 ) -> tuple[GraphStore, AgentDojoPolicyEnforcer, int, int]:
     suite = get_suite("v1.2.2", "workspace")
     task = suite.get_user_task_by_id("user_task_33")
@@ -88,6 +95,12 @@ def _run_policy_flow(
     ]
     if not include_protected_attachment:
         calls[-1].args["attachments"] = []
+    if attachment_override is not None:
+        calls[-1].args["attachments"] = attachment_override
+    if without_read:
+        calls = [calls[-1]]
+    if send_overrides:
+        calls[-1].args.update(send_overrides)
     if retry_without_attachment:
         calls.append(
             FunctionCall(
@@ -97,7 +110,9 @@ def _run_policy_flow(
             )
         )
 
-    observer = AgentDojoRuntimeObserver([WorkspaceReadSendExtractor()])
+    observer = AgentDojoRuntimeObserver(
+        [WorkspaceReadSendExtractor()] if with_extractor else []
+    )
     mapper = AgentDojoTraceMapper(
         session_id=SESSION_ID,
         model_name=_PlannedLLM.name,
@@ -107,7 +122,8 @@ def _run_policy_flow(
         trusted_domains=trusted_domains,
     )
     enforcer = AgentDojoPolicyEnforcer(
-        [policy],
+        [policy, *extra_policies],
+        approval_events=approval_events,
         mapper=mapper,
         observer=observer,
     )
@@ -171,10 +187,11 @@ def test_protected_external_send_is_denied_before_email_mutation() -> None:
         and edge.edge_type is EdgeType.INPUT_TO
         for edge in store.edges()
     )
-    assert any(
-        edge.edge_type is EdgeType.READ
-        and edge.edge_id in decision.evidence_edge_ids
-        for edge in enforcer.last_evaluation_store.edges()
+    assert set(decision.evidence_node_ids) == {protected_node.node_id, send_tool.node_id}
+    assert len(decision.evidence_edge_ids) == 1
+    edge = enforcer.last_evaluation_store.get_edge(decision.evidence_edge_ids[0])
+    assert (edge.source_id, edge.target_id, edge.edge_type) == (
+        protected_node.node_id, send_tool.node_id, EdgeType.INPUT_TO,
     )
 
 
@@ -229,6 +246,25 @@ def test_policy_decision_and_denied_exports_do_not_leak_raw_content(tmp_path) ->
     )
 
 
+@pytest.mark.parametrize(
+    "attachment_override",
+    [["missing-file-id"], "missing-file-id"],
+)
+def test_unresolved_attachment_is_held_before_email_mutation(attachment_override) -> None:
+    store, enforcer, before_count, after_count = _run_policy_flow(
+        attachment_override=attachment_override,
+    )
+
+    assert after_count == before_count
+    assert len(enforcer.decisions) == 1
+    decision = enforcer.decisions[0]
+    assert decision.decision is PolicyAction.REQUEST_APPROVAL
+    assert decision.evidence_status == "missing"
+    assert not _successful_send_nodes(store)
+    assert not any(edge.edge_type is EdgeType.WRITE for edge in store.edges())
+    assert not any(edge.edge_type is EdgeType.PAYLOAD_OF for edge in store.edges())
+
+
 def test_revised_send_after_denial_receives_a_fresh_decision() -> None:
     store, enforcer, before_count, after_count = _run_policy_flow(
         retry_without_attachment=True,
@@ -278,3 +314,183 @@ def _successful_send_nodes(store: GraphStore) -> list[object]:
         if node.node_type.value == "system_operation"
         and node.operation_type == "email_send"
     ]
+
+
+def _assert_no_send_effects(store, before_count, after_count):
+    assert before_count == after_count
+    assert not _successful_send_nodes(store)
+    assert not any(edge.edge_type in {EdgeType.WRITE, EdgeType.PAYLOAD_OF}
+                   for edge in store.edges())
+    assert not any(node.node_type.value == "data_object" and node.object_kind == "email"
+                   for node in store.nodes())
+
+
+def test_attachment_without_preceding_read_is_enforced():
+    store, enforcer, before, after = _run_policy_flow(without_read=True)
+    assert enforcer.decisions[0].decision is PolicyAction.DENY
+    assert not any(edge.edge_type is EdgeType.READ for edge in store.edges())
+    assert len(enforcer.decisions[0].evidence_edge_ids) == 1
+    _assert_no_send_effects(store, before, after)
+
+
+@pytest.mark.parametrize("field", ["recipients", "cc", "bcc"])
+def test_untrusted_recipient_in_any_scope_is_denied(field):
+    addresses = ["outsider@example.org"]
+    if field == "recipients":
+        addresses.insert(0, "john.mitchell@gmail.com")
+    store, enforcer, before, after = _run_policy_flow(
+        trusted_domains=("gmail.com",), send_overrides={field: addresses},
+    )
+    decision = enforcer.decisions[0]
+    assert decision.decision is PolicyAction.DENY
+    assert "outsider@example.org" in decision.recipient_addresses
+    _assert_no_send_effects(store, before, after)
+
+
+def test_all_to_cc_bcc_recipients_trusted():
+    store, enforcer, before, after = _run_policy_flow(
+        trusted_domains=("gmail.com",),
+        send_overrides={"cc": ["cc@gmail.com"], "bcc": ["bcc@gmail.com"]},
+    )
+    assert enforcer.decisions[0].decision is PolicyAction.ALLOW
+    assert set(enforcer.decisions[0].recipient_addresses) == {
+        "john.mitchell@gmail.com", "cc@gmail.com", "bcc@gmail.com",
+    }
+    assert after == before + 1
+    assert _successful_send_nodes(store)
+
+
+@pytest.mark.parametrize("overrides", [
+    {"recipients": []}, {"recipients": ["invalid"]},
+    {"cc": "outsider@example.org"}, {"bcc": [""]}, {"cc": [None]},
+])
+def test_unresolved_destination_holds_without_mutation(overrides):
+    store, enforcer, before, after = _run_policy_flow(
+        trusted_domains=("gmail.com",), send_overrides=overrides,
+    )
+    decision = enforcer.decisions[0]
+    assert decision.decision is PolicyAction.REQUEST_APPROVAL
+    assert decision.destination_classification == "unresolved"
+    _assert_no_send_effects(store, before, after)
+
+
+@pytest.mark.parametrize("attachments", [None, []])
+def test_explicit_no_attachments_is_not_unresolved(attachments):
+    store, enforcer, before, after = _run_policy_flow(
+        send_overrides={"attachments": attachments}, without_read=True,
+    )
+    assert enforcer.decisions[0].decision is PolicyAction.ALLOW
+    assert enforcer.decisions[0].evidence_status == "complete"
+    assert after == before + 1
+
+
+def test_public_attachment_is_permitted():
+    store, enforcer, before, after = _run_policy_flow(
+        attachment_override=[{"type": "file", "file_id": "7"}], without_read=True,
+    )
+    assert enforcer.decisions[0].decision is PolicyAction.ALLOW
+    assert enforcer.decisions[0].protected_resource_ids == ()
+    assert after == before + 1
+
+
+def test_unknown_attachment_holds_even_with_trusted_destination():
+    store, enforcer, before, after = _run_policy_flow(
+        trusted_domains=("gmail.com",), attachment_override=["missing-file-id"],
+    )
+    assert enforcer.decisions[0].decision is PolicyAction.REQUEST_APPROVAL
+    _assert_no_send_effects(store, before, after)
+
+
+@pytest.mark.parametrize("overrides,expected", [
+    ({}, PolicyAction.ALLOW_WITH_AUDIT),
+    ({"expiration": 0.0}, PolicyAction.DENY),
+    ({"resource_scope": "agentdojo:workspace:file:7"}, PolicyAction.DENY),
+    ({"destination_scope": "mailto:other@gmail.com"}, PolicyAction.DENY),
+    ({"action_class": "upload"}, PolicyAction.DENY),
+])
+def test_approval_exception_at_real_runtime_gate(overrides, expected):
+    approval = NormalizedEvent.model_validate({
+        "event_id": "exact-approval", "event_type": "human_approval",
+        "timestamp": 0.0, "agent_id": "human", "session_id": SESSION_ID,
+        "causal_context_id": SESSION_ID, "parent_event_id": None,
+        "attributes": {
+            "approver_id": "user-1", "action_class": "send_email",
+            "resource_scope": PROTECTED,
+            "destination_scope": "mailto:john.mitchell@gmail.com",
+            "expiration": 1e20, **overrides,
+        },
+    })
+    store, enforcer, before, after = _run_policy_flow(
+        approval_events=[approval], without_read=True,
+    )
+    decision = enforcer.decisions[0]
+    assert decision.decision is expected
+    if expected is PolicyAction.ALLOW_WITH_AUDIT:
+        assert after == before + 1
+        assert decision.exception_evidence_node_ids
+        assert not set(decision.exception_evidence_node_ids) & set(decision.evidence_node_ids)
+    else:
+        _assert_no_send_effects(store, before, after)
+
+
+def test_attachment_allow_does_not_override_another_policy():
+    second = protected_file_external_email_policy(
+        protected_resource_ids=(PROTECTED,),
+    ).model_copy(update={"policy_id": "other-policy"})
+    store, enforcer, before, after = _run_policy_flow(
+        trusted_domains=("gmail.com",), extra_policies=(second,),
+    )
+    assert [d.decision for d in enforcer.decisions] == [PolicyAction.ALLOW, PolicyAction.DENY]
+    _assert_no_send_effects(store, before, after)
+
+
+def test_missing_attachment_adapter_evidence_holds():
+    store, enforcer, before, after = _run_policy_flow(
+        without_read=True, with_extractor=False,
+    )
+    assert enforcer.decisions[0].decision is PolicyAction.REQUEST_APPROVAL
+    _assert_no_send_effects(store, before, after)
+
+
+def test_partially_unresolved_attachments_hold_before_mutation():
+    store, enforcer, before, after = _run_policy_flow(
+        attachment_override=[
+            {"type": "file", "file_id": "19"},
+            {"type": "file", "file_id": "missing"},
+        ],
+    )
+    decision = enforcer.decisions[0]
+    assert decision.decision is PolicyAction.REQUEST_APPROVAL
+    assert decision.protected_resource_ids == (PROTECTED,)
+    assert decision.evidence_status == "missing"
+    _assert_no_send_effects(store, before, after)
+
+
+def test_to_only_approval_cannot_authorize_added_cc():
+    approval = NormalizedEvent.model_validate({
+        "event_id": "to-only-approval", "event_type": "human_approval",
+        "timestamp": 0.0, "agent_id": "human", "session_id": SESSION_ID,
+        "causal_context_id": SESSION_ID, "parent_event_id": None,
+        "attributes": {
+            "approver_id": "user-1", "action_class": "send_email",
+            "resource_scope": PROTECTED,
+            "destination_scope": "mailto:john.mitchell@gmail.com",
+            "expiration": 1e20,
+        },
+    })
+    store, enforcer, before, after = _run_policy_flow(
+        approval_events=[approval], send_overrides={"cc": ["outsider@example.org"]},
+    )
+    assert enforcer.decisions[0].decision is PolicyAction.DENY
+    assert enforcer.decisions[0].exception_status == "none"
+    _assert_no_send_effects(store, before, after)
+
+
+def test_model_supplied_policy_claims_do_not_override_adapter_evidence():
+    store, enforcer, before, after = _run_policy_flow(send_overrides={
+        "outgoing_attachment_refs": [], "sensitivity": "public",
+        "approved": True, "trusted_destination": True,
+    })
+    assert enforcer.decisions[0].decision is PolicyAction.DENY
+    assert enforcer.decisions[0].protected_resource_ids == (PROTECTED,)
+    _assert_no_send_effects(store, before, after)
